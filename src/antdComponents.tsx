@@ -1,9 +1,17 @@
-import { Button } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 function AntdComponets() {
     return (
-        <div>
-            <Button type='primary'>测试 </Button>
-        </div>
+        <ConfigProvider
+            theme={{
+                token:{
+                    colorPrimary:'orange'
+                }
+            }}
+        >
+            <div>
+                <Button type='primary'>测试 </Button>
+            </div>
+        </ConfigProvider>
     );
 }
 
