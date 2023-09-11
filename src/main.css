@@ -1,0 +1,26 @@
+.ori-main-tabs {
+    background-color: white;
+    height: 100%;
+}
+
+.ant-tabs {
+    height: 100% !important;
+}
+
+.ant-tabs-content {
+    height: 100% !important;
+}
+
+.ant-tabs-tabpane {
+    height: 100% !important;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.ant-tabs-nav-add {
+    display: none !important;
+}
+
+.ant-tabs-tab {
+    border-radius: 0px !important;
+}
