@@ -2,10 +2,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, Tabs, theme } from "antd";
 import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
-import './main.css';
-import { IMenuItem, MainMenus, OridStoreClass } from "./menu";
-
-
+import { IMenuItem, OridStore } from "..";
+import './index.css';
 
 interface IMainRight {
     activeKey: string | undefined;
@@ -14,6 +12,7 @@ interface IMainRight {
 }
 
 interface IMainLeft {
+    menu: IMenuItem[];
     activeKey: string | undefined;
     onMenuChange: (activeKey: string) => void;
 }
@@ -29,7 +28,7 @@ interface IMainAction {
     key?: string;
 }
 
-const OridStore = new OridStoreClass();
+const store = new OridStore();
 
 function mainResucer(state: IMainState, action: IMainAction): IMainState {
     switch (action.type) {
@@ -74,7 +73,7 @@ function MainLeft(props: IMainLeft) {
                         props.onMenuChange(info.key)
                     }}
                     mode="inline"
-                    items={MainMenus}
+                    items={props.menu}
                 />
             </div>
             <div style={{ padding: 16, textAlign: "center", fontWeight: 600, borderTop: "1px solid #e9e9e9" }} >
@@ -113,7 +112,7 @@ function MainRight(props: IMainRight) {
     </>
 }
 
-export default function Main(props: { default?: Tab }) {
+export default function MainLayout(props: { default?: Tab, menuList: IMenuItem[] }) {
 
     const [state, dispatch] = useReducer(mainResucer, {
         activeKey: undefined,
@@ -128,7 +127,7 @@ export default function Main(props: { default?: Tab }) {
                     tab: {
                         key: item.key.toString(),
                         label: item.label,
-                        children: React.createElement(item.component, { OridStore }),
+                        children: React.createElement(item.component, { OridStore: store }),
                         closable: true
                     }
                 })
@@ -141,6 +140,7 @@ export default function Main(props: { default?: Tab }) {
     return <>
         <Layout style={{ height: '100vh' }}>
             <MainLeft
+                menu={props.menuList}
                 activeKey={state.activeKey}
                 onMenuChange={(key) => {
                     if (state.tabs.find((tab) => tab.key === key)) {
@@ -149,7 +149,7 @@ export default function Main(props: { default?: Tab }) {
                             key,
                         })
                     } else {
-                        activeTabsByMenuKey(MainMenus, key);
+                        activeTabsByMenuKey(props.menuList, key);
                     }
 
                 }}

@@ -1,7 +1,9 @@
+import { HomeOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, FloatButton, Input } from 'antd';
 import { useState } from 'react';
-import Main from './main';
-import { HomeOutlined } from '@ant-design/icons';
+import { MainLayout } from './lib';
+import { MainMenus } from './menu';
+
 function AntdComponets() {
     const [value, setValue] = useState<string>()
     const [primaryColor, setColor] = useState<string>('purple')
@@ -41,7 +43,8 @@ function AntdComponets() {
                     </div>
 
                 } />
-            <Main
+            <MainLayout
+                menuList={MainMenus}
                 default={{
                     key: '-1',
                     label: <div style={{ textAlign: 'center', width: '40px' }} > <HomeOutlined style={{ margin: "0px" }} /></div>,
