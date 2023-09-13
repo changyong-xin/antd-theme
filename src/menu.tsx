@@ -1,9 +1,10 @@
 import { FormOutlined, LayoutOutlined, TableOutlined } from "@ant-design/icons";
 import { Demo1 } from "./demos/demo1";
 import { Demo2 } from "./demos/demo2";
+import { OriTable } from "./demos/oriTable";
+import { StaticFunctions } from "./demos/staticFun";
 import { TreeDemos } from "./demos/tree";
 import { IMenuItem } from "./lib";
-import { OriTable } from "./oriTable";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -32,7 +33,7 @@ export const MainMenus: IMenuItem[] = [
     {
         label: '组件列表', icon: <FormOutlined />, key: '03', children: [
             { label: '树形组件', key: '0301', component: TreeDemos },
-            { label: '编辑表单', key: '0302', component: Demo1 },
+            { label: '全局提示', key: '0302', component: StaticFunctions },
         ]
     },
 ]

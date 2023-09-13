@@ -19,7 +19,7 @@ export function TreeDataTrans<T extends ITreeData>(list: T[], itemTrans: (item: 
     return result
 }
 
-export function Copy(data: any) {
+export function Copy<T = any>(data: T): T {
     try {
         return JSON.parse(JSON.stringify(data))
     } catch (error) {

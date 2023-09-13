@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import AntdComponets from './antdComponents';
 import './index.css';
 
-
 configure({
   enforceActions: "never"
 })
