@@ -1,7 +1,7 @@
 import { Tree } from 'antd';
-import { DataNode } from 'antd/es/tree';
+import { DataNode, EventDataNode } from 'antd/es/tree';
 import React from 'react';
-import { Copy, StaticContext } from '../../lib';
+import { Copy } from '../../lib';
 import { TreeData } from './common';
 
 interface IDraggableTreeState {
@@ -27,23 +27,27 @@ export class DraggableTree extends React.Component<any, IDraggableTreeState>{
                 treeData={this.state.treeData}
                 draggable={true}
                 onDrop={(info) => {
-                    if (info.dropToGap) {
-                        StaticContext.message.info('层级变化可能无法恢复')
-                    }
-                    this.dropHandler(this.state.treeData, info.dragNode, info.node)
+                    console.log('drag info:', info)
+                    this.dropHandler(this.state.treeData, info.dragNode, info.node, info.dropToGap)
                 }}
+                blockNode={true}
             />
         )
     }
 
-    public dropHandler(treeData: DataNode[], source: DataNode, target: DataNode,) {
+    /**
+     * 
+     * @param treeData 原始数据
+     * @param source 移动目标
+     * @param target 目的地
+     * @param dropToGap 在同级范围（兄弟节点之间移动）内切换位置
+     */
+    public dropHandler(treeData: DataNode[], source: EventDataNode<DataNode>, target: EventDataNode<DataNode>, dropToGap: boolean) {
         this._drapNode = undefined;
         const result = this.filterSource(treeData, source.key);
         if (result && this._drapNode) {
             this.setState({
-                treeData: this.addTarget(result, this._drapNode, target.key)
-            }, () => {
-                console.log(this.state.treeData)
+                treeData: this.addTarget(result, this._drapNode, target, dropToGap)
             })
         }
     }
@@ -63,21 +67,26 @@ export class DraggableTree extends React.Component<any, IDraggableTreeState>{
         return result
     }
 
-    public addTarget(treeData: DataNode[], source: DataNode, targetKey: string | number): DataNode[] {
+    public addTarget(treeData: DataNode[], source: EventDataNode<DataNode>, target: EventDataNode<DataNode>, dropToGap: boolean): DataNode[] {
         const result: DataNode[] = []
         let findIndex: number | undefined;
         treeData.forEach((node, index) => {
-            if (node.key === targetKey) {
-                findIndex = index
+            if (node.key === target.key) {
+                if (dropToGap) {
+                    findIndex = index
+                } else {
+                    node.children ? node.children.unshift(source) : node.children = [source]
+                }
             } else {
                 if (node.children && node.children.length > 0) {
-                    node.children = this.addTarget(node.children, source, targetKey);
+                    node.children = this.addTarget(node.children, source, target, dropToGap);
                 }
             }
             result.push(node)
         })
+        // target.dragOverGapTop  是否移动到目的地上方（否则为下方）
         if (findIndex !== undefined) {
-            result.splice(findIndex + 1, 0, source)
+            result.splice(target.dragOverGapTop ? findIndex : findIndex + 1, 0, source)
         }
         return result
     }
