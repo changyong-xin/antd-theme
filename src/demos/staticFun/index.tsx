@@ -1,9 +1,9 @@
 import { Button, message, notification } from 'antd';
-import React from 'react';
-import { StaticContext } from '../../lib';
 import modal from 'antd/es/modal';
+import React from 'react';
+import { OriContext } from '../../lib';
 
-export class StaticFunctions extends React.Component<any, any>{
+export class OriContextDemo extends React.Component<any, any>{
     public render() {
         return (
             <div>
@@ -15,23 +15,23 @@ export class StaticFunctions extends React.Component<any, any>{
                 <div style={{ marginTop: 16 }} >能用主题的写法：</div>
                 <div style={{ marginTop: 16 }} >
                     <Button onClick={() => {
-                        StaticContext.message.info('测试')
+                        OriContext.message.info('测试')
                     }}>
-                        StaticContext.message
+                        OriContext.message
                     </Button>
                     <Button onClick={() => {
-                        StaticContext.notification.info({ message: '测试' })
+                        OriContext.notification.info({ message: '测试' })
                     }}>
-                        StaticContext.notification
+                        OriContext.notification
                     </Button>
                     <Button onClick={() => {
-                        StaticContext.modal.info({
+                        OriContext.modal.info({
                             title: '测试',
                             content: '窗口测试',
                             okText: '我知道了'
                         })
                     }}>
-                        StaticContext.modal
+                        OriContext.modal
                     </Button>
                 </div >
                 <div style={{ marginTop: 16 }} >不能用主题的写法：</div>
@@ -56,6 +56,17 @@ export class StaticFunctions extends React.Component<any, any>{
                         modal
                     </Button>
                 </div >
+                <div style={{ marginTop: 16 }} >在任意位置打开一个标签页：</div>
+                <div style={{ marginTop: 16 }} >
+                    <Button
+                        onClick={() => {
+                            OriContext.openTab('00011')
+                        }}
+                    >
+                        OriContext.openTab
+                    </Button>
+                </div>
+
             </div>
         )
     }

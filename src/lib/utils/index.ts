@@ -1,4 +1,5 @@
 import type { DataNode } from 'antd/es/tree';
+import { IMenuItem } from '../interface';
 
 interface ITreeData {
     children?: ITreeData[];
@@ -26,4 +27,24 @@ export function Copy<T = any>(data: T): T {
         console.log('Copy error:', error)
         return data
     }
+}
+
+export function createMenuMap(menu: IMenuItem[]) {
+
+    const map = new Map<string | number, IMenuItem>();
+
+    function listToMap(data: IMenuItem[]) {
+        data.forEach((item) => {
+            if (item.children && item.children.length > 0) {
+                listToMap(item.children);
+            } else {
+                map.set(item.key, item)
+            }
+        })
+    }
+
+    listToMap(menu)
+
+    return { map, menu }
+
 }

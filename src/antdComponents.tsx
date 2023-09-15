@@ -1,8 +1,7 @@
 import { HomeOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, FloatButton, Input } from 'antd';
 import { useState } from 'react';
-import { MainLayout } from './lib';
-import AppWrapper from './lib/context';
+import { MainLayout, createMenuMap } from './lib';
 import { MainMenus } from './menu';
 
 
@@ -32,7 +31,7 @@ function ThemeSetting(props: { onOk: (color: string) => void }) {
 }
 
 function AntdComponets() {
-    const [primaryColor, setColor] = useState<string>('orange');
+    const [primaryColor, setColor] = useState<string>('purple');
     return (
         <ConfigProvider
             theme={{
@@ -42,19 +41,14 @@ function AntdComponets() {
                 },
                 components: {
                     Tabs: {
-                        cardBg: 'rgba(202,202,202,0.5)',
+                        itemColor: 'white',
                     },
                 }
             }}
         >
-            <AppWrapper />
-            <FloatButton
-                tooltip={
-                    <ThemeSetting onOk={setColor} />
-                }
-            />
+            <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
             <MainLayout
-                menuList={MainMenus}
+                menu={createMenuMap(MainMenus)}
                 default={{
                     key: '-1',
                     label: <div style={{ textAlign: 'center', width: '40px' }} > <HomeOutlined style={{ margin: "0px" }} /></div>,

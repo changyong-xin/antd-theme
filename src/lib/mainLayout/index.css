@@ -17,10 +17,6 @@
     margin-right: 16px;
 }
 
-.ori-main-tabs .ant-tabs-nav-add {
-    display: none !important;
-}
-
 .ori-main-tabs .ant-tabs-tab {
     border-radius: 0px !important;
 }

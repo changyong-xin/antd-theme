@@ -1,9 +1,7 @@
 import { MenuItemType } from "antd/es/menu/hooks/useItems";
-import { OridStore } from "..";
 
-
-export interface ITabProps {
-    OridStore: OridStore
+interface ITabProps {
+    params: any
 }
 
 

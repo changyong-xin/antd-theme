@@ -1,9 +1,11 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, Tabs, theme } from "antd";
+import { App, Button, Layout, Menu, Tabs, theme } from "antd";
 import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
-import { IMenuItem, OridStore } from "..";
+import { IMenuItem } from "..";
+import { OriContext } from '../context';
 import './index.css';
+
 
 interface IMainRight {
     activeKey: string | undefined;
@@ -26,9 +28,24 @@ interface IMainAction {
     type: 'active' | 'add' | 'remove';
     tab?: Tab;
     key?: string;
+
 }
 
-const store = new OridStore();
+function Context() {
+    const { message, notification, modal } = App.useApp();
+    OriContext.message = message;
+    OriContext.notification = notification;
+    OriContext.modal = modal;
+    return <></>
+}
+
+function AppWrapper() {
+    return (
+        <App>
+            <Context />
+        </App>
+    )
+}
 
 function mainResucer(state: IMainState, action: IMainAction): IMainState {
     switch (action.type) {
@@ -96,6 +113,7 @@ function MainRight(props: IMainRight) {
         <Layout.Content>
             <div className="ori-main-tabs" >
                 <Tabs
+                    hideAdd={true}
                     tabBarStyle={{ backgroundColor: token.colorPrimary }}
                     activeKey={props.activeKey}
                     onChange={props.onTabChange}
@@ -112,47 +130,52 @@ function MainRight(props: IMainRight) {
     </>
 }
 
-export default function MainLayout(props: { default?: Tab, menuList: IMenuItem[] }) {
+export default function MainLayout(props: {
+    default?: Tab,
+    menu: {
+        map: Map<string | number, IMenuItem>;
+        menu: IMenuItem[];
+    }
+}) {
 
     const [state, dispatch] = useReducer(mainResucer, {
         activeKey: undefined,
-        tabs: props.default ? [props.default] : []
+        tabs: props.default ? [props.default] : [],
     })
 
-    function activeTabsByMenuKey(data: IMenuItem[], key: string) {
-        data.forEach((item) => {
-            if (item.key === key && item.component) {
+    function openTab(key: string, params?: any) {
+        if (state.tabs.find((tab) => tab.key === key)) {
+            dispatch({
+                type: 'active',
+                key,
+            })
+        } else {
+            const find = props.menu.map.get(key);
+            if (find && find.component) {
                 dispatch({
                     type: 'add',
                     tab: {
-                        key: item.key.toString(),
-                        label: item.label,
-                        children: React.createElement(item.component, { OridStore: store }),
+                        key: find.key.toString(),
+                        label: find.label,
+                        children: React.createElement(find.component, { params: params }),
                         closable: true
                     }
                 })
-            } else if (item.children && item.children.length > 0) {
-                activeTabsByMenuKey(item.children, key);
+            } else {
+                OriContext.message.info('没有对应的菜单或者该菜单没有需要渲染的组件')
             }
-        })
+        }
     }
+
+    OriContext.openTab = openTab;
 
     return <>
         <Layout style={{ height: '100vh' }}>
+            <AppWrapper />
             <MainLeft
-                menu={props.menuList}
+                menu={props.menu.menu}
                 activeKey={state.activeKey}
-                onMenuChange={(key) => {
-                    if (state.tabs.find((tab) => tab.key === key)) {
-                        dispatch({
-                            type: 'active',
-                            key,
-                        })
-                    } else {
-                        activeTabsByMenuKey(props.menuList, key);
-                    }
-
-                }}
+                onMenuChange={OriContext.openTab}
             />
             <MainRight
                 activeKey={state.activeKey}

@@ -1,9 +1,9 @@
-import { OridStore, StaticContext } from "./entity";
+import { OriContext } from "./context";
 import { IMenuItem } from "./interface";
 import MainLayout from "./mainLayout";
-import { Copy, TreeDataTrans } from "./utils";
+import { Copy, TreeDataTrans, createMenuMap } from "./utils";
 
-export { Copy, MainLayout, OridStore, StaticContext, TreeDataTrans };
+export { Copy, MainLayout, OriContext, TreeDataTrans, createMenuMap };
 
-export type { IMenuItem };
+    export type { IMenuItem };
 

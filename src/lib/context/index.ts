@@ -2,11 +2,11 @@ import { MessageInstance } from "antd/es/message/interface";
 import { ModalStaticFunctions } from "antd/es/modal/confirm";
 import { NotificationInstance } from "antd/es/notification/interface";
 
-export class OridStore {
-    identity: string = '';
-}
+export class OriContext {
 
-export class StaticContext {
+    public static identity: string;
+
+    public static openTab: (key: string, params?: any) => void;
 
     public static message: MessageInstance;
 
