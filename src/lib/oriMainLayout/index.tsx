@@ -130,7 +130,7 @@ function MainRight(props: IMainRight) {
     </>
 }
 
-export default function MainLayout(props: {
+export default function OriMainLayout(props: {
     default?: Tab,
     menu: {
         map: Map<string | number, IMenuItem>;

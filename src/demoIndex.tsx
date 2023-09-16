@@ -1,7 +1,7 @@
 import { HomeOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, FloatButton, Input } from 'antd';
 import { useState } from 'react';
-import { MainLayout, createMenuMap } from './lib';
+import { OriMainLayout, createMenuMap } from './lib';
 import { MainMenus } from './menu';
 
 
@@ -47,7 +47,7 @@ function DemoIndex() {
             }}
         >
             <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
-            <MainLayout
+            <OriMainLayout
                 menu={createMenuMap(MainMenus)}
                 default={{
                     key: '-1',
