@@ -60,7 +60,15 @@ export class OriContextDemo extends React.Component<any, any>{
                 <div style={{ marginTop: 16 }} >
                     <Button
                         onClick={() => {
-                            OriContext.openTab('00011')
+                            // OriContext.modal.info({
+                            //     title: '选择标签',
+                            //     content: <Select>
+                            //         {
+                            //         createMenuMap(MainMenus).map.entries().next.
+                            //         }
+                            //     </Select>
+                            // })
+                            OriContext.openTab('0001')
                         }}
                     >
                         OriContext.openTab

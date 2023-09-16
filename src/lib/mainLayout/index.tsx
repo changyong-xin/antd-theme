@@ -3,7 +3,7 @@ import { App, Button, Layout, Menu, Tabs, theme } from "antd";
 import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
 import { IMenuItem } from "..";
-import { OriContext } from '../context';
+import { OriContext } from '../oriContext';
 import './index.css';
 
 

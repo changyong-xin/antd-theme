@@ -1,9 +1,9 @@
 import { FormOutlined, GroupOutlined, LayoutOutlined, TableOutlined } from "@ant-design/icons";
 import { Demo1 } from "./demos/demo1";
 import { Demo2 } from "./demos/demo2";
-import { OriTable } from "./demos/oriTable";
-import { OriContextDemo } from "./demos/staticFun";
-import { TreeDemos } from "./demos/tree";
+import { OriContextDemo } from "./demos/contextDemo";
+import { OriTable } from "./demos/tableDemo";
+import { TreeDemos } from "./demos/treeDemo";
 import { IMenuItem } from "./lib";
 
 export const MainMenus: IMenuItem[] = [

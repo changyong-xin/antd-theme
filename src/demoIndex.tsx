@@ -30,7 +30,7 @@ function ThemeSetting(props: { onOk: (color: string) => void }) {
 
 }
 
-function AntdComponets() {
+function DemoIndex() {
     const [primaryColor, setColor] = useState<string>('purple');
     return (
         <ConfigProvider
@@ -60,4 +60,4 @@ function AntdComponets() {
     );
 }
 
-export default AntdComponets;
+export default DemoIndex;

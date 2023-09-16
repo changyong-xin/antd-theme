@@ -1,6 +1,6 @@
 import { configure } from 'mobx';
 import ReactDOM from 'react-dom/client';
-import AntdComponets from './antdComponents';
+import DemoIndex from './demoIndex';
 import './index.css';
 
 configure({
@@ -8,7 +8,7 @@ configure({
 })
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <AntdComponets />
+  <DemoIndex />
 );
 
 

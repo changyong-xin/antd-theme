@@ -1,7 +1,7 @@
 import { Tree } from 'antd';
 import { DataNode, EventDataNode } from 'antd/es/tree';
 import React from 'react';
-import { Copy } from '../../lib';
+import { copyObj } from '../../lib';
 import { TreeData } from './common';
 
 interface IDraggableTreeState {
@@ -15,7 +15,7 @@ export class DraggableTree extends React.Component<any, IDraggableTreeState>{
     constructor(props: any) {
         super(props)
         this.state = {
-            treeData: Copy(TreeData)
+            treeData: copyObj(TreeData)
         }
         this.dropHandler = this.dropHandler.bind(this);
     }
