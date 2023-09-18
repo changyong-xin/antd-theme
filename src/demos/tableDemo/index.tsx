@@ -54,7 +54,7 @@ class ChildrenTable extends React.Component<{ domain: TableUiStore }, any>{
 
 observer(ChildrenTable)
 
-export class OriTable extends React.Component<any, any>{
+export class OriTableDemo extends React.Component<any, any>{
 
     private _uiStore = new TableUiStore()
 
@@ -63,12 +63,11 @@ export class OriTable extends React.Component<any, any>{
         console.log('OriTableReander')
         return (
             <>
-                <div style={{ padding: '16px' }} >
+                <div style={{ padding: '16px', height: "100%" }} >
                     <ChildrenTable domain={this._uiStore} />
                 </div>
             </>
         )
     }
-
 
 }

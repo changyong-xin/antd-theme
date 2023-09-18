@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { App, Button, Layout, Menu, Tabs, theme } from "antd";
+import { Button, Layout, Menu, Tabs, theme } from "antd";
 import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
 import { IMenuItem } from "..";
@@ -28,22 +28,6 @@ interface IMainAction {
     tab?: Tab;
     key?: string;
 
-}
-
-function Context() {
-    const { message, notification, modal } = App.useApp();
-    OriContext.message = message;
-    OriContext.notification = notification;
-    OriContext.modal = modal;
-    return <></>
-}
-
-function AppWrapper() {
-    return (
-        <App>
-            <Context />
-        </App>
-    )
 }
 
 function mainResucer(state: IMainState, action: IMainAction): IMainState {
@@ -170,7 +154,6 @@ export default function OriMainLayout(props: {
 
     return <>
         <Layout style={{ height: '100vh' }}>
-            <AppWrapper />
             <MainLeft
                 menu={props.menu.menu}
                 activeKey={state.activeKey}

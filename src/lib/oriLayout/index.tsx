@@ -30,8 +30,6 @@ export interface IOriLayout {
     /** 布局类型 垂直 | 水平 */
     orientation: 'vertical' | 'horizontal';
 
-    className?: string;
-
     /** 填充（type='inner'时无效,默认16px） */
     padding?: number | string;
 
@@ -41,15 +39,11 @@ export interface IOriLayout {
     /** 顶部是否拉伸 */
     topStretch?: boolean;
 
-    topClassName?: string;
-
     /** 底部 */
     bottomContent?: React.ReactNode;
 
     /** 底部是否拉伸 */
     bottomStretch?: boolean;
-
-    bottomClassName?: string;
 
     /** 中间 */
     middleContent?: React.ReactNode;
@@ -57,23 +51,17 @@ export interface IOriLayout {
     /** 中间是否拉伸 */
     middleStretch?: boolean;
 
-    middleClassName?: string;
-
     /** 左侧 */
     leftContent?: React.ReactNode;
 
     /** 左侧是否拉伸 */
     leftStretch?: boolean;
 
-    leftClassName?: string;
-
     /** 右侧 */
     rightContent?: React.ReactNode;
 
     /** 右侧是否拉伸 */
     rightStretch?: boolean;
-
-    rightClassName?: string;
 
     /** 
      * 子结构的间距（默认为0px）
@@ -108,7 +96,8 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                     width: '100%',
                     display: 'flex',
                 }}
-                className={this.props.className ? 'ori-layout ' + this.props.className : 'ori-layout'}>
+                className={'ori-layout'}
+            >
                 {this.props.orientation === 'vertical' ? this.getTopContent() : this.getLeftContent()}
             </div>
         )
@@ -128,7 +117,7 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                             width: this.props.childrenProfile?.topWidth,
                         }
                 }
-                className={this.props.topClassName ? 'ori-layout-top ' + this.props.topClassName : 'ori-layout-top'}
+                className={'ori-layout-top'}
             >
                 {this.props.topContent}
             </div>
@@ -153,7 +142,8 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                             width: this.props.childrenProfile?.leftWidth,
                         }
                 }
-                className={this.props.leftClassName ? 'ori-layout-left ' + this.props.leftClassName : 'ori-layout-left'} >
+                className={'ori-layout-left'}
+            >
                 {this.props.leftContent}
             </div>
             {this.getDivider(this.props.orientation, 'left')}
@@ -173,7 +163,8 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                         width: this.props.childrenProfile?.bottomWidth,
                     }
             }
-            className={this.props.bottomClassName ? 'ori-layout-bottom ' + this.props.bottomClassName : 'ori-layout-bottom'} >
+            className={'ori-layout-bottom'}
+        >
             {this.props.bottomContent}
         </div>
     }
@@ -189,7 +180,8 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                         width: this.props.childrenProfile?.rightWidth,
                     }
             }
-            className={this.props.rightClassName ? 'ori-layout-right ' + this.props.rightClassName : 'ori-layout-right'} >
+            className={'ori-layout-right'}
+        >
             {this.props.rightContent}
         </div>
     }
@@ -206,7 +198,8 @@ export class OriLayout extends React.Component<IOriLayout, any>{
                             width: this.props.childrenProfile?.middleWidth,
                         }
                 }
-                className={this.props.middleClassName ? 'ori-layout-middle ' + this.props.middleClassName : 'ori-layout-middle'} >
+                className={'ori-layout-middle'}
+            >
                 {this.props.middleContent}
             </div>
             {this.getDivider(this.props.orientation, 'middle')}
@@ -216,12 +209,12 @@ export class OriLayout extends React.Component<IOriLayout, any>{
     public getDivider(orientation: 'vertical' | 'horizontal', type: 'top' | 'left' | 'middle',) {
         if (orientation === 'vertical') {
             return <div
-                className={'uicontainer-divider'}
+                className={'ori-layout-divider'}
                 style={{ width: undefined, height: this.getChildrenGap(), minHeight: this.getChildrenGap(), maxHeight: this.getChildrenGap() }}
             />
         } else {
             return <div
-                className={'uicontainer-divider'}
+                className={'ori-layout-divider'}
                 style={{ height: undefined, width: this.getChildrenGap(), minWidth: this.getChildrenGap(), maxWidth: this.getChildrenGap() }}
             />
         }

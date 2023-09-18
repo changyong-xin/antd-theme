@@ -1,5 +1,5 @@
 import { FormInstance } from "antd";
-import { MenuItemType } from "antd/lib/menu/hooks/useItems";
+import { MenuItemType } from "antd/es/menu/hooks/useItems";
 
 interface ITabProps {
     params: any

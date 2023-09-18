@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import Form, { FormItemProps } from 'antd/lib/form';
-import { FieldData } from 'rc-field-form/lib/interface';
+import Form, { FormItemProps } from 'antd/es/form';
+import { FieldData } from 'rc-field-form/es/interface';
 import React from 'react';
 import { OriGrid } from '../oriGrid';
 import { IOridForm } from '../interface';

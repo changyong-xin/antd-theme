@@ -1,9 +1,9 @@
 import { HomeOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, FloatButton, Input } from 'antd';
+import { App, Button, ConfigProvider, FloatButton, Input } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { useState } from 'react';
-import { OriMainLayout, createMenuMap } from '../lib';
+import { OriContext, OriMainLayout, createMenuMap } from '../lib';
 import { MainMenus } from './menu';
 
 function ThemeSetting(props: { onOk: (color: string) => void }) {
@@ -28,6 +28,22 @@ function ThemeSetting(props: { onOk: (color: string) => void }) {
         </Button>
     </div>
 
+}
+
+function Context() {
+    const { message, notification, modal } = App.useApp();
+    OriContext.message = message;
+    OriContext.notification = notification;
+    OriContext.modal = modal;
+    return <></>
+}
+
+function AppWrapper() {
+    return (
+        <App>
+            <Context />
+        </App>
+    )
 }
 
 ConfigProvider.config({
@@ -56,6 +72,7 @@ function DemoIndex() {
             }}
         >
             <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
+            <AppWrapper />
             <OriMainLayout
                 menu={createMenuMap(MainMenus)}
                 default={{

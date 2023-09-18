@@ -1,4 +1,4 @@
-import { Card, Input } from 'antd';
+import { Card } from 'antd';
 import React from 'react';
 import { OriSearchForm } from '../../lib';
 
@@ -61,13 +61,7 @@ export class SearchFormDemo extends React.Component<any, any>{
                                 isRange: true,
                                 valueInput: 'YYYY-MM-DD HH:mm:ss',
                                 description: '自定义时间'
-                            },
-                            {
-                                name: 'Cutom',
-                                valueInput: <Input style={{ width: '120px' }} placeholder='自定义组件' />,
-                                initialValue: '444',
-                                description: '自定义组件'
-                            },
+                            }
                         ]}
                         onSearch={this.onSearch}
                         onFieldsChange={this.onFieldsChange}

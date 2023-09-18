@@ -55,6 +55,9 @@ export class OriContextDemo extends React.Component<any, any>{
                     }}>
                         modal
                     </Button>
+                    <div style={{ marginTop: 16 }}>
+                        注意：控制台中会提示 Static function can not consume context like dynamic theme. Please use 'App' component instead.
+                    </div>
                 </div >
                 <div style={{ marginTop: 16 }} >在任意位置打开一个标签页：</div>
                 <div style={{ marginTop: 16 }} >
