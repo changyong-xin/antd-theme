@@ -1,6 +1,6 @@
 import { configure } from 'mobx';
 import ReactDOM from 'react-dom/client';
-import DemoIndex from './demoIndex';
+import DemoIndex from './demos';
 import './index.css';
 
 configure({

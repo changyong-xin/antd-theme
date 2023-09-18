@@ -4,18 +4,15 @@ import Form, { FormItemProps } from 'antd/lib/form';
 import { FieldData } from 'rc-field-form/lib/interface';
 import React from 'react';
 import { OriGrid } from '../oriGrid';
+import { IOridForm } from '../interface';
 
 
-interface IOriGridForm<T> {
+interface IOriGridForm<T> extends IOridForm<T> {
     items: FormItemProps[]
     cols: number;
     labelCol?: number;
     wrapperCol?: number;
     rowHeight?: number | string;
-    /** 获取表单实例对象（用于外部控制表单Api） */
-    getFormInstance?: (form: FormInstance<T>) => void;
-    /** 取值 */
-    onFieldsChange?: (name: string, value: any) => void;
 }
 
 export class OriGridForm<T = any> extends React.Component<IOriGridForm<T>, any>{

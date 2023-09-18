@@ -1,10 +1,11 @@
 import { FormOutlined, GroupOutlined, LayoutOutlined, TableOutlined } from "@ant-design/icons";
-import { Demo1 } from "./demos/demo1";
-import { Demo2 } from "./demos/demo2";
-import { OriContextDemo } from "./demos/contextDemo";
-import { OriTable } from "./demos/tableDemo";
-import { TreeDemos } from "./demos/treeDemo";
-import { IMenuItem } from "./lib";
+import { DateDemo, Demo1 } from "./demo1";
+import { Demo2 } from "./demo2";
+import { OriContextDemo } from "./contextDemo";
+import { OriTable } from "./tableDemo";
+import { TreeDemos } from "./treeDemo";
+import { IMenuItem } from "../lib";
+import { SearchFormDemo } from "./formDemo";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -26,8 +27,8 @@ export const MainMenus: IMenuItem[] = [
     },
     {
         label: '表单组件', icon: <FormOutlined />, key: '02', children: [
-            { label: '查询表单', key: '0201', component: Demo1 },
-            { label: '编辑表单', key: '0202', component: Demo1 },
+            { label: '查询表单', key: '0201', component: SearchFormDemo },
+            { label: '编辑表单', key: '0202', component: DateDemo },
         ]
     },
     {

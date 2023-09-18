@@ -34,7 +34,7 @@ export class OriContextDemo extends React.Component<any, any>{
                         OriContext.modal
                     </Button>
                 </div >
-                <div style={{ marginTop: 16 }} >不能用主题的写法：</div>
+                <div style={{ marginTop: 16 }} >不能用主题的写法(当前红色主题应用了ConfigProvider.config的单独配置)：</div>
                 <div style={{ marginTop: 16 }} >
                     <Button onClick={() => {
                         message.info('测试')

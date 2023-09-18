@@ -1,19 +1,9 @@
-import { MenuItemType } from "antd/es/menu/hooks/useItems";
 import type { DataNode } from 'antd/es/tree';
-
-interface ITabProps {
-    params: any
-}
-
+import { IMenuItem } from '..';
 
 interface ITreeData {
     children?: ITreeData[];
     Children?: ITreeData[];
-}
-
-export interface IMenuItem extends MenuItemType {
-    children?: IMenuItem[];
-    component?: React.ComponentClass<ITabProps> | React.FunctionComponent<ITabProps>;
 }
 
 export function treeDataTrans<T extends ITreeData>(list: T[], itemTrans: (item: T) => DataNode): DataNode[] {

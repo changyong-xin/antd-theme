@@ -1,0 +1,25 @@
+.ori-groupinput {
+    display: flex;
+
+    .ori-groupinput-left {
+        width: calc(50% - 15px);
+        z-index: 9;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .ori-groupinput-right {
+        width: calc(50% - 15px);
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .ori-groupinput-middle {
+        border-left: 0px;
+        border-right: 0px;
+        border-radius: 0px;
+        pointer-events: none;
+        width: 30px;
+        background-color: white !important;
+    }
+}

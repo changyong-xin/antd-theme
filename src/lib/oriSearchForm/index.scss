@@ -1,0 +1,20 @@
+.searchform {
+    display: flex;
+    flex-wrap: wrap;
+
+    .ant-form-item {
+        margin: 0px 8px 8px 0px;
+        height: 32px;
+
+        .ant-form-item-control-wrapper {
+            height: 32px;
+
+            .ant-form-item-control {
+                height: 32px;
+                line-height: 32px;
+                margin-bottom: 8px;
+                margin-right: 8px;
+            }
+        }
+    }
+}

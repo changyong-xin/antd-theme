@@ -4,8 +4,7 @@ import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
 import { IMenuItem } from "..";
 import { OriContext } from '../oriContext';
-import './index.css';
-
+import './index.scss';
 
 interface IMainRight {
     activeKey: string | undefined;
