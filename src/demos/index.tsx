@@ -62,12 +62,16 @@ function DemoIndex() {
             theme={{
                 token: {
                     colorPrimary: primaryColor,
-                    colorInfo: primaryColor
+                    colorInfo: primaryColor,
                 },
                 components: {
                     Tabs: {
                         itemColor: 'white',
                     },
+                    Table: {
+                        headerBg: 'lightgrey',
+                        headerBorderRadius: 0
+                    }
                 }
             }}
         >
@@ -78,7 +82,11 @@ function DemoIndex() {
                 default={{
                     key: '-1',
                     label: <div style={{ textAlign: 'center', width: '40px' }} > <HomeOutlined style={{ margin: "0px" }} /></div>,
-                    children: <div>默认标签页</div>,
+                    children: <div>
+                        <div>
+                            默认标签页
+                        </div>
+                    </div>,
                     closable: false
                 }}
             />

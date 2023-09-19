@@ -1,0 +1,29 @@
+.ori-tablelayout-table {
+    height: 100%;
+    padding-bottom: 8px;
+
+    .ant-spin-nested-loading {
+        height: 100%;
+
+        .ant-spin-container {
+            height: 100%;
+
+            .ant-table {
+                height: 100%;
+
+                .ant-table-container {
+                    height: 100%;
+
+                    .ant-table-body {
+                        overflow-y: auto !important;
+                        height: calc(100% - 55px);
+
+                        table {
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

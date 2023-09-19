@@ -1,3 +1,4 @@
+import { AnyObject } from "antd/es/_util/type";
 
 
 /**
@@ -18,63 +19,54 @@ function checkStatus(response: Response): Response {
  * @returns {Promise<any>} 解析后的json对象
  */
 function parseJSON(response: Response): Promise<any> {
-    return response.json();
+    try {
+        return response.json();
+    } catch (error) {
+        console.log(error)
+        throw new Error('请求结果转换JSON对象异常');
+    }
 }
 
 /**
  * requestJson函数的返回的Promise<T>中的T的类型
  */
-export interface IResponseJsonResult {
-    data?: any,
+export interface IResponseJsonResult<T = AnyObject> {
+    data?: T,
     rtnCode: number,
     rtnMsg: string,
 }
 
-export async function requestJson(url: string, options?: RequestInit | undefined): Promise<IResponseJsonResult> {
+export async function requestJson<T = AnyObject>(url: string, options?: RequestInit | undefined): Promise<IResponseJsonResult<T>> {
+
     if (url.slice(0, 4) === '/api' || url.slice(0, 3) === 'api') {
         url = wrapperApi(url)
     }
 
-    return fetch(url, { ...options, credentials: 'same-origin' })
-        .then(checkStatus)
-        .then(parseJSON)
-        .then((jsonObject: any) => {
-            if ((typeof jsonObject.rtnCode === "undefined" || jsonObject.rtnCode === null) && !jsonObject.rtnMsg) {
-                const data: IResponseJsonResult = {} as IResponseJsonResult;
-                data.rtnCode = 0;
-                data.rtnMsg = '';
-                data.data = jsonObject;
-                return data;
-            }
-
-            if (typeof jsonObject.rtnCode === "undefined" || jsonObject.rtnCode === null || typeof jsonObject.rtnCode !== "number") {
-                const data: IResponseJsonResult = {} as IResponseJsonResult;
-                data.rtnCode = -1;
-                data.rtnMsg = '返回的json中没有 rtnCode 类型不是数字';
-                return data;
-            }
-
-            if (typeof jsonObject.rtnMsg === "undefined" || jsonObject.rtnMsg === null || typeof jsonObject.rtnMsg !== "string") {
-                const data: IResponseJsonResult = {} as IResponseJsonResult;
-                data.rtnCode = -1;
-                data.rtnMsg = '返回的json中 rtnMsg 字段不是字符串';
-                return data;
-            }
-
-            const rtncode: string = String(jsonObject.rtnCode);
-            if (rtncode[0] === '1' && rtncode.slice(3, 6) === '100') {
-                const data: IResponseJsonResult = {} as IResponseJsonResult;
-                data.rtnCode = -1;
-                data.rtnMsg = '登录超时，请重新登录';
-                return data;
-            }
-
-            return jsonObject
-        })
-        .catch((err: Error) => ({
-            rtnCode: -1,
-            rtnMsg: err.message
-        }));
+    return fetch(url, options).then(checkStatus).then(parseJSON).then((jsonObject: any) => {
+        if ((typeof jsonObject.rtnCode === "undefined" || jsonObject.rtnCode === null) && !jsonObject.rtnMsg) {
+            const data: IResponseJsonResult = {} as IResponseJsonResult;
+            data.rtnCode = 0;
+            data.rtnMsg = '';
+            data.data = jsonObject;
+            return data;
+        }
+        if (typeof jsonObject.rtnCode === "undefined" || jsonObject.rtnCode === null || typeof jsonObject.rtnCode !== "number") {
+            const data: IResponseJsonResult = {} as IResponseJsonResult;
+            data.rtnCode = -1;
+            data.rtnMsg = '返回的json中没有 rtnCode 类型不是数字';
+            return data;
+        }
+        if (typeof jsonObject.rtnMsg === "undefined" || jsonObject.rtnMsg === null || typeof jsonObject.rtnMsg !== "string") {
+            const data: IResponseJsonResult = {} as IResponseJsonResult;
+            data.rtnCode = -1;
+            data.rtnMsg = '返回的json中 rtnMsg 字段不是字符串';
+            return data;
+        }
+        return jsonObject
+    }).catch((err: Error) => ({
+        rtnCode: -1,
+        rtnMsg: err.message
+    }));
 }
 
 

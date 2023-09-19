@@ -11,10 +11,10 @@ import { TreeDemos } from "./treeDemo";
 export const MainMenus: IMenuItem[] = [
     {
         label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
-            { label: '通用布局', key: '0001', component: LayoutDemo },
+            { label: '通用布局', key: '0001', component: Demo1 },
             {
                 label: '表格页面', key: '0002', component: Demo1, children: [
-                    { label: '通用表格', key: '000201', component: Demo1 },
+                    { label: '通用表格', key: '000201', component: LayoutDemo },
                     { label: '虚拟表格', key: '000202', component: Demo1 },
                 ]
             },

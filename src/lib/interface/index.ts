@@ -1,8 +1,9 @@
 import { FormInstance } from "antd";
+import { AnyObject } from "antd/es/_util/type";
 import { MenuItemType } from "antd/es/menu/hooks/useItems";
 
-interface ITabProps {
-    params: any
+interface ITabProps<T extends AnyObject = any> {
+    params: T
 }
 
 export interface IOridForm<T> {

@@ -8,6 +8,7 @@ import { OriLayout } from "./oriLayout";
 import OriMainLayout from "./oriMainLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
 import { OriSearchForm } from "./oriSearchForm";
+import { OriTableLayout, OriTableLayoutUiStore } from "./oriTableLayout";
 import { OriTimePicker } from "./oriTimePicker";
 import { copyObj, createMenuMap, treeDataTrans } from "./utils";
 import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
@@ -23,6 +24,8 @@ export {
     OriMainLayout,
     OriMonthPicker,
     OriSearchForm,
+    OriTableLayout,
+    OriTableLayoutUiStore,
     OriTimePicker,
     antiShaking,
     copyObj,
