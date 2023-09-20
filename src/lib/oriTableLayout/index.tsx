@@ -13,6 +13,7 @@ import { OriTable } from '../oriTable';
 interface IOriTableLayout<T, Q, S extends OriTableLayoutUiStore<T> = OriTableLayoutUiStore<T>> {
     fields: IOriSearchFormField[];
     columns: ColumnsType<T>;
+    rowKey?:  keyof T;
     rowSelection?: TableRowSelection<T>;
     extra?: React.ReactNode;
     uiAction?: OriTableLayoutUiAction<T, Q, S>;
@@ -63,9 +64,9 @@ export class OriTableLayoutUiAction<T, Q, S extends OriTableLayoutUiStore<T> = O
         this.uiStore.pageSize = size;
         this.uiStore.totalCount = 0;
         this.uiStore.dataSource = [];
-        this.uiStore.loading = true;
     }
 
+    // antd警告，index作为rowKey可能存在问题
     public getRowKey(record: T, index?: number) {
         return index ? index.toString() : ''
     }
@@ -100,14 +101,11 @@ export class OriTableLayout<T extends AnyObject, Q extends AnyObject = any> exte
                 }
                 middleContent={
                     <OriTable<T>
-                        rowKey={(record, index) => this._uiAction.getRowKey(record, index)}
-                        className='ori-tablelayout-table'
+                        rowKey={this.props.rowKey ? this.props.rowKey : this._uiAction.getRowKey}
                         columns={this.props.columns}
                         dataSource={this._uiStore.dataSource}
                         rowSelection={this.props.rowSelection}
                         loading={this._uiStore.loading}
-                        scroll={{ y: 'calc(100% - 55px)' }}
-                        bordered={true}
                     />
                 }
                 middleStretch={true}

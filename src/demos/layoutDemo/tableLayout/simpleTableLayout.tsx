@@ -33,9 +33,9 @@ class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEnti
         this.uiStore.dataSource = [];
         setTimeout(() => {
             this.uiStore.dataSource = [
+                { name: '0', sex: '0', age: 1 },
                 { name: '1', sex: '0', age: 1 },
                 { name: '2', sex: '0', age: 1 },
-                { name: '1', sex: '0', age: 1 },
                 { name: '3', sex: '0', age: 1 },
                 { name: '4', sex: '0', age: 1 },
                 { name: '5', sex: '0', age: 1 },
@@ -43,6 +43,7 @@ class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEnti
                 { name: '7', sex: '0', age: 1 },
                 { name: '8', sex: '0', age: 1 },
             ]
+            this.uiStore.totalCount = 7;
             this.uiStore.loading = false;
         }, 1000);
     }
@@ -59,6 +60,7 @@ export class SimpleTableLayout extends React.Component {
     public render(): ReactNode {
         return (
             <OriTableLayout<IDemoDataEntity, IDemoDataEntity>
+                rowKey={'name'}
                 uiStore={this._uiStore}
                 uiAction={this._uiAction}
                 extra={
