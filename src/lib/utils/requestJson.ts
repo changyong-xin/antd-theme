@@ -1,4 +1,5 @@
 import { AnyObject } from "antd/es/_util/type";
+import { OriContext } from "../oriContext";
 
 
 /**
@@ -41,6 +42,13 @@ export async function requestJson<T = AnyObject>(url: string, options?: RequestI
     if (url.slice(0, 4) === '/api' || url.slice(0, 3) === 'api') {
         url = wrapperApi(url)
     }
+
+    if (url.includes('?')) {
+        url += `&identity=${OriContext.identity}`
+    } else {
+        url += `?identity=${OriContext.identity}`
+    }
+
 
     return fetch(url, options).then(checkStatus).then(parseJSON).then((jsonObject: any) => {
         if ((typeof jsonObject.rtnCode === "undefined" || jsonObject.rtnCode === null) && !jsonObject.rtnMsg) {

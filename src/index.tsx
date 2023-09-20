@@ -1,3 +1,4 @@
+import { ConfigProvider } from 'antd';
 import { configure } from 'mobx';
 import ReactDOM from 'react-dom/client';
 import DemoIndex from './demos';
@@ -6,6 +7,14 @@ import './index.css';
 configure({
   enforceActions: "never"
 })
+
+ConfigProvider.config({
+  prefixCls: 'ant',
+  iconPrefixCls: 'anticon',
+  // 5.6.0+
+  // 请优先考虑使用 hooks 版本
+  theme: { token: { colorPrimary: 'red', colorInfo: 'red' } },
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <DemoIndex />

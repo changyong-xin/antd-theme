@@ -46,14 +46,6 @@ function AppWrapper() {
     )
 }
 
-ConfigProvider.config({
-    prefixCls: 'ant',
-    iconPrefixCls: 'anticon',
-    // 5.6.0+
-    // 请优先考虑使用 hooks 版本
-    theme: { token: { colorPrimary: 'red', colorInfo: 'red' } },
-});
-
 function DemoIndex() {
     const [primaryColor, setColor] = useState<string>('purple');
     return (
