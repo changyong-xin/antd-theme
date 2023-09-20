@@ -1,12 +1,23 @@
-import { Table } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { ColumnsType } from 'antd/es/table';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { makeObservable, observable } from 'mobx';
+import { observer } from 'mobx-react';
 import React from 'react';
 import { OriLayout } from '../oriLayout';
 import { OriPagination } from '../oriPagination';
-import './index.scss';
+import { IOriSearchFormField, OriSearchForm } from '../oriSearchForm';
+import { OriTable } from '../oriTable';
+
+
+interface IOriTableLayout<T, Q, S extends OriTableLayoutUiStore<T> = OriTableLayoutUiStore<T>> {
+    fields: IOriSearchFormField[];
+    columns: ColumnsType<T>;
+    rowSelection?: TableRowSelection<T>;
+    extra?: React.ReactNode;
+    uiAction?: OriTableLayoutUiAction<T, Q, S>;
+    uiStore?: OriTableLayoutUiStore<T>;
+}
 
 export class OriTableLayoutUiStore<T>{
 
@@ -34,30 +45,67 @@ export class OriTableLayoutUiStore<T>{
     public totalCount: number = 123456;
 
 }
+export class OriTableLayoutUiAction<T, Q, S extends OriTableLayoutUiStore<T> = OriTableLayoutUiStore<T>>{
+
+    public uiStore: S
+
+    constructor(store: S) {
+        this.uiStore = store
+    }
+
+    public onSearch(value: Q) {
+        console.log(value)
+    }
+
+    public onPaginationChange(index: number, size: number) {
+        console.log(index, size)
+        this.uiStore.pageIndex = index;
+        this.uiStore.pageSize = size;
+        this.uiStore.totalCount = 0;
+        this.uiStore.dataSource = [];
+        this.uiStore.loading = true;
+    }
+
+    public getRowKey(record: T, index?: number) {
+        return index ? index.toString() : ''
+    }
+}
 
 
-export abstract class OriTableLayout<T extends AnyObject, U extends OriTableLayoutUiStore<T> = OriTableLayoutUiStore<T>, P = any, S = any> extends React.Component<P, S>{
+export class OriTableLayout<T extends AnyObject, Q extends AnyObject = any> extends React.Component<IOriTableLayout<T, Q>, any>{
 
-    public abstract uiStore: U;
+    private _uiStore: OriTableLayoutUiStore<T>;
 
-    public abstract columns: ColumnsType<T>;
+    private _uiAction: OriTableLayoutUiAction<T, Q, OriTableLayoutUiStore<T>>;
 
-    public rowSelection?: TableRowSelection<T>;
+    constructor(props: IOriTableLayout<T, Q>) {
+        super(props)
+        this._uiStore = props.uiStore ? props.uiStore : new OriTableLayoutUiStore<T>();
+        this._uiAction = props.uiAction ? props.uiAction : new OriTableLayoutUiAction<T, Q, OriTableLayoutUiStore<T>>(this._uiStore);
+
+    }
 
 
     public render() {
-        console.log('render')
         return (
             <OriLayout
                 orientation='vertical'
-                topContent={this.getTopBar()}
+                topContent={
+                    <OriSearchForm<Q>
+                        fields={this.props.fields}
+                        onSearch={(value) => this._uiAction.onSearch(value)}
+                        onFieldsChange={(name, value) => { console.log(name, value) }}
+                        extra={this.props.extra}
+                    />
+                }
                 middleContent={
-                    <Table<T>
+                    <OriTable<T>
+                        rowKey={(record, index) => this._uiAction.getRowKey(record, index)}
                         className='ori-tablelayout-table'
-                        columns={this.columns}
-                        dataSource={this.uiStore.dataSource}
-                        rowSelection={this.rowSelection}
-                        loading={this.uiStore.loading}
+                        columns={this.props.columns}
+                        dataSource={this._uiStore.dataSource}
+                        rowSelection={this.props.rowSelection}
+                        loading={this._uiStore.loading}
                         scroll={{ y: 'calc(100% - 55px)' }}
                         bordered={true}
                     />
@@ -66,17 +114,10 @@ export abstract class OriTableLayout<T extends AnyObject, U extends OriTableLayo
                 bottomContent={
                     <div style={{ borderTop: '1px solid rgb(217,217,217)', padding: '8px 0px' }}>
                         <OriPagination
-                            size={this.uiStore.pageSize}
-                            index={this.uiStore.pageIndex}
-                            total={this.uiStore.totalCount}
-                            onChange={(index, size) => {
-                                console.log('paginationChange:', index, size)
-                                this.uiStore.pageIndex = index;
-                                this.uiStore.pageSize = size;
-                                this.uiStore.totalCount = 0;
-                                this.uiStore.dataSource = [];
-                                this.uiStore.loading = true;
-                            }}
+                            size={this._uiStore.pageSize}
+                            index={this._uiStore.pageIndex}
+                            total={this._uiStore.totalCount}
+                            onChange={(index, size) => this._uiAction.onPaginationChange(index, size)}
                         />
                     </div>
                 }
@@ -84,7 +125,6 @@ export abstract class OriTableLayout<T extends AnyObject, U extends OriTableLayo
         )
     }
 
-    public getTopBar(): React.ReactNode {
-        return <React.Fragment />
-    }
 }
+
+observer(OriTableLayout)

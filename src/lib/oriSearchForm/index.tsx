@@ -12,7 +12,7 @@ declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' | 'YYYY-
 
 declare type FieldVlaue = string | [string, string] | string[];
 
-interface IOriSearchFormField {
+export interface IOriSearchFormField {
     name: string;
     /** 中文描述 */
     description: string;
@@ -26,7 +26,7 @@ interface IOriSearchFormField {
     initialValue?: FieldVlaue;
 }
 
-interface IOriSearchForm<T> extends IOridForm<T> {
+export interface IOriSearchForm<T> extends IOridForm<T> {
     fields: IOriSearchFormField[];
     extra?: React.ReactNode;
     onSearch?: (value: T) => void;

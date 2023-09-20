@@ -7,8 +7,9 @@ import { OriGroupInput } from "./oriGroupInput";
 import { OriLayout } from "./oriLayout";
 import OriMainLayout from "./oriMainLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
-import { OriSearchForm } from "./oriSearchForm";
-import { OriTableLayout, OriTableLayoutUiStore } from "./oriTableLayout";
+import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
+import { OriTable } from "./oriTable";
+import { OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore } from "./oriTableLayout";
 import { OriTimePicker } from "./oriTimePicker";
 import { copyObj, createMenuMap, treeDataTrans } from "./utils";
 import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
@@ -24,9 +25,8 @@ export {
     OriMainLayout,
     OriMonthPicker,
     OriSearchForm,
-    OriTableLayout,
-    OriTableLayoutUiStore,
-    OriTimePicker,
+    OriTable,
+    OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore, OriTimePicker,
     antiShaking,
     copyObj,
     createMenuMap,
@@ -35,5 +35,5 @@ export {
     wrapperUrl
 };
 
-    export type { IMenuItem, IOridForm };
+export type { IMenuItem, IOriSearchFormField, IOridForm };
 
