@@ -1,25 +1,15 @@
 import { FormOutlined, GroupOutlined, LayoutOutlined, TableOutlined } from "@ant-design/icons";
 import { IMenuItem } from "../lib";
 import { OriContextDemo } from "./contextDemo";
-import { DateDemo, Demo1 } from "./demo1";
+import { DateDemo } from "./demo1";
 import { Demo2 } from "./demo2";
 import { SearchFormDemo } from "./formDemo";
 import { LayoutDemo } from "./layoutDemo";
+import { TableLayoutDemo } from "./layoutDemo/tableLayout";
 import { OriTableDemo } from "./tableDemo";
 import { TreeDemos } from "./treeDemo";
 
 export const MainMenus: IMenuItem[] = [
-    {
-        label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
-            { label: '通用布局', key: '0001', component: Demo1 },
-            {
-                label: '表格页面', key: '0002', component: Demo1, children: [
-                    { label: '通用表格', key: '000201', component: LayoutDemo },
-                    { label: '虚拟表格', key: '000202', component: Demo1 },
-                ]
-            },
-        ]
-    },
     {
         label: '表格组件', icon: <TableOutlined />, key: '01', children: [
             { label: '通用表格', key: '0101', component: OriTableDemo },
@@ -30,6 +20,12 @@ export const MainMenus: IMenuItem[] = [
         label: '表单组件', icon: <FormOutlined />, key: '02', children: [
             { label: '查询表单', key: '0201', component: SearchFormDemo },
             { label: '编辑表单', key: '0202', component: DateDemo },
+        ]
+    },
+    {
+        label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
+            { label: '通用布局', key: '0001', component: LayoutDemo },
+            { label: '表格布局', key: '0002', component: TableLayoutDemo },
         ]
     },
     {

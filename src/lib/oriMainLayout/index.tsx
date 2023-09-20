@@ -59,13 +59,22 @@ function mainResucer(state: IMainState, action: IMainAction): IMainState {
 }
 
 function MainLeft(props: IMainLeft) {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(window.innerWidth < 1200 ? true : false);
+
     return <>
-        <Layout.Sider theme="light" collapsed={collapsed} style={{ borderRight: "1px solid #e9e9e9", boxShadow: '0px 0px 4px #e9e9e9' }}>
+        <Layout.Sider
+            onBreakpoint={(broken) => {
+                setCollapsed(broken)
+            }}
+            breakpoint="xl"
+            theme="light"
+            collapsed={collapsed}
+            style={{ borderRight: "1px solid #e9e9e9", boxShadow: '0px 0px 4px #e9e9e9' }}
+        >
             <div style={{ padding: 16, textAlign: "center", fontWeight: 600, borderBottom: "1px solid #e9e9e9" }} >
                 <span>LOGO</span>
             </div>
-            <div style={{ height: 'calc(100% - 117px)' }} >
+            <div style={{ height: 'calc(100% - 117px)', overflowY: 'auto' }} >
                 <Menu
                     selectedKeys={[props.activeKey!]}
                     style={{ border: '0px' }}

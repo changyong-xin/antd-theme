@@ -22,7 +22,6 @@ export class OriDatePicker extends React.Component<IOriDatePicker, any>{
                     style={{ width: '240px' }}
                     placeholder={['开始日期', '结束日期']}
                     onChange={(date, dateStr) => {
-                        console.log(date)
                         this.props.onChange!(dateStr[0] && dateStr[0].length > 0 ? dateStr : undefined)
                     }}
                 />
@@ -34,7 +33,6 @@ export class OriDatePicker extends React.Component<IOriDatePicker, any>{
                     format={this.props.format}
                     value={typeof (this.props.value) === 'string' ? dayjs(this.props.value, this.props.format) : undefined}
                     onChange={(date, dateStr) => {
-                        console.log(date)
                         this.props.onChange!(dateStr && dateStr.length > 0 ? dateStr : undefined)
                     }}
                 />

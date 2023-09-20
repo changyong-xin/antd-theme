@@ -1,6 +1,6 @@
 import { makeObservable, observable } from 'mobx';
 import React, { ReactNode } from 'react';
-import { OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore } from '../../lib';
+import { OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore } from '../../../lib';
 import { Button, Modal } from 'antd';
 import { observer } from 'mobx-react';
 
@@ -14,7 +14,7 @@ interface IDemoDataQo {
     createDate?: string;
 }
 
-class TableLayoutDemoStore extends OriTableLayoutUiStore<IDemoDataEntity> {
+class SimpleTableLayoutStore extends OriTableLayoutUiStore<IDemoDataEntity> {
 
     public visible: boolean = false;
 
@@ -26,8 +26,9 @@ class TableLayoutDemoStore extends OriTableLayoutUiStore<IDemoDataEntity> {
     }
 }
 
-class TableLayoutDemoDoaminAction extends OriTableLayoutUiAction<IDemoDataEntity, IDemoDataQo, TableLayoutDemoStore>{
-    public onSearch() {
+class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEntity, IDemoDataQo, SimpleTableLayoutStore>{
+    public onSearch(value: IDemoDataQo) {
+        console.log(value)
         this.uiStore.loading = true;
         this.uiStore.dataSource = [];
         setTimeout(() => {
@@ -49,11 +50,11 @@ class TableLayoutDemoDoaminAction extends OriTableLayoutUiAction<IDemoDataEntity
 
 
 
-export class TableLayoutDemo extends React.Component {
+export class SimpleTableLayout extends React.Component {
 
-    private _uiStore = new TableLayoutDemoStore();
+    private _uiStore = new SimpleTableLayoutStore();
 
-    private _uiAction = new TableLayoutDemoDoaminAction(this._uiStore)
+    private _uiAction = new SimpleTableLayoutDoaminAction(this._uiStore)
 
     public render(): ReactNode {
         return (
@@ -78,7 +79,7 @@ export class TableLayoutDemo extends React.Component {
                         },
                         {
                             name: 'createDate',
-                            isRange: true,
+                            allowClear: true,
                             valueInput: 'YYYY-MM-DD',
                             description: '创建日期'
                         }
@@ -116,4 +117,4 @@ export class TableLayoutDemo extends React.Component {
 
 }
 
-observer(TableLayoutDemo)
+observer(SimpleTableLayout)
