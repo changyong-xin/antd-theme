@@ -6,7 +6,6 @@
         "noEmit": false,
         "outDir": "lib",
         "rootDir": "src/lib",
-        "sourceMap": true,
       },
       "include": [
         "./src/lib/**/*",
