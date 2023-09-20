@@ -1,7 +1,11 @@
 {
-  "name": "antd-theme",
-  "version": "0.1.0",
-  "private": true,
+  "name": "orid",
+  "version": "5.0.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -27,8 +31,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
+    "build": "set NODE_OPTIONS=--max_old_space_size=7168 && react-scripts build",
+    "prepub": "node scripts/compile.js && node ./node_modules/typescript/bin/tsc --project tsconfig.pub.json",
+    "ppublish": "npm publish --tag new5.0 --registry=http://192.168.4.61:4873",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
