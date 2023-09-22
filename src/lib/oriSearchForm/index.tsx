@@ -28,13 +28,15 @@ export interface IOriSearchFormField {
 
 export interface IOriSearchForm<T> extends IOridForm<T> {
     fields: IOriSearchFormField[];
-    extra?: React.ReactNode;
     onSearch?: (value: T) => void;
     dividual?: boolean;
     onDividualClick?: (name: string, value: FieldVlaue) => void;
     showSearchButton?: boolean;
     showResetButton?: boolean;
     circleButton?: boolean;
+    addOnBefore?: React.ReactNode;
+    addOnAfter?: React.ReactNode;
+    addOnEnd?: React.ReactNode;
 }
 
 
@@ -60,7 +62,15 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
     public render() {
         return (
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} >
-                <Form className='searchform' ref={this._form} >
+                <Form className='ori-searchform' style={{ display: "flex", flexWrap: 'wrap' }} ref={this._form} >
+                    {
+                        this.props.addOnBefore ?
+                            <div className='ori-searchform-add'>
+                                {this.props.addOnBefore}
+                            </div>
+                            :
+                            <></>
+                    }
                     {
                         this.props.fields.map((item, index) => <React.Fragment key={index}>
                             <Tooltip
@@ -101,7 +111,7 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                                 ?
                                 <Button
                                     shape='circle'
-                                    style={{ marginRight: '8px' }}
+                                    style={{ marginRight: '8px', marginBottom: '8px' }}
                                     onClick={() => {
                                         if (this.props.onSearch && this._form.current) {
                                             this.props.onSearch(this._form.current.getFieldsValue())
@@ -111,7 +121,7 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                                 </Button>
                                 :
                                 <Button
-                                    style={{ marginRight: '8px' }}
+                                    style={{ marginRight: '8px', marginBottom: '8px' }}
                                     type='primary'
                                     onClick={() => {
                                         if (this.props.onSearch && this._form.current) {
@@ -126,7 +136,7 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                     {
                         this.props.showResetButton === true ?
                             <Button
-                                style={{ marginRight: '8px' }}
+                                style={{ marginRight: '8px', marginBottom: '8px' }}
                                 onClick={() => {
                                     if (this._form.current) {
                                         this._form.current.resetFields()
@@ -137,10 +147,23 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                             :
                             <></>
                     }
+                    {
+                        this.props.addOnAfter ?
+                            <div className='ori-searchform-add'>
+                                {this.props.addOnAfter}
+                            </div>
+                            :
+                            <></>
+                    }
                 </Form>
-                <div className='ori-searchform-extra'>
-                    {this.props.extra || <></>}
-                </div>
+                {
+                    this.props.addOnEnd ?
+                        <div className='ori-searchform-add'>
+                            {this.props.addOnEnd}
+                        </div>
+                        :
+                        <></>
+                }
             </div>
         )
     }

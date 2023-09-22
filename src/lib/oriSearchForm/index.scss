@@ -1,4 +1,4 @@
-.searchform {
+.ori-searchform {
     display: flex;
     flex-wrap: wrap;
 
@@ -16,5 +16,10 @@
                 margin-right: 8px;
             }
         }
+    }
+
+    .ori-searchform-add {
+        margin: 0px 8px 8px 0px;
+        height: 32px;
     }
 }

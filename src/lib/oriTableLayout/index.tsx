@@ -96,7 +96,7 @@ export class OriTableLayout<T extends AnyObject, Q extends AnyObject = any> exte
                         fields={this.props.fields}
                         onSearch={(value) => this._uiAction.onSearch(value)}
                         onFieldsChange={(name, value) => { console.log(name, value) }}
-                        extra={this.props.extra}
+                        addOnEnd={this.props.extra}
                     />
                 }
                 middleContent={

@@ -66,6 +66,9 @@ export class SearchFormDemo extends React.Component<any, any>{
                         onSearch={this.onSearch}
                         onFieldsChange={this.onFieldsChange}
                         circleButton={true}
+                        addOnAfter={<span>123456</span>}
+                        addOnBefore={<span>123456</span>}
+                        addOnEnd={<span>123456</span>}
                     />
                 </Card>
                 <Card title={'基础查询表单，表单域独立取值'} style={{ marginBottom: '16px' }}  >
