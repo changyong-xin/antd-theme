@@ -12,7 +12,7 @@ import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
 import { OriTable } from "./oriTable";
 import { OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore } from "./oriTableLayout";
 import { OriTimePicker } from "./oriTimePicker";
-import { copyObj, createMenuMap, treeDataTrans } from "./utils";
+import { copyObj, createMenuMap, dayjsTrans, treeDataTrans } from "./utils";
 import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
 import { antiShaking, throttle } from "./utils/throttle";
 
@@ -31,11 +31,10 @@ export {
     OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore, OriTimePicker,
     antiShaking,
     copyObj,
-    createMenuMap,
-    requestJson,
+    createMenuMap, dayjsTrans, requestJson,
     throttle, treeDataTrans, wrapperApi,
     wrapperUrl
 };
 
-export type { IMenuItem, IOriSearchFormField, IOridForm };
+    export type { IMenuItem, IOriSearchFormField, IOridForm };
 

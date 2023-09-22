@@ -1,6 +1,6 @@
 import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
 import React from 'react';
+import { dayjsTrans } from '../utils';
 
 interface IOriDatePicker {
     isRange: boolean;
@@ -17,7 +17,7 @@ export class OriDatePicker extends React.Component<IOriDatePicker, any>{
             this.props.isRange ?
                 <DatePicker.RangePicker
                     allowClear={this.props.allowClear}
-                    value={typeof (this.props.value) === 'object' ? [dayjs(this.props.value[0], this.props.format), dayjs(this.props.value[1], this.props.format)] : undefined}
+                    value={typeof (this.props.value) === 'object' ? [dayjsTrans(this.props.value[0], this.props.format), dayjsTrans(this.props.value[1], this.props.format)] : undefined}
                     format={this.props.format}
                     style={{ width: '240px' }}
                     placeholder={['开始日期', '结束日期']}
@@ -31,7 +31,7 @@ export class OriDatePicker extends React.Component<IOriDatePicker, any>{
                     style={{ width: '120px' }}
                     placeholder={'日期'}
                     format={this.props.format}
-                    value={typeof (this.props.value) === 'string' ? dayjs(this.props.value, this.props.format) : undefined}
+                    value={typeof (this.props.value) === 'string' ? dayjsTrans(this.props.value, this.props.format) : undefined}
                     onChange={(date, dateStr) => {
                         this.props.onChange!(dateStr && dateStr.length > 0 ? dateStr : undefined)
                     }}

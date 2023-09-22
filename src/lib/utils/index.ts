@@ -1,9 +1,19 @@
 import type { DataNode } from 'antd/es/tree';
 import { IMenuItem } from '..';
+import dayjs from 'dayjs';
 
 interface ITreeData {
     children?: ITreeData[];
     Children?: ITreeData[];
+}
+
+/** 针对空字符串转换日期的时候会产生 Invalid Date 的问题，使用此方法进行转换(空字符串对应日期为null) */
+export function dayjsTrans(dateStr?: string, format?: dayjs.OptionType) {
+    if (dateStr && dateStr.length > 0) {
+        return dayjs(dateStr, format)
+    } else {
+        return null
+    }
 }
 
 export function treeDataTrans<T extends ITreeData>(list: T[], itemTrans: (item: T) => DataNode): DataNode[] {

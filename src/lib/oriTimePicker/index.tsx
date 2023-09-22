@@ -1,6 +1,6 @@
 import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
 import React from 'react';
+import { dayjsTrans } from '../utils';
 
 interface IOriTimePicker {
     isRange: boolean;
@@ -18,7 +18,7 @@ export class OriTimePicker extends React.Component<IOriTimePicker, any>{
                 <DatePicker.RangePicker
                     showTime={true}
                     allowClear={this.props.allowClear}
-                    value={typeof (this.props.value) === 'object' ? [dayjs(this.props.value[0], this.props.format), dayjs(this.props.value[1], this.props.format)] : undefined}
+                    value={typeof (this.props.value) === 'object' ? [dayjsTrans(this.props.value[0], this.props.format), dayjsTrans(this.props.value[1], this.props.format)] : undefined}
                     format={this.props.format}
                     style={{ width: '320px' }}
                     placeholder={['开始时间', '结束时间']}
@@ -31,7 +31,7 @@ export class OriTimePicker extends React.Component<IOriTimePicker, any>{
                     style={{ width: '180px' }}
                     placeholder={'时间'}
                     format={this.props.format}
-                    value={typeof (this.props.value) === 'string' ? dayjs(this.props.value, this.props.format) : undefined}
+                    value={typeof (this.props.value) === 'string' ? dayjsTrans(this.props.value, this.props.format) : undefined}
                     onChange={(date: any, dateStr: string) => this.props.onChange!(dateStr && dateStr.length > 0 ? dateStr : undefined)}
                 />
         )
