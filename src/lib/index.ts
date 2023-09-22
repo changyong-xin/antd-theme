@@ -1,6 +1,7 @@
 import { IMenuItem, IOridForm } from "./interface";
 import { OriContext } from "./oriContext";
 import { OriDatePicker } from "./oriDatePicker";
+import { OriEmpty } from "./oriEmpty";
 import { OriGrid } from "./oriGrid";
 import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
@@ -18,6 +19,7 @@ import { antiShaking, throttle } from "./utils/throttle";
 export {
     OriContext,
     OriDatePicker,
+    OriEmpty,
     OriGrid,
     OriGridForm,
     OriGroupInput,
