@@ -1,6 +1,6 @@
 import { Card, Switch } from 'antd';
 import React, { useState } from 'react';
-import { OriLayout } from '../../lib';
+import { OriLayout, OriMiniLayout } from '../../lib';
 
 function VerticalLayout() {
     const [topStretch, setTopStretch] = useState(true);
@@ -35,14 +35,24 @@ export class LayoutDemo extends React.Component<any, any>{
                 <Card title='上中下' style={{ margin: '8px 0px' }} >
                     <VerticalLayout />
                 </Card>
-                <Card title='左中右' style={{ margin: '8px 0px' }} >
+                <Card title='最小布局' style={{ margin: '8px 0px' }} >
                     <div style={{ height: 300 }} >
-                        <OriLayout
-                            orientation='horizontal'
-                            leftContent={<div>左</div>}
-                            middleContent={<div>中</div>}
-                            middleStretch={true}
-                            rightContent={<div>右</div>}
+                        <OriMiniLayout
+                            orientation='vertical'
+                            first={
+                                <OriMiniLayout
+                                    orientation='horizontal'
+                                    first={<div>左</div>}
+                                    second={<div>右</div>}
+                                />
+                            }
+                            second={
+                                <OriMiniLayout
+                                    orientation='vertical'
+                                    first={<div>中</div>}
+                                    second={<div>下</div>}
+                                />
+                            }
                         />
                     </div>
                 </Card>

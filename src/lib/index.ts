@@ -7,6 +7,7 @@ import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
 import { OriLayout } from "./oriLayout";
 import OriMainLayout from "./oriMainLayout";
+import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
 import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
 import { OriTable } from "./oriTable";
@@ -25,6 +26,7 @@ export {
     OriGroupInput,
     OriLayout,
     OriMainLayout,
+    OriMiniLayout,
     OriMonthPicker,
     OriSearchForm,
     OriTable,
@@ -36,5 +38,5 @@ export {
     wrapperUrl
 };
 
-    export type { IMenuItem, IOriSearchFormField, IOridForm };
+export type { IMenuItem, IOriSearchFormField, IOridForm };
 
