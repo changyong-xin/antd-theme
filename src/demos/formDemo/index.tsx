@@ -1,4 +1,4 @@
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 import React from 'react';
 import { OriSearchForm } from '../../lib';
 
@@ -48,7 +48,8 @@ export class SearchFormDemo extends React.Component<any, any>{
                                 name: 'YearMonth',
                                 isRange: true,
                                 valueInput: 'YYYY-MM',
-                                description: '账期'
+                                description: '账期',
+                                allowClear: true
                             },
                             {
                                 name: 'WriteOffDate',
@@ -66,9 +67,9 @@ export class SearchFormDemo extends React.Component<any, any>{
                         onSearch={this.onSearch}
                         onFieldsChange={this.onFieldsChange}
                         circleButton={true}
-                        addOnAfter={<span>123456</span>}
-                        addOnBefore={<span>123456</span>}
-                        addOnEnd={<span>123456</span>}
+                        addOnAfter={<Button>addOnAfter</Button>}
+                        addOnBefore={<Button>addOnBefore</Button>}
+                        addOnEnd={<Button>addOnEnd</Button>}
                     />
                 </Card>
                 <Card title={'基础查询表单，表单域独立取值'} style={{ marginBottom: '16px' }}  >

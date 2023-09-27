@@ -1,5 +1,4 @@
 import { Input } from 'antd';
-import React from 'react';
 import { OriGroupInput } from '../oriGroupInput';
 
 interface IOriInput {
@@ -11,27 +10,25 @@ interface IOriInput {
     onChange?: (value?: string | [string, string]) => void;
 }
 
-export class OriInput extends React.Component<IOriInput, any>{
+export function OriInput(props: IOriInput) {
 
-    public render() {
-        return (
-            this.props.isRange ?
-                <OriGroupInput
-                    allowClear={this.props.allowClear}
-                    value={typeof (this.props.value) === 'object' ? this.props.value : undefined}
-                    style={{ width: this.props.width }}
-                    placeholder={this.props.placeholder ? [this.props.placeholder, this.props.placeholder] : undefined}
-                    onChange={(value) => this.props.onChange!(value)}
-                />
-                :
-                <Input
-                    allowClear={this.props.allowClear}
-                    style={{ width: this.props.width }}
-                    placeholder={this.props.placeholder}
-                    value={this.props.value ? this.props.value : undefined}
-                    onChange={(e) => this.props.onChange!(e.target.value)}
-                />
-        )
-    }
+    return (
+        props.isRange ?
+            <OriGroupInput
+                allowClear={props.allowClear}
+                value={typeof (props.value) === 'object' ? props.value : undefined}
+                style={{ width: props.width }}
+                placeholder={props.placeholder ? [props.placeholder, props.placeholder] : undefined}
+                onChange={(value) => props.onChange!(value)}
+            />
+            :
+            <Input
+                allowClear={props.allowClear}
+                style={{ width: props.width }}
+                placeholder={props.placeholder}
+                value={props.value ? props.value : undefined}
+                onChange={(e) => props.onChange!(e.target.value)}
+            />
+    )
 
 }
