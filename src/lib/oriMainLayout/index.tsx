@@ -125,7 +125,7 @@ function MainRight(props: IMainRight) {
 export default function OriMainLayout(props: {
     default?: Tab,
     menu: {
-        map: Map<string | number, IMenuItem>;
+        map: Map<React.Key, IMenuItem>;
         menu: IMenuItem[];
     }
 }) {

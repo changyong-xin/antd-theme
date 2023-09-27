@@ -41,7 +41,7 @@ export function copyObj<T = any>(data: T): T {
 
 export function createMenuMap(menu: IMenuItem[]) {
 
-    const map = new Map<string | number, IMenuItem>();
+    const map = new Map<React.Key, IMenuItem>();
 
     function listToMap(data: IMenuItem[]) {
         data.forEach((item) => {

@@ -52,7 +52,7 @@ export class DraggableTree extends React.Component<any, IDraggableTreeState>{
         }
     }
 
-    public filterSource(treeData: DataNode[], sourceKey: string | number,): DataNode[] {
+    public filterSource(treeData: DataNode[], sourceKey: React.Key,): DataNode[] {
         const result: DataNode[] = []
         treeData.forEach((node) => {
             if (node.key !== sourceKey) {
