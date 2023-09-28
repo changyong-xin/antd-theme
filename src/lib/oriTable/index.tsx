@@ -8,6 +8,7 @@ export function OriTable<T extends AnyObject>(props: TableProps<T>) {
     const { className, columns, scroll, size, ...rest } = props
     return (
         <Table<T>
+            {...rest}
             size='small'
             className={
                 props.dataSource && props.dataSource.length > 0 ?
@@ -21,7 +22,7 @@ export function OriTable<T extends AnyObject>(props: TableProps<T>) {
             }}
             scroll={{ y: 'calc(100% - 39px)' }}
             bordered={true}
-            {...rest}
+            pagination={false}
         />
     )
 

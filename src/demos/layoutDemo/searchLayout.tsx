@@ -1,8 +1,8 @@
-import { makeObservable, observable } from 'mobx';
-import React, { ReactNode } from 'react';
-import { OriTableLayout, OriTableLayoutUiAction, OriTableLayoutUiStore } from '../../../lib';
 import { Button, Modal } from 'antd';
+import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import React, { ReactNode } from 'react';
+import { OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore } from '../../lib';
 
 interface IDemoDataEntity {
     name: string;
@@ -14,7 +14,7 @@ interface IDemoDataQo {
     createDate?: string;
 }
 
-class SimpleTableLayoutStore extends OriTableLayoutUiStore<IDemoDataEntity> {
+class SimpleSearchLayoutStore extends OriSearchLayoutUiStore<IDemoDataEntity> {
 
     public visible: boolean = false;
 
@@ -26,7 +26,7 @@ class SimpleTableLayoutStore extends OriTableLayoutUiStore<IDemoDataEntity> {
     }
 }
 
-class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEntity, IDemoDataQo, SimpleTableLayoutStore>{
+class SimpleSearchLayoutDoaminAction extends OriSearchLayoutUiAction<IDemoDataEntity, IDemoDataQo, SimpleSearchLayoutStore>{
     public onSearch(value: IDemoDataQo) {
         console.log(value)
         this.uiStore.loading = true;
@@ -42,6 +42,13 @@ class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEnti
                 { name: '6', sex: '0', age: 1 },
                 { name: '7', sex: '0', age: 1 },
                 { name: '8', sex: '0', age: 1 },
+                { name: '9', sex: '0', age: 1 },
+                { name: '10', sex: '0', age: 1 },
+                { name: '11', sex: '0', age: 1 },
+                { name: '12', sex: '0', age: 1 },
+                { name: '13', sex: '0', age: 1 },
+                { name: '14', sex: '0', age: 1 },
+                { name: '15', sex: '0', age: 1 },
             ]
             this.uiStore.totalCount = 7;
             this.uiStore.loading = false;
@@ -51,19 +58,19 @@ class SimpleTableLayoutDoaminAction extends OriTableLayoutUiAction<IDemoDataEnti
 
 
 
-export class SimpleTableLayout extends React.Component {
+export class SimpleSearchLayoutDemo extends React.Component<any, any> {
 
-    private _uiStore = new SimpleTableLayoutStore();
+    private _uiStore = new SimpleSearchLayoutStore();
 
-    private _uiAction = new SimpleTableLayoutDoaminAction(this._uiStore)
+    private _uiAction = new SimpleSearchLayoutDoaminAction(this._uiStore)
 
     public render(): ReactNode {
         return (
-            <OriTableLayout<IDemoDataEntity, IDemoDataEntity>
+            <OriSearchLayout<IDemoDataEntity, IDemoDataEntity>
                 rowKey={'name'}
                 uiStore={this._uiStore}
                 uiAction={this._uiAction}
-                extra={
+                formEnd={
                     < div >
                         <Button onClick={() => { this._uiStore.visible = !this._uiStore.visible }} >新增</Button>
                         <Modal title={'demo'} open={this._uiStore.visible} onCancel={() => this._uiStore.visible = false} >
@@ -104,12 +111,8 @@ export class SimpleTableLayout extends React.Component {
                         {
                             title: '年龄',
                             dataIndex: "age",
-                            width: 600
-                        },
-                        {
-                            title: '',
-                            dataIndex: "flex-col",
-                        },
+                            width: 500
+                        }
                     ]
                 }
             />
@@ -119,4 +122,4 @@ export class SimpleTableLayout extends React.Component {
 
 }
 
-observer(SimpleTableLayout)
+observer(SimpleSearchLayoutDemo)

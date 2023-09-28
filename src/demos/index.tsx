@@ -62,12 +62,13 @@ function DemoIndex() {
                     },
                     Table: {
                         headerBg: 'lightgrey',
+                        rowHoverBg:'lightgrey',
                         headerBorderRadius: 0
                     }
                 }
             }}
         >
-            <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
+            <FloatButton style={{ display: 'none' }} tooltip={<ThemeSetting onOk={setColor} />} />
             <AppWrapper />
             <OriMainLayout
                 menu={createMenuMap(MainMenus)}

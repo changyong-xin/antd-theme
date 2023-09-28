@@ -1,10 +1,18 @@
-.ori-pagination-menu {
-    width: 205px;
+.ori-pagination {
+    border-top: 1px solid rgb(217, 217, 217);
+    padding: 8px 0px;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
 
-    li {
-        width: 60px !important;
-        text-align: center;
+    .ori-pagination-menu {
+        width: 205px;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+            width: 60px !important;
+            text-align: center;
+        }
     }
 }
