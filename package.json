@@ -1,12 +1,12 @@
 {
   "name": "orid",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "dependencies": {
+  "devDependencies": {
     "@ant-design/icons": "5.2.6",
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
     "@testing-library/jest-dom": "5.14.1",
