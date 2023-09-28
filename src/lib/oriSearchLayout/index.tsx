@@ -1,6 +1,5 @@
 import { AnyObject } from 'antd/es/_util/type';
 import { ColumnsType } from 'antd/es/table';
-import { TableRowSelection } from 'antd/es/table/interface';
 import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -8,6 +7,8 @@ import { OriLayout } from '../oriLayout';
 import { OriPagination } from '../oriPagination';
 import { IOriSearchFormField, OriSearchForm } from '../oriSearchForm';
 import { OriTable } from '../oriTable';
+import { ExclamationCircleFilled, ExclamationCircleTwoTone } from '@ant-design/icons';
+import { OriContext } from '../oriContext';
 
 
 interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> {
@@ -15,7 +16,7 @@ interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearch
     tableBar?: React.ReactNode;
     fields?: IOriSearchFormField[];
     rowKey?: keyof T;
-    rowSelection?: TableRowSelection<T>;
+    selectable?: boolean;
     formEnd?: React.ReactNode;
     uiAction?: OriSearchLayoutUiAction<T, Q, S>;
     uiStore?: OriSearchLayoutUiStore<T>;
@@ -42,7 +43,9 @@ export class OriSearchLayoutUiStore<T>{
 
     public pageSize: number = 20;
 
-    public selectedRowKeys: string[] = [];
+    public selectedRowKeys: React.Key[] = [];
+
+    public selectedRows: T[] = [];
 
     public totalCount: number = 123456;
 
@@ -119,14 +122,31 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                             ]
                         }
                         dataSource={this._uiStore.dataSource}
-                        rowSelection={this.props.rowSelection}
-                        loading={this._uiStore.loading}
+                        rowSelection={
+                            this.props.selectable ? {
+                                selectedRowKeys: this._uiStore.selectedRowKeys,
+                                onChange: (selectedRowKeys, selectedRows, info) => {
+                                    this._uiStore.selectedRowKeys = selectedRowKeys;
+                                    this._uiStore.selectedRows = selectedRows;
+                                },
+                            } : undefined
+                        }
+                        loading={{ spinning: this._uiStore.loading, tip: "加载中..." }}
                     />
                 }
                 middleStretch={true}
                 bottomContent={
                     <OriPagination
-                        addOnBefore={this.props.rowSelection ? <span>已选中<span style={{ margin: '0px 8px' }}>{this._uiStore.selectedRowKeys.length}</span>条</span> : <></>}
+                        addOnBefore={this.props.selectable ?
+                            <div className='ori-flex-row'>
+                                <ExclamationCircleTwoTone twoToneColor={OriContext.primaryColor} style={{ marginRight: '8px' }} />
+                                <span>已选中</span>
+                                <span style={{ margin: '0px 8px' }}>{this._uiStore.selectedRowKeys.length}</span>
+                                <span>条</span>
+                            </div>
+                            :
+                            <></>
+                        }
                         size={this._uiStore.pageSize}
                         index={this._uiStore.pageIndex}
                         total={this._uiStore.totalCount}

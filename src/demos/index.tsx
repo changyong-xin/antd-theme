@@ -2,7 +2,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import { App, Button, ConfigProvider, FloatButton, Input } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OriContext, OriMainLayout, createMenuMap } from '../lib';
 import { MainMenus } from './menu';
 
@@ -47,7 +47,10 @@ function AppWrapper() {
 }
 
 function DemoIndex() {
-    const [primaryColor, setColor] = useState<string>('purple');
+    const [primaryColor, setColor] = useState<string>('orange');
+    useEffect(() => {
+        OriContext.primaryColor = primaryColor
+    })
     return (
         <ConfigProvider
             locale={zhCN}
@@ -61,8 +64,6 @@ function DemoIndex() {
                         itemColor: 'white',
                     },
                     Table: {
-                        headerBg: 'lightgrey',
-                        rowHoverBg:'lightgrey',
                         headerBorderRadius: 0
                     }
                 }

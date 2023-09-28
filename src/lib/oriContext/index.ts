@@ -4,6 +4,8 @@ import { NotificationInstance } from "antd/es/notification/interface";
 
 export class OriContext {
 
+    public static primaryColor: string;
+
     public static identity: string;
 
     public static openTab: (key: string, params?: any) => void;

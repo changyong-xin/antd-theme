@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, Switch } from 'antd';
 import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { ReactNode } from 'react';
@@ -18,10 +18,13 @@ class SimpleSearchLayoutStore extends OriSearchLayoutUiStore<IDemoDataEntity> {
 
     public visible: boolean = false;
 
+    public selectable: boolean = false;
+
     constructor() {
         super()
         makeObservable(this, {
-            visible: observable
+            visible: observable,
+            selectable: observable
         })
     }
 }
@@ -66,12 +69,25 @@ export class SimpleSearchLayoutDemo extends React.Component<any, any> {
 
     public render(): ReactNode {
         return (
-            <OriSearchLayout<IDemoDataEntity, IDemoDataEntity>
+            <OriSearchLayout<IDemoDataEntity, IDemoDataQo>
                 rowKey={'name'}
                 uiStore={this._uiStore}
                 uiAction={this._uiAction}
+                selectable={this._uiStore.selectable}
                 formEnd={
                     < div >
+                        <span>
+                            表格数据可选
+                            <Switch
+                                style={{ margin: '0px 8px' }}
+                                checked={this._uiStore.selectable}
+                                onChange={(checked) => {
+                                    this._uiStore.selectable = checked
+                                }}
+                                checkedChildren={'on'}
+                                unCheckedChildren={'off'}
+                            />
+                        </span>
                         <Button onClick={() => { this._uiStore.visible = !this._uiStore.visible }} >新增</Button>
                         <Modal title={'demo'} open={this._uiStore.visible} onCancel={() => this._uiStore.visible = false} >
                             <div>Demo Modal</div>
