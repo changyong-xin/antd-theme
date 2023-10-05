@@ -9,6 +9,7 @@ import { OriFreeLayoutDemo } from "./layoutDemo/freeLayoutDemo";
 import { SimpleSearchLayoutDemo } from "./layoutDemo/searchLayout";
 import { OriTableDemo } from "./tableDemo";
 import { TreeDemos } from "./treeDemo";
+import { SelectDemo } from "./selectDemo";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -33,6 +34,7 @@ export const MainMenus: IMenuItem[] = [
     {
         label: '组件列表', icon: <GroupOutlined />, key: '03', children: [
             { label: '树形组件', key: '0302', component: TreeDemos },
+            { label: '选择组件', key: '0303', component: SelectDemo },
         ]
     },
     { label: 'OriContext', key: '04', component: OriContextDemo },
