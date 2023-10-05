@@ -1,7 +1,8 @@
-import { Button, Table } from 'antd';
+import { Button } from 'antd';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { OriTable } from '../../lib';
 
 
 
@@ -36,7 +37,7 @@ class ChildrenTable extends React.Component<{ domain: TableUiStore }, any>{
                         this.props.domain.tableData = []
                     }} >清空</Button>
                 </div>
-                <Table
+                <OriTable
                     rowKey={'title'}
                     dataSource={this.props.domain.tableData}
                     columns={[{

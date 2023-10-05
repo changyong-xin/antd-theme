@@ -5,7 +5,7 @@ import './index.scss';
 
 
 export function OriTable<T extends AnyObject>(props: TableProps<T>) {
-    const { className, columns, scroll, size, ...rest } = props
+    const { className, columns, scroll, size, bordered, pagination, locale, ...rest } = props
     return (
         <Table<T>
             {...rest}

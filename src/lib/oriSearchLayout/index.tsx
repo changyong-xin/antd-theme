@@ -47,7 +47,7 @@ export class OriSearchLayoutUiStore<T>{
 
     public selectedRows: T[] = [];
 
-    public totalCount: number = 123456;
+    public totalCount: number = 0;
 
 }
 export class OriSearchLayoutUiAction<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>>{
