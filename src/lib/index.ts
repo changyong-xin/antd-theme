@@ -2,6 +2,7 @@ import { IMenuItem, IOridForm } from "./interface";
 import { OriContext } from "./oriContext";
 import { OriDatePicker } from "./oriDatePicker";
 import { OriEmpty } from "./oriEmpty";
+import { OriFreeLayout } from "./oriFreeLayout";
 import { OriGrid } from "./oriGrid";
 import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
@@ -21,6 +22,7 @@ export {
     OriContext,
     OriDatePicker,
     OriEmpty,
+    OriFreeLayout,
     OriGrid,
     OriGridForm,
     OriGroupInput,
@@ -35,5 +37,5 @@ export {
     wrapperUrl
 };
 
-export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
+    export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
 

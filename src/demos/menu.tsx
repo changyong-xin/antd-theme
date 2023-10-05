@@ -5,9 +5,10 @@ import { DateDemo } from "./demo1";
 import { Demo2 } from "./demo2";
 import { SearchFormDemo } from "./formDemo";
 import { LayoutDemo } from "./layoutDemo";
+import { OriFreeLayoutDemo } from "./layoutDemo/freeLayoutDemo";
+import { SimpleSearchLayoutDemo } from "./layoutDemo/searchLayout";
 import { OriTableDemo } from "./tableDemo";
 import { TreeDemos } from "./treeDemo";
-import { SimpleSearchLayoutDemo } from "./layoutDemo/searchLayout";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -25,6 +26,7 @@ export const MainMenus: IMenuItem[] = [
     {
         label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
             { label: '通用布局', key: '0001', component: LayoutDemo },
+            { label: '自由布局', key: '0003', component: OriFreeLayoutDemo },
             { label: '数据查询及展示', key: '0002', component: SimpleSearchLayoutDemo },
         ]
     },
