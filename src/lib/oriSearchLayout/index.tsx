@@ -11,7 +11,7 @@ import { IOriSearchFormField, OriSearchForm } from '../oriSearchForm';
 import { OriTable } from '../oriTable';
 
 
-interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> {
+export interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> {
     columns: ColumnsType<T>;
     tableBar?: React.ReactNode;
     fields?: IOriSearchFormField[];
