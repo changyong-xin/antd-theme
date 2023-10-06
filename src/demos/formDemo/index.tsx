@@ -1,6 +1,6 @@
 import { Button, Card } from 'antd';
 import React from 'react';
-import { OriSearchForm } from '../../lib';
+import { OriSearchForm, OriSelect } from '../../lib';
 
 export class SearchFormDemo extends React.Component<any, any>{
 
@@ -102,6 +102,44 @@ export class SearchFormDemo extends React.Component<any, any>{
                         ]}
                         dividual={true}
                         onDividualClick={this.onDividualSearchClick}
+                        onFieldsChange={this.onFieldsChange}
+                    />
+                </Card>
+                <Card title={'使用自定义组件，注意：需要实现接口的value及onChange'} style={{ marginBottom: '16px' }}  >
+
+                    <OriSearchForm
+                        fields={[
+                            {
+                                name: 'OperatorId',
+                                valueInput: <OriSelect
+                                    allowClear={true}
+                                    placeholder={'请选择'}
+                                    options={[
+                                        { value: '1', label: '张三' },
+                                        { value: '2', label: '李四' },
+                                        { value: '3', label: '管理员' },
+                                    ]}
+                                />,
+                                initialValue: '3',
+                                description: '操作员',
+                            },
+                            {
+                                name: 'Operators',
+                                valueInput: <OriSelect
+                                    width={200}
+                                    allowClear={true}
+                                    mode={'multiple'}
+                                    placeholder={'请选择多个'}
+                                    options={[
+                                        { value: '1', label: '张三' },
+                                        { value: '2', label: '李四' },
+                                        { value: '3', label: '管理员' },
+                                    ]}
+                                />,
+                                description: '操作员',
+                            },
+                        ]}
+                        onSearch={this.onSearch}
                         onFieldsChange={this.onFieldsChange}
                     />
                 </Card>

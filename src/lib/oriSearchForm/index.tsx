@@ -10,19 +10,19 @@ import { SearchOutlined } from '@ant-design/icons';
 
 declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' | 'YYYY-MM-DD HH:mm:ss';
 
-declare type FieldVlaue = string | [string, string] | string[];
+declare type FieldVlaue = React.Key | [React.Key, React.Key] | React.Key[];
 
 export interface IOriSearchFormField {
     name: string;
     /** 中文描述 */
     description: string;
-    /** 输入组件的类型 */
+    /** 输入组件的类型，从默认类型中选择或直接使用自定义组件，注意：需要实现接口的value及onChange */
     valueInput: ValueInput | React.ReactNode;
     width?: number;
     allowClear?: boolean;
     /** 是否是区间查询 */
     isRange?: boolean;
-    /** 表单域的值，类型有string、[string,string] */
+    /** 初始值 */
     initialValue?: FieldVlaue;
 }
 

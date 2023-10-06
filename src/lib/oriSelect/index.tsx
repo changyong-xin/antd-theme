@@ -8,27 +8,28 @@ declare type OriSelectValue = React.Key | React.Key[]
 interface IOriSelect {
     fieldNames?: FieldNames
     options: AnyObject[];
-    mode?: "multiple" | "tags";
+    mode?: "multiple";
     value?: OriSelectValue;
     width?: number;
     onChange?: (value: OriSelectValue) => void;
     placeholder?: string;
+    allowClear?: boolean;
 }
 
 export function OriSelect(props: IOriSelect) {
     const [label, setLabel] = useState<string | undefined>(undefined)
     return (
         <Select<OriSelectValue, AnyObject>
+            showSearch={false}
             fieldNames={props.fieldNames}
-            allowClear={true}
+            allowClear={props.allowClear}
             placeholder={props.placeholder}
             mode={props.mode}
             value={props.value}
-            style={{ width: (props.width && props.width > 80) ? props.width : 80, }}
+            style={{ width: (props.width && props.width > 80) ? props.width : 120, }}
             className={"ori-select"}
             options={props.options}
             onChange={(value, options) => {
-                console.log(value, options)
                 if (props.onChange) {
                     props.onChange(value)
                 }
