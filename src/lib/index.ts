@@ -15,6 +15,7 @@ import { IOriSearchLayout, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLa
 import { OriSelect } from "./oriSelect";
 import { OriTable } from "./oriTable";
 import { OriTimePicker } from "./oriTimePicker";
+import { OriTreeSelect } from "./oriTreeSelect";
 import { copyObj, createMenuMap, dayjsTrans, treeDataTrans } from "./utils";
 import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
 import { antiShaking, throttle } from "./utils/throttle";
@@ -30,7 +31,7 @@ export {
     OriLayout,
     OriMainLayout,
     OriMiniLayout,
-    OriMonthPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore, OriSelect, OriTable, OriTimePicker, antiShaking,
+    OriMonthPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
     copyObj,
     createMenuMap, dayjsTrans, requestJson,
     throttle, treeDataTrans, wrapperApi,

@@ -10,6 +10,7 @@ interface IOriSelect {
     options: AnyObject[];
     mode?: "multiple";
     value?: OriSelectValue;
+    defaultValue?: OriSelectValue;
     width?: number;
     onChange?: (value: OriSelectValue) => void;
     placeholder?: string;
@@ -17,7 +18,66 @@ interface IOriSelect {
 }
 
 export function OriSelect(props: IOriSelect) {
-    const [label, setLabel] = useState<string | undefined>(undefined)
+    function getInitialLable(value: any) {
+        let label;
+        let labels: any[] = [];
+        if (typeof (value) === 'string') {
+            props.options.forEach((item) => {
+                if (props.fieldNames && props.fieldNames.value) {
+                    if (value === item[props.fieldNames.value]) {
+                        if (props.fieldNames && props.fieldNames.label) {
+                            label = item[props.fieldNames.label]
+                        } else {
+                            label = item.label
+                        }
+                    }
+                } else {
+                    if (value === item.value) {
+                        if (props.fieldNames && props.fieldNames.label) {
+                            label = item[props.fieldNames.label]
+                        } else {
+                            label = item.label
+                        }
+                    }
+                }
+            })
+        } else {
+            value.forEach((valueitem: any) => {
+                props.options.forEach((item) => {
+                    if (props.fieldNames && props.fieldNames.value) {
+                        if (valueitem === item[props.fieldNames.value]) {
+                            if (props.fieldNames && props.fieldNames.label) {
+                                labels.push(item[props.fieldNames.label]);
+                            } else {
+                                labels.push(item.label);
+                            }
+                        }
+                    } else {
+                        if (valueitem === item.value) {
+                            if (props.fieldNames && props.fieldNames.label) {
+                                labels.push(item[props.fieldNames.label]);
+                            } else {
+                                labels.push(item.label);
+                            }
+                        }
+                    }
+                })
+            })
+            label = labels.toString();
+        }
+        return label
+    }
+    const [label, setLabel] = useState<string | undefined>(
+        props.value
+            ?
+            getInitialLable(props.value)
+            :
+            props.defaultValue
+                ?
+                getInitialLable(props.defaultValue)
+                :
+                undefined
+    )
     return (
         <Select<OriSelectValue, AnyObject>
             showSearch={false}
@@ -26,8 +86,8 @@ export function OriSelect(props: IOriSelect) {
             placeholder={props.placeholder}
             mode={props.mode}
             value={props.value}
+            defaultValue={props.defaultValue}
             style={{ width: (props.width && props.width > 80) ? props.width : 120, }}
-            className={"ori-select"}
             options={props.options}
             onChange={(value, options) => {
                 if (props.onChange) {
@@ -56,7 +116,6 @@ export function OriSelect(props: IOriSelect) {
                     <span title={label}>{label}</span>
                 </div>
             }
-            maxTagTextLength={2}
         />
     )
 

@@ -1,6 +1,6 @@
 import { Button, Card } from 'antd';
 import React from 'react';
-import { OriSearchForm, OriSelect } from '../../lib';
+import { OriSearchForm, OriSelect, OriTreeSelect } from '../../lib';
 
 export class SearchFormDemo extends React.Component<any, any>{
 
@@ -131,12 +131,47 @@ export class SearchFormDemo extends React.Component<any, any>{
                                     mode={'multiple'}
                                     placeholder={'请选择多个'}
                                     options={[
-                                        { value: '1', label: '张三' },
-                                        { value: '2', label: '李四' },
-                                        { value: '3', label: '管理员' },
+                                        { id: '1', name: '张三' },
+                                        { id: '2', name: '李四' },
+                                        { id: '3', name: '管理员' },
                                     ]}
+                                    fieldNames={{
+                                        value: 'id',
+                                        label: 'name'
+                                    }}
                                 />,
                                 description: '操作员',
+                                initialValue: ['1', '3']
+                            },
+                            {
+                                name: 'DeptOperators',
+                                valueInput: <OriTreeSelect
+                                    width={200}
+                                    allowClear={true}
+                                    multiple={true}
+                                    placeholder={'请选择多个'}
+                                    treeDefaultExpandAll={true}
+                                    treeData={[
+                                        {
+                                            id: '1', name: '开发部', children: [
+                                                { id: '01', name: '张三' },
+                                                { id: '02', name: '李四' },
+                                            ]
+                                        },
+                                        {
+                                            id: '2', name: '测试部门', children: [
+                                                { id: '03', name: '张三三' },
+                                                { id: '04', name: '李四四' },
+                                            ]
+                                        },
+                                    ]}
+                                    fieldNames={{
+                                        value: 'id',
+                                        label: 'name'
+                                    }}
+                                />,
+                                description: '操作员',
+                                initialValue: ['04']
                             },
                         ]}
                         onSearch={this.onSearch}
