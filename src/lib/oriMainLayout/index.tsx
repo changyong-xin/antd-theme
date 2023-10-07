@@ -1,4 +1,4 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, Tabs, theme } from "antd";
 import { Tab } from 'rc-tabs/lib/interface';
 import React, { useReducer, useState } from "react";
@@ -7,6 +7,7 @@ import { OriContext } from '../oriContext';
 import './index.scss';
 
 interface IMainRight {
+    tabBarExtraContent?: React.ReactNode;
     activeKey: string | undefined;
     tabs: Tab[];
     onTabChange: (activeKey: string, remove?: boolean) => void;
@@ -105,6 +106,7 @@ function MainRight(props: IMainRight) {
         <Layout.Content>
             <div className="ori-main-tabs" >
                 <Tabs
+                    tabBarExtraContent={props.tabBarExtraContent}
                     hideAdd={true}
                     tabBarStyle={{ backgroundColor: token.colorPrimary }}
                     activeKey={props.activeKey}
@@ -123,7 +125,8 @@ function MainRight(props: IMainRight) {
 }
 
 export default function OriMainLayout(props: {
-    default?: Tab,
+    default?: React.ReactNode,
+    tabBarExtraContent?: React.ReactNode;
     menu: {
         map: Map<React.Key, IMenuItem>;
         menu: IMenuItem[];
@@ -132,7 +135,14 @@ export default function OriMainLayout(props: {
 
     const [state, dispatch] = useReducer(mainResucer, {
         activeKey: undefined,
-        tabs: props.default ? [props.default] : [],
+        tabs: props.default ? [
+            {
+                key: '-1',
+                label: <div style={{ textAlign: 'center', width: '40px' }} > <HomeOutlined style={{ margin: "0px" }} /></div>,
+                children: props.default,
+                closable: false
+            }
+        ] : [],
     })
 
     function openTab(key: string, params?: any) {
@@ -169,6 +179,7 @@ export default function OriMainLayout(props: {
                 onMenuChange={OriContext.openTab}
             />
             <MainRight
+                tabBarExtraContent={props.tabBarExtraContent}
                 activeKey={state.activeKey}
                 onTabChange={(key, remove) => {
                     if (remove) {

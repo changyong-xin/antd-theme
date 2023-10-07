@@ -6,7 +6,6 @@ import './index.scss';
 
 export function OriTable<T extends AnyObject>(props: TableProps<T>) {
     const { className, columns, scroll, size, bordered, pagination, locale, ...rest } = props
-    console.log(props.loading)
     return (
         <Table<T>
             {...rest}

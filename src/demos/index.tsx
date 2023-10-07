@@ -1,10 +1,10 @@
-import { HomeOutlined } from '@ant-design/icons';
-import { App, Button, ConfigProvider, FloatButton, Input } from 'antd';
+import { App, Avatar, Badge, Button, ConfigProvider, Dropdown, FloatButton, Input } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { useEffect, useState } from 'react';
 import { OriContext, OriMainLayout, createMenuMap } from '../lib';
 import { MainMenus } from './menu';
+import { UserOutlined } from '@ant-design/icons';
 
 function ThemeSetting(props: { onOk: (color: string) => void }) {
     const [value, setValue] = useState<string>()
@@ -46,6 +46,33 @@ function AppWrapper() {
     )
 }
 
+function MainExtra() {
+    const [dot, setDot] = useState(true)
+    return (
+        <div style={{ marginRight: '16px', lineHeight: '40px' }}>
+            <Dropdown
+                menu={
+                    {
+                        items: [
+                            { key: '1', label: '个人中心' },
+                            { key: '2', label: <Badge dot={dot} >{'消息列表'}</Badge> }
+                        ],
+                        onClick: (info) => {
+                            if (info.key === '2') {
+                                setDot(false)
+                            }
+                        }
+                    }
+                }
+            >
+                <Badge dot={dot} >
+                    <Avatar shape="circle" size={28} icon={<UserOutlined />} />
+                </Badge>
+            </Dropdown>
+        </div>
+    )
+}
+
 function DemoIndex() {
     const [primaryColor, setColor] = useState<string>('orange');
     useEffect(() => {
@@ -73,16 +100,8 @@ function DemoIndex() {
             <AppWrapper />
             <OriMainLayout
                 menu={createMenuMap(MainMenus)}
-                default={{
-                    key: '-1',
-                    label: <div style={{ textAlign: 'center', width: '40px' }} > <HomeOutlined style={{ margin: "0px" }} /></div>,
-                    children: <div>
-                        <div>
-                            默认标签页
-                        </div>
-                    </div>,
-                    closable: false
-                }}
+                default={<div>默认标签页</div>}
+                tabBarExtraContent={<MainExtra />}
             />
         </ConfigProvider>
     );
