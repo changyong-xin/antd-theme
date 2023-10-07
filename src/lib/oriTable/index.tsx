@@ -6,6 +6,7 @@ import './index.scss';
 
 export function OriTable<T extends AnyObject>(props: TableProps<T>) {
     const { className, columns, scroll, size, bordered, pagination, locale, ...rest } = props
+    console.log(props.loading)
     return (
         <Table<T>
             {...rest}
@@ -18,7 +19,11 @@ export function OriTable<T extends AnyObject>(props: TableProps<T>) {
             }
             columns={columns}
             locale={{
-                emptyText: props.loading ? <></> : <OriEmpty />
+                emptyText: typeof (props.loading) === 'object'
+                    ?
+                    (props.loading.spinning ? <></> : <OriEmpty />)
+                    :
+                    (props.loading ? <></> : <OriEmpty />)
             }}
             scroll={{ y: 'calc(100% - 39px)' }}
             bordered={true}

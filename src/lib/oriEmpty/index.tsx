@@ -22,7 +22,7 @@ const ImageSize = {
     "lg": { width: "96px", height: "96px" },
 }
 
-function selectImageType(type: string): any {
+function selectImageType(type?: string): any {
     switch (type) {
         case "blank":
             return ImageList.blank;
@@ -37,20 +37,17 @@ function selectImageType(type: string): any {
     }
 }
 
-function selectImamgeSize(size: string): any {
-    if (size) {
-        switch (size) {
-            case "xs":
-                return ImageSize.xs;
-            case "md":
-                return ImageSize.md;
-            case "lg":
-                return ImageSize.lg;
-            default:
-                return ImageSize.md;
-        }
+function selectImamgeSize(size?: string): any {
+    switch (size) {
+        case "xs":
+            return ImageSize.xs;
+        case "md":
+            return ImageSize.md;
+        case "lg":
+            return ImageSize.lg;
+        default:
+            return ImageSize.md;
     }
-    return ImageSize.md;
 }
 
 export function OriEmpty(props: IOriEmptyProps) {
@@ -59,8 +56,8 @@ export function OriEmpty(props: IOriEmptyProps) {
         <div>
             <img
                 alt=''
-                src={selectImageType(props.type || "default")}
-                style={selectImamgeSize(props.size || 'md')}
+                src={selectImageType(props.type)}
+                style={selectImamgeSize(props.size)}
             />
             <p>
                 {props.decription || "暂无数据"}
