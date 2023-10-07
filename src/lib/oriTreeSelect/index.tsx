@@ -41,9 +41,6 @@ export function OriTreeSelect(props: IOriTreeSelect) {
                     setLabel(labels.toString())
                 }
             }}
-            onSelect={(value)=>{
-                console.log('onSelect')
-            }}
             maxTagCount={0}
             maxTagPlaceholder={
                 <div
