@@ -13,7 +13,7 @@ import { OriSearchLayoutUiStore } from './uiStore';
 
 
 export interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> extends IOriSearchForm<Q> {
-    columns: ColumnsType<T>;
+    columns?: ColumnsType<T>;
     rowKey?: keyof T;
     selectable?: boolean;
     uiAction?: OriSearchLayoutUiAction<T, Q, S>;
@@ -53,10 +53,9 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                         rowKey={this.props.rowKey || this._uiAction.getRowKey}
                         columns={
                             [
-                                ...this.props.columns,
+                                ...(this.props.columns || []),
                                 {
-                                    title: '',
-                                    dataIndex: "flex-col",
+                                    dataIndex: "ori-searchlayout-flex-col",
                                 },
                             ]
                         }

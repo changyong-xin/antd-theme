@@ -18,7 +18,7 @@ class SimpleSearchLayoutStore extends OriSearchLayoutUiStore<IDemoDataEntity> {
 
     public visible: boolean = false;
 
-    public selectable: boolean = false;
+    public selectable: boolean = true;
 
     constructor() {
         super()

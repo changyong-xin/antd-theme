@@ -27,7 +27,7 @@ export interface IOriSearchFormField {
 }
 
 export interface IOriSearchForm<T> extends IOridForm<T> {
-    fields: IOriSearchFormField[];
+    fields?: IOriSearchFormField[];
     onSearch?: (value: T) => void;
     dividual?: boolean;
     onDividualClick?: (name: string, value: FieldVlaue) => void;
@@ -67,64 +67,70 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                             <></>
                     }
                     {
-                        this.props.fields.map((item, index) => <React.Fragment key={index}>
-                            <Tooltip
-                                title={item.description}
-                            >
-                                <span>
-                                    <Form.Item
-                                        name={item.name}
-                                        initialValue={item.initialValue}
-                                    >
-                                        {this.getField(item)}
-                                    </Form.Item>
-                                </span>
-                            </Tooltip>
-                            {
-                                this.props.dividual ?
-                                    <Button
-                                        style={{ marginRight: '8px' }}
-                                        type='primary'
-                                        onClick={() => {
-                                            if (this.props.onDividualClick && this._form.current) {
-                                                this.props.onDividualClick(item.name, this._form.current.getFieldValue(item.name))
-                                            }
-                                        }}
-                                    >
-                                        查询
-                                    </Button>
-                                    :
-                                    <></>
-                            }
-                        </React.Fragment>
-                        )
+                        this.props.fields ?
+                            this.props.fields.map((item, index) => <React.Fragment key={index}>
+                                <Tooltip
+                                    title={item.description}
+                                >
+                                    <span>
+                                        <Form.Item
+                                            name={item.name}
+                                            initialValue={item.initialValue}
+                                        >
+                                            {this.getField(item)}
+                                        </Form.Item>
+                                    </span>
+                                </Tooltip>
+                                {
+                                    this.props.dividual ?
+                                        <Button
+                                            style={{ marginRight: '8px' }}
+                                            type='primary'
+                                            onClick={() => {
+                                                if (this.props.onDividualClick && this._form.current) {
+                                                    this.props.onDividualClick(item.name, this._form.current.getFieldValue(item.name))
+                                                }
+                                            }}
+                                        >
+                                            查询
+                                        </Button>
+                                        :
+                                        <></>
+                                }
+                            </React.Fragment>
+                            )
+                            :
+                            <></>
                     }
                     {
-                        this.props.showSearchButton !== false && !this.props.dividual
-                            ?
-                            this.props.circleButton
+                        this.props.fields ?
+                            this.props.showSearchButton !== false && !this.props.dividual
                                 ?
-                                <Button
-                                    shape='circle'
-                                    style={{ marginRight: '8px', marginBottom: '8px' }}
-                                    onClick={() => {
-                                        if (this.props.onSearch && this._form.current) {
-                                            this.props.onSearch(this._form.current.getFieldsValue())
-                                        }
-                                    }}>
-                                    <SearchOutlined />
-                                </Button>
+                                this.props.circleButton
+                                    ?
+                                    <Button
+                                        shape='circle'
+                                        style={{ marginRight: '8px', marginBottom: '8px' }}
+                                        onClick={() => {
+                                            if (this.props.onSearch && this._form.current) {
+                                                this.props.onSearch(this._form.current.getFieldsValue())
+                                            }
+                                        }}>
+                                        <SearchOutlined />
+                                    </Button>
+                                    :
+                                    <Button
+                                        style={{ marginRight: '8px', marginBottom: '8px' }}
+                                        type='primary'
+                                        onClick={() => {
+                                            if (this.props.onSearch && this._form.current) {
+                                                this.props.onSearch(this._form.current.getFieldsValue())
+                                            }
+                                        }}>
+                                        查询
+                                    </Button>
                                 :
-                                <Button
-                                    style={{ marginRight: '8px', marginBottom: '8px' }}
-                                    type='primary'
-                                    onClick={() => {
-                                        if (this.props.onSearch && this._form.current) {
-                                            this.props.onSearch(this._form.current.getFieldsValue())
-                                        }
-                                    }}>
-                                    查询
-                                </Button>
+                                <></>
                             :
                             <></>
                     }
