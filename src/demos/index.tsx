@@ -1,10 +1,10 @@
+import { UserOutlined } from '@ant-design/icons';
 import { App, Avatar, Badge, Button, ConfigProvider, Dropdown, FloatButton, Input } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { OriContext, OriMainLayout, createMenuMap } from '../lib';
 import { MainMenus } from './menu';
-import { UserOutlined } from '@ant-design/icons';
 
 function ThemeSetting(props: { onOk: (color: string) => void }) {
     const [value, setValue] = useState<string>()
@@ -75,9 +75,6 @@ function MainExtra() {
 
 function DemoIndex() {
     const [primaryColor, setColor] = useState<string>('orange');
-    useEffect(() => {
-        OriContext.primaryColor = primaryColor
-    })
     return (
         <ConfigProvider
             locale={zhCN}
@@ -96,7 +93,7 @@ function DemoIndex() {
                 }
             }}
         >
-            <FloatButton style={{ display: 'none' }} tooltip={<ThemeSetting onOk={setColor} />} />
+            <FloatButton  tooltip={<ThemeSetting onOk={setColor} />} />
             <AppWrapper />
             <OriMainLayout
                 menu={createMenuMap(MainMenus)}

@@ -1,15 +1,27 @@
 import { ExclamationCircleTwoTone } from '@ant-design/icons';
+import { theme } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { ColumnsType } from 'antd/es/table';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { OriContext } from '../oriContext';
 import { OriLayout } from '../oriLayout';
 import { OriPagination } from '../oriPagination';
 import { IOriSearchForm, OriSearchForm } from '../oriSearchForm';
 import { OriTable } from '../oriTable';
 import { OriSearchLayoutUiAction } from './uiAction';
 import { OriSearchLayoutUiStore } from './uiStore';
+
+function SelectCounts(props: { count: number }) {
+    const token = theme.useToken()
+    return (
+        <div className='ori-flex-row'>
+            <ExclamationCircleTwoTone twoToneColor={token.token.colorPrimary} style={{ marginRight: '8px' }} />
+            <span>已选中</span>
+            <span style={{ margin: '0px 8px' }}>{props.count}</span>
+            <span>条</span>
+        </div>
+    )
+}
 
 
 export interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> extends IOriSearchForm<Q> {
@@ -78,12 +90,7 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                         addOnBefore={
                             this.props.selectable
                                 ?
-                                <div className='ori-flex-row'>
-                                    <ExclamationCircleTwoTone twoToneColor={OriContext.primaryColor} style={{ marginRight: '8px' }} />
-                                    <span>已选中</span>
-                                    <span style={{ margin: '0px 8px' }}>{this._uiStore.selectedRowKeys.length}</span>
-                                    <span>条</span>
-                                </div>
+                                <SelectCounts count={this._uiStore.selectedRowKeys.length} />
                                 :
                                 <></>
                         }
