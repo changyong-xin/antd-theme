@@ -1,6 +1,5 @@
 .ori-table {
     height: 100%;
-    padding-bottom: 8px;
 
     .ant-spin-nested-loading {
         height: 100%;
@@ -30,6 +29,7 @@
     .ant-table-body {
         overflow-y: auto !important;
         height: calc(100% - 39px);
+
         table {
             height: 100%;
         }

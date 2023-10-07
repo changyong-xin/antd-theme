@@ -43,11 +43,6 @@ export interface IOriSearchForm<T> extends IOridForm<T> {
 /**
  * 查询表单
  * 
- * props：IOriSearchForm
- * 
- * individual：是否独立查询，如果是，则每个输入域都有一个'查询'按钮，点击查询只会获取这个域的值
- * 
- * 
  */
 export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
 

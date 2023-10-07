@@ -74,7 +74,7 @@ export class SimpleSearchLayoutDemo extends React.Component<any, any> {
                 uiStore={this._uiStore}
                 uiAction={this._uiAction}
                 selectable={this._uiStore.selectable}
-                formEnd={
+                addOnEnd={
                     < div >
                         <span>
                             表格数据可选

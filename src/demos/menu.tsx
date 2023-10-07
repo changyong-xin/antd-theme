@@ -27,8 +27,7 @@ export const MainMenus: IMenuItem[] = [
     {
         label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
             { label: '通用布局', key: '0001', component: LayoutDemo },
-            { label: '自由布局', key: '0003', component: OriFreeLayoutDemo },
-            { label: '数据查询及展示', key: '0002', component: SimpleSearchLayoutDemo },
+            { label: '自由布局', key: '0002', component: OriFreeLayoutDemo },
         ]
     },
     {
@@ -39,4 +38,5 @@ export const MainMenus: IMenuItem[] = [
     },
     { label: 'OriContext', key: '04', component: OriContextDemo },
     { label: 'OriUtils', key: '05', component: OriContextDemo },
+    { label: '数据查询及展示', key: '06', component: SimpleSearchLayoutDemo },
 ]

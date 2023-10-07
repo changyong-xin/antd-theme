@@ -11,7 +11,9 @@ import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
 import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
-import { IOriSearchLayout, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore } from "./oriSearchLayout";
+import { IOriSearchLayout, OriSearchLayout } from "./oriSearchLayout";
+import { OriSearchLayoutUiAction } from "./oriSearchLayout/uiAction";
+import { OriSearchLayoutUiStore } from "./oriSearchLayout/uiStore";
 import { OriSelect } from "./oriSelect";
 import { OriTable } from "./oriTable";
 import { OriTimePicker } from "./oriTimePicker";
@@ -38,5 +40,5 @@ export {
     wrapperUrl
 };
 
-    export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
+export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
 
