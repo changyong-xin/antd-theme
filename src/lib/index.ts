@@ -12,6 +12,7 @@ import { OriLayout } from "./oriLayout";
 import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
+import { OriPicker } from "./oriPicker";
 import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
 import { IOriSearchLayout, OriSearchLayout } from "./oriSearchLayout";
 import { OriSearchLayoutUiAction } from "./oriSearchLayout/uiAction";
@@ -37,12 +38,11 @@ export {
     OriLayout,
     OriMainLayout,
     OriMiniLayout,
-    OriMonthPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
-    copyObj,
-    createMenuMap, dayjsTrans, requestJson,
+    OriMonthPicker, OriPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
+    copyObj, createMenuMap, dayjsTrans, requestJson,
     throttle, treeDataTrans, wrapperApi,
     wrapperUrl
 };
 
-export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
+    export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
 

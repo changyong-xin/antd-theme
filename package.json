@@ -1,6 +1,6 @@
 {
   "name": "orid",
-  "version": "5.0.16",
+  "version": "5.0.17",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

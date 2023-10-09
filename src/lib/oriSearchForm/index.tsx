@@ -1,4 +1,5 @@
-import { Button, Form, FormInstance, Tooltip } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Form, FormInstance, Input, Tooltip } from 'antd';
 import React from 'react';
 import { IOridForm } from '../interface';
 import { OriDatePicker } from '../oriDatePicker';
@@ -6,9 +7,8 @@ import { OriInput } from '../oriInput';
 import { OriMonthPicker } from '../oriMonthPicker';
 import { OriTimePicker } from '../oriTimePicker';
 import './index.scss';
-import { SearchOutlined } from '@ant-design/icons';
 
-declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' | 'YYYY-MM-DD HH:mm:ss';
+declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' | 'YYYY-MM-DD HH' | 'YYYY-MM-DD HH:mm' | 'YYYY-MM-DD HH:mm:ss';
 
 declare type FieldVlaue = React.Key | [React.Key, React.Key] | React.Key[];
 
@@ -178,18 +178,19 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                     return <OriMonthPicker allowClear={field.allowClear || false} isRange={field.isRange || false} format={field.valueInput} />;
                 case 'YYYY-MM-DD':
                     return <OriDatePicker allowClear={field.allowClear || false} isRange={field.isRange || false} format={field.valueInput} />;
+                case 'YYYY-MM-DD HH':
+                    return <OriTimePicker allowClear={field.allowClear || false} isRange={field.isRange || false} format={field.valueInput} />;
+                case 'YYYY-MM-DD HH:mm':
+                    return <OriTimePicker allowClear={field.allowClear || false} isRange={field.isRange || false} format={field.valueInput} />;
                 case 'YYYY-MM-DD HH:mm:ss':
                     return <OriTimePicker allowClear={field.allowClear || false} isRange={field.isRange || false} format={field.valueInput} />;
-                case 'input':
-                    return (
-                        <OriInput
-                            allowClear={field.allowClear || false}
-                            isRange={field.isRange || false}
-                            placeholder={field.description}
-                            width={field.width ? field.width : field.isRange ? 240 : 120}
-                        />
-                    );
-                default: return <></>
+                case 'input': return <OriInput
+                    allowClear={field.allowClear || false}
+                    isRange={field.isRange || false}
+                    placeholder={field.description}
+                    width={field.width ? field.width : field.isRange ? 240 : 120}
+                />;
+                default: return <Input allowClear={field.allowClear} placeholder={field.description} />
             }
         } else {
             return field.valueInput
