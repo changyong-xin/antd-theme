@@ -1,4 +1,5 @@
 import { IMenuItem, IOridForm } from "./interface";
+import { OriBooleanSelect } from "./oriBooleanSelect";
 import { OriContext } from "./oriContext";
 import { OriDatePicker } from "./oriDatePicker";
 import { OriEmpty } from "./oriEmpty";
@@ -6,6 +7,7 @@ import { OriFreeLayout } from "./oriFreeLayout";
 import { OriGrid } from "./oriGrid";
 import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
+import { OriInput } from "./oriInput";
 import { OriLayout } from "./oriLayout";
 import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
@@ -23,6 +25,7 @@ import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
 import { antiShaking, throttle } from "./utils/throttle";
 
 export {
+    OriBooleanSelect,
     OriContext,
     OriDatePicker,
     OriEmpty,
@@ -30,6 +33,7 @@ export {
     OriGrid,
     OriGridForm,
     OriGroupInput,
+    OriInput,
     OriLayout,
     OriMainLayout,
     OriMiniLayout,
