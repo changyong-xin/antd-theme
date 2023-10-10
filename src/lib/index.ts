@@ -21,9 +21,7 @@ import { OriSelect } from "./oriSelect";
 import { OriTable } from "./oriTable";
 import { OriTimePicker } from "./oriTimePicker";
 import { OriTreeSelect } from "./oriTreeSelect";
-import { copyObj, createMenuMap, dayjsTrans, treeDataTrans } from "./utils";
-import { requestJson, wrapperApi, wrapperUrl } from "./utils/requestJson";
-import { antiShaking, throttle } from "./utils/throttle";
+import { antiShaking, copyObj, createMenuMap, dayjsTrans, throttle, treeDataTrans, wrapperApi, wrapperUrl } from "./utils";
 
 export {
     OriBooleanSelect,
@@ -39,10 +37,10 @@ export {
     OriMainLayout,
     OriMiniLayout,
     OriMonthPicker, OriPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
-    copyObj, createMenuMap, dayjsTrans, requestJson,
+    copyObj, createMenuMap, dayjsTrans,
     throttle, treeDataTrans, wrapperApi,
     wrapperUrl
 };
 
-    export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
+export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
 

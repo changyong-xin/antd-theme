@@ -16,9 +16,9 @@ ConfigProvider.config({
   theme: { token: { colorPrimary: 'red', colorInfo: 'red' } },
 });
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <DemoIndex />
-);
+
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<DemoIndex />);
 
 
 // If you want to start measuring performance in your app, pass a function
