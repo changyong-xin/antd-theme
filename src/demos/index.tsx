@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
-import { App, Avatar, Badge, Button, ConfigProvider, Dropdown, FloatButton, Input } from 'antd';
+import { Avatar, Badge, Button, ConfigProvider, Dropdown, FloatButton, Input } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { useState } from 'react';
@@ -30,21 +30,6 @@ function ThemeSetting(props: { onOk: (color: string) => void }) {
 
 }
 
-function Context() {
-    const { message, notification, modal } = App.useApp();
-    OriContext.message = message;
-    OriContext.notification = notification;
-    OriContext.modal = modal;
-    return <></>
-}
-
-function AppWrapper() {
-    return (
-        <App>
-            <Context />
-        </App>
-    )
-}
 
 function MainExtra() {
     const [dot, setDot] = useState(true)
@@ -93,13 +78,14 @@ function DemoIndex() {
                 }
             }}
         >
-            <FloatButton  tooltip={<ThemeSetting onOk={setColor} />} />
-            <AppWrapper />
-            <OriMainLayout
-                menu={createMenuMap(MainMenus)}
-                default={<div>默认标签页</div>}
-                tabBarExtraContent={<MainExtra />}
-            />
+            <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
+            <OriContext.Container>
+                <OriMainLayout
+                    menu={createMenuMap(MainMenus)}
+                    default={<div>默认标签页</div>}
+                    tabBarExtraContent={<MainExtra />}
+                />
+            </OriContext.Container>
         </ConfigProvider>
     );
 }

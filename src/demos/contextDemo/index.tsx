@@ -12,7 +12,7 @@ export class OriContextDemo extends React.Component<any, any>{
                         Antd定制主题的特殊用法,如果直接使用message.info则不能使用主题变量
                     </a>
                 </div>
-                <div style={{ marginTop: 16 }} >能用主题的写法：</div>
+                <div style={{ marginTop: 16 }} >能用动态主题的写法：</div>
                 <div style={{ marginTop: 16 }} >
                     <Button onClick={() => {
                         OriContext.message.info('测试')
@@ -34,7 +34,7 @@ export class OriContextDemo extends React.Component<any, any>{
                         OriContext.modal
                     </Button>
                 </div >
-                <div style={{ marginTop: 16 }} >不能用主题的写法(当前红色主题应用了ConfigProvider.config的单独配置)：</div>
+                <div style={{ marginTop: 16 }} >不能用动态主题的写法(当前红色主题应用了ConfigProvider.config的单独配置)：</div>
                 <div style={{ marginTop: 16 }} >
                     <Button onClick={() => {
                         message.info('测试')

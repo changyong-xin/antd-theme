@@ -172,7 +172,7 @@ export default function OriMainLayout(props: {
     OriContext.openTab = openTab;
 
     return <>
-        <Layout style={{ height: '100vh' }}>
+        <Layout style={{ height: '100vh', overflow: 'hidden' }}>
             <MainLeft
                 menu={props.menu.menu}
                 activeKey={state.activeKey}
