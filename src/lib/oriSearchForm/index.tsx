@@ -1,32 +1,16 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Form, FormInstance, Input, Tooltip } from 'antd';
+import { FieldData } from 'rc-field-form/es/interface';
 import React from 'react';
-import { IOridForm } from '../interface';
+import { FieldVlaue, IOriForm, IOriSearchFormField } from '../interface';
 import { OriDatePicker } from '../oriDatePicker';
 import { OriInput } from '../oriInput';
 import { OriMonthPicker } from '../oriMonthPicker';
 import { OriTimePicker } from '../oriTimePicker';
 import './index.scss';
 
-declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' | 'YYYY-MM-DD HH' | 'YYYY-MM-DD HH:mm' | 'YYYY-MM-DD HH:mm:ss';
 
-declare type FieldVlaue = React.Key | [React.Key, React.Key] | React.Key[];
-
-export interface IOriSearchFormField {
-    name: string;
-    /** 中文描述 */
-    description: string;
-    /** 输入组件的类型，从默认类型中选择或直接使用自定义组件，注意：需要实现接口的value及onChange */
-    valueInput: ValueInput | React.ReactNode;
-    width?: number;
-    allowClear?: boolean;
-    /** 是否是区间查询 */
-    isRange?: boolean;
-    /** 初始值 */
-    initialValue?: FieldVlaue;
-}
-
-export interface IOriSearchForm<T> extends IOridForm<T> {
+export interface IOriSearchForm<T> extends IOriForm<T> {
     fields?: IOriSearchFormField[];
     onSearch?: (value: T) => void;
     dividual?: boolean;
@@ -59,7 +43,7 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} >
                 {
                     this.props.fields ?
-                        <Form className='ori-searchform' style={{ display: "flex", flexWrap: 'wrap' }} ref={this._form} >
+                        <Form className='ori-searchform' onFieldsChange={this.onFieldsChange} style={{ display: "flex", flexWrap: 'wrap' }} ref={this._form} >
                             {
                                 this.props.addOnBefore ?
                                     <div className='ori-searchform-add'>
@@ -200,9 +184,18 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
                 />;
                 default: return <Input allowClear={field.allowClear} placeholder={field.description} />
             }
-        } else {
+        } else if (field.valueInput) {
             return field.valueInput
+        } else {
+            return <Input allowClear={field.allowClear} placeholder={field.description} />
         }
     }
-
+    public onFieldsChange = (fields: FieldData[]) => {
+        if (fields[0]) {
+            const field = fields[0]
+            if (field && field.validating !== true && this.props.onFieldsChange !== undefined) {
+                this.props.onFieldsChange(field.name[0], field.value)
+            }
+        }
+    }
 }

@@ -4,12 +4,12 @@ import Form, { FormItemProps } from 'antd/es/form';
 import { FieldData } from 'rc-field-form/es/interface';
 import React from 'react';
 import { OriGrid } from '../oriGrid';
-import { IOridForm } from '../interface';
+import { IOriForm } from '../interface';
 
 
-interface IOriGridForm<T> extends IOridForm<T> {
+interface IOriGridForm<T> extends IOriForm<T> {
     items: FormItemProps[]
-    cols: number;
+    cols?: number;
     labelCol?: number;
     wrapperCol?: number;
     rowHeight?: number | string;
@@ -27,9 +27,9 @@ export class OriGridForm<T = any> extends React.Component<IOriGridForm<T>, any>{
 
     public render() {
         return (
-            <Form ref={this._form} onFieldsChange={this.onFieldsChange} validateMessages={{ required: "不能为空", }} >
+            <Form<T> ref={this._form} onFieldsChange={this.onFieldsChange} validateMessages={{ required: "不能为空", }} >
                 <OriGrid<FormItemProps>
-                    cols={this.props.cols}
+                    cols={this.props.cols || 1}
                     dataSource={this.props.items}
                     render={(item) =>
                         <Form.Item

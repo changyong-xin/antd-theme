@@ -1,4 +1,4 @@
-import { IMenuItem, IOridForm } from "./interface";
+import { IMenuItem, IOriForm, IOriSearchFormField } from "./interface";
 import { OriBooleanSelect } from "./oriBooleanSelect";
 import { OriContext } from "./oriContext";
 import { OriDatePicker } from "./oriDatePicker";
@@ -13,7 +13,7 @@ import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
 import { OriPicker } from "./oriPicker";
-import { IOriSearchFormField, OriSearchForm } from "./oriSearchForm";
+import { OriSearchForm } from "./oriSearchForm";
 import { IOriSearchLayout, OriSearchLayout } from "./oriSearchLayout";
 import { OriSearchLayoutUiAction } from "./oriSearchLayout/uiAction";
 import { OriSearchLayoutUiStore } from "./oriSearchLayout/uiStore";
@@ -42,5 +42,5 @@ export {
     wrapperUrl
 };
 
-export type { IMenuItem, IOriSearchFormField, IOriSearchLayout, IOridForm };
+    export type { IMenuItem, IOriForm, IOriSearchFormField, IOriSearchLayout };
 
