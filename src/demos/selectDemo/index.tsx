@@ -10,7 +10,7 @@ export function SelectDemo() {
                 title='下拉选'
             >
                 <OriSelect
-                    defaultValue={['5','6']}
+                    defaultValue={['5', '6']}
                     placeholder={'多选'}
                     width={200}
                     mode={'multiple'}
@@ -43,7 +43,7 @@ export function SelectDemo() {
                 title='树选择器-多选模式下默认为级联选择，并且只会选择子级'
             >
                 <OriTreeSelect
-                    defaultValue={['2','3','4']}
+                    defaultValue={['1', '4']}
                     treeDefaultExpandAll={true}
                     allowClear={true}
                     placeholder={'多选'}
@@ -67,6 +67,7 @@ export function SelectDemo() {
                     fieldNames={{ label: 'title', value: 'valuerow', children: 'child' }}
                 />
                 <OriTreeSelect
+                    defaultValue={'7'}
                     treeDefaultExpandAll={true}
                     allowClear={true}
                     placeholder={'单选'}
@@ -74,7 +75,7 @@ export function SelectDemo() {
                     treeData={[
                         {
                             value: '1', label: 'label1', children: [
-                                { value: '4', label: 'label4' },
+                                { value: '4', label: 'label4', disabled: true },
                             ]
                         },
                         {
