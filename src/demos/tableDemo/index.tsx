@@ -3,14 +3,12 @@ import { OriTable } from '../../lib';
 
 export class OriTableDemo extends React.Component<any, any>{
 
-
-
     public render() {
-        console.log('OriTableReander')
         return (
             <>
                 <div style={{ padding: '16px', height: "100%" }} >
                     <OriTable
+                        
                         rowKey={'title'}
                         dataSource={[{ title: '456' }]}
                         columns={[{

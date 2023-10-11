@@ -5,7 +5,7 @@ import './index.scss';
 
 
 export function OriTable<T extends AnyObject>(props: TableProps<T>) {
-    const { className, columns, scroll, size, bordered, pagination, locale, ...rest } = props
+    const { className, columns, scroll, size, bordered, pagination, locale, ...rest } = props;
     return (
         <Table<T>
             {...rest}
@@ -16,7 +16,15 @@ export function OriTable<T extends AnyObject>(props: TableProps<T>) {
                     :
                     'ori-table ori-table-empty'
             }
-            columns={columns}
+
+            columns={
+                [
+                    ...(columns || []),
+                    {
+                        dataIndex: "ori-table-flex-col",
+                    },
+                ]
+            }
             locale={{
                 emptyText: typeof (props.loading) === 'object'
                     ?

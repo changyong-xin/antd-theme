@@ -63,14 +63,7 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                 middleContent={
                     <OriTable<T>
                         rowKey={this.props.rowKey || this._uiAction.getRowKey}
-                        columns={
-                            [
-                                ...(this.props.columns || []),
-                                {
-                                    dataIndex: "ori-searchlayout-flex-col",
-                                },
-                            ]
-                        }
+                        columns={this.props.columns}
                         dataSource={this._uiStore.dataSource}
                         rowSelection={
                             this.props.selectable ? {
