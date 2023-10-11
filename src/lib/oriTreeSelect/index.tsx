@@ -19,7 +19,41 @@ interface IOriTreeSelect {
 }
 
 export function OriTreeSelect(props: IOriTreeSelect) {
-    const [label, setLabel] = useState<string | undefined>(undefined)
+    function getInitialLable(value: OriSelectValue, source: AnyObject[], labels: any[]) {
+        source.forEach((item) => {
+            const children = (props.fieldNames && props.fieldNames.children) ? item[props.fieldNames.children] : item.children;
+            if ((Array.isArray(value) ? value : [value]).find((valueitem) => valueitem === (
+                props.fieldNames && props.fieldNames.value ? item[props.fieldNames.value] : item.value
+            ))) {
+                labels.push(
+                    children && children.length > 0 ?
+                        children.map((childrenIitem: any) => (
+                            props.fieldNames && props.fieldNames.label)
+                            ?
+                            childrenIitem[props.fieldNames.label]
+                            :
+                            childrenIitem.label
+                        )
+                        :
+                        props.fieldNames && props.fieldNames.label ? item[props.fieldNames.label] : item.label
+                );
+            } else if (children && children.length > 0) {
+                getInitialLable(value, children, labels)
+            }
+        })
+        return labels
+    }
+    const [label, setLabel] = useState<string | undefined>(
+        props.value
+            ?
+            getInitialLable(props.value, props.treeData, []).toString()
+            :
+            props.defaultValue
+                ?
+                getInitialLable(props.defaultValue, props.treeData, []).toString()
+                :
+                undefined
+    )
     return (
         <TreeSelect<OriSelectValue, AnyObject>
             treeDefaultExpandAll={props.treeDefaultExpandAll}
@@ -34,6 +68,7 @@ export function OriTreeSelect(props: IOriTreeSelect) {
             style={{ width: (props.width && props.width > 80) ? props.width : 120, }}
             treeData={props.treeData}
             onChange={(value, labels) => {
+                console.log(value)
                 if (props.onChange) {
                     props.onChange(value)
                 }

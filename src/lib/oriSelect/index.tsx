@@ -18,10 +18,10 @@ interface IOriSelect {
 }
 
 export function OriSelect(props: IOriSelect) {
-    function getInitialLable(value: any) {
-        let label;
+    function getInitialLable(value: OriSelectValue) {
+        let label: any;
         let labels: any[] = [];
-        if (typeof (value) === 'string') {
+        if (!Array.isArray(value)) {
             props.options.forEach((item) => {
                 if (props.fieldNames && props.fieldNames.value) {
                     if (value === item[props.fieldNames.value]) {

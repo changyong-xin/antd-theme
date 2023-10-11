@@ -178,6 +178,13 @@ export class SearchFormDemo extends React.Component<any, any>{
                         onFieldsChange={this.onFieldsChange}
                     />
                 </Card>
+                <Card title={'不使用表单，则仅相当于一个between布局的div，只有addOnAfter及addOnEnd'} style={{ marginBottom: '16px' }} >
+                    <OriSearchForm
+                        addOnAfter={<Button>addOnAfter</Button>}
+                        addOnBefore={<Button>addOnBefore</Button>}
+                        addOnEnd={<Button>addOnEnd</Button>}
+                    />
+                </Card>
             </div>
         )
     }
