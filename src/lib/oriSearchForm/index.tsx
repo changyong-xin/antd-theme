@@ -190,6 +190,7 @@ export class OriSearchForm<T> extends React.Component<IOriSearchForm<T>, any>{
             return <Input allowClear={field.allowClear} placeholder={field.description} />
         }
     }
+    
     public onFieldsChange = (fields: FieldData[]) => {
         if (fields[0]) {
             const field = fields[0]

@@ -1,48 +1,44 @@
 import { ExclamationCircleTwoTone } from '@ant-design/icons';
 import { theme } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
-import { ColumnsType } from 'antd/es/table';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { OriLayout } from '../oriLayout';
-import { OriPagination } from '../oriPagination';
+import { IOriPagination, OriPagination } from '../oriPagination';
 import { IOriSearchForm, OriSearchForm } from '../oriSearchForm';
 import { OriTable } from '../oriTable';
-import { OriSearchLayoutUiAction } from './uiAction';
-import { OriSearchLayoutUiStore } from './uiStore';
+import { OriSearchLayoutDomain } from './domain';
 
-function SelectCounts(props: { count: number }) {
+function SelectCounts(props: { count: number, extra?: React.ReactNode }) {
     const token = theme.useToken()
     return (
         <div className='ori-flex-row'>
             <ExclamationCircleTwoTone twoToneColor={token.token.colorPrimary} style={{ marginRight: '8px' }} />
-            <span>已选中</span>
+            <span>已选择</span>
             <span style={{ margin: '0px 8px' }}>{props.count}</span>
-            <span>条</span>
+            <span>项</span>
+            {
+                props.extra
+            }
         </div>
     )
 }
 
 
-export interface IOriSearchLayout<T, Q, S extends OriSearchLayoutUiStore<T> = OriSearchLayoutUiStore<T>> extends IOriSearchForm<Q> {
-    columns?: ColumnsType<T>;
-    rowKey?: keyof T;
+export interface IOriSearchLayout<T, Q> extends IOriSearchForm<Q> {
     selectable?: boolean;
-    uiAction?: OriSearchLayoutUiAction<T, Q, S>;
-    uiStore?: OriSearchLayoutUiStore<T>;
+    selectExtra?: React.ReactNode;
+    domain?: OriSearchLayoutDomain<T, Q>;
 }
 
 
-export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> extends React.Component<IOriSearchLayout<T, Q>, any>{
+export class OriSearchLayout<T extends AnyObject = any, Q extends AnyObject = any> extends React.Component<IOriSearchLayout<T, Q>, any>{
 
-    private _uiStore: OriSearchLayoutUiStore<T>;
-
-    private _uiAction: OriSearchLayoutUiAction<T, Q, OriSearchLayoutUiStore<T>>;
+    private _domain: OriSearchLayoutDomain<T, Q>
 
     constructor(props: IOriSearchLayout<T, Q>) {
         super(props)
-        this._uiStore = props.uiStore ? props.uiStore : new OriSearchLayoutUiStore<T>();
-        this._uiAction = props.uiAction ? props.uiAction : new OriSearchLayoutUiAction<T, Q, OriSearchLayoutUiStore<T>>(this._uiStore);
+        this._domain = props.domain ? props.domain : new OriSearchLayoutDomain<T, Q>();
 
     }
 
@@ -55,26 +51,26 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                         addOnBefore={this.props.addOnAfter}
                         addOnAfter={this.props.addOnAfter}
                         fields={this.props.fields}
-                        onSearch={this._uiAction.onSearch}
-                        onFieldsChange={this._uiAction.onFieldsChange}
+                        onSearch={this._domain.onSearch}
+                        onFieldsChange={this._domain.onFieldsChange}
                         addOnEnd={this.props.addOnEnd}
                     />
                 }
                 middleContent={
                     <OriTable<T>
-                        rowKey={this.props.rowKey || this._uiAction.getRowKey}
-                        columns={this.props.columns}
-                        dataSource={this._uiStore.dataSource}
+                        rowKey={this._domain.getRowKey}
+                        columns={this._domain.columns}
+                        dataSource={this._domain.dataSource}
                         rowSelection={
                             this.props.selectable ? {
-                                selectedRowKeys: this._uiStore.selectedRowKeys,
+                                selectedRowKeys: this._domain.selectedRowKeys,
                                 onChange: (selectedRowKeys, selectedRows, info) => {
-                                    this._uiStore.selectedRowKeys = selectedRowKeys;
-                                    this._uiStore.selectedRows = selectedRows;
+                                    this._domain.selectedRowKeys = selectedRowKeys;
+                                    this._domain.selectedRows = selectedRows;
                                 },
                             } : undefined
                         }
-                        loading={{ spinning: this._uiStore.loading, tip: "加载中..." }}
+                        loading={{ spinning: this._domain.loading, tip: "加载中..." }}
                     />
                 }
                 middleStretch={true}
@@ -83,14 +79,14 @@ export class OriSearchLayout<T extends AnyObject, Q extends AnyObject = any> ext
                         addOnBefore={
                             this.props.selectable
                                 ?
-                                <SelectCounts count={this._uiStore.selectedRowKeys.length} />
+                                <SelectCounts count={this._domain.selectedRowKeys.length} />
                                 :
                                 <></>
                         }
-                        size={this._uiStore.pageSize}
-                        index={this._uiStore.pageIndex}
-                        total={this._uiStore.totalCount}
-                        onChange={(index, size) => this._uiAction.onPaginationChange(index, size)}
+                        size={this._domain.pageSize}
+                        index={this._domain.pageIndex || 0}
+                        total={this._domain.totalCount}
+                        onChange={(index, size) => this._domain.onPaginationChange(index, size)}
                     />
                 }
             />

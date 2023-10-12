@@ -78,7 +78,7 @@ function DemoIndex() {
                 }
             }}
         >
-            <FloatButton tooltip={<ThemeSetting onOk={setColor} />} />
+            <FloatButton style={{ display: 'none' }} tooltip={<ThemeSetting onOk={setColor} />} />
             <OriContext.Container>
                 <OriMainLayout
                     menu={createMenuMap(MainMenus)}

@@ -2,7 +2,8 @@ import { Button, Modal, Switch } from 'antd';
 import { makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { ReactNode } from 'react';
-import { OriSearchLayout, OriSearchLayoutUiAction, OriSearchLayoutUiStore } from '../../lib';
+import { OriSearchLayout } from '../../lib';
+import { OriSearchLayoutDomain } from '../../lib/oriSearchLayout/domain';
 
 interface IDemoDataEntity {
     name: string;
@@ -14,11 +15,10 @@ interface IDemoDataQo {
     createDate?: string;
 }
 
-class SimpleSearchLayoutStore extends OriSearchLayoutUiStore<IDemoDataEntity> {
 
-    public visible: boolean = false;
+class SimpleSearchLayoutDoaminAction extends OriSearchLayoutDomain<IDemoDataEntity, IDemoDataQo>{
 
-    public selectable: boolean = true;
+
 
     constructor() {
         super()
@@ -26,16 +26,35 @@ class SimpleSearchLayoutStore extends OriSearchLayoutUiStore<IDemoDataEntity> {
             visible: observable,
             selectable: observable
         })
+        this.columns = [
+            {
+                title: '姓名',
+                dataIndex: "name",
+                width: 500,
+                fixed: true,
+                sorter: true,
+            },
+            {
+                title: '性别',
+                dataIndex: "sex",
+                width: 600
+            },
+            {
+                title: '年龄',
+                dataIndex: "age",
+                width: 500
+            }
+        ]
     }
-}
 
-class SimpleSearchLayoutDoaminAction extends OriSearchLayoutUiAction<IDemoDataEntity, IDemoDataQo, SimpleSearchLayoutStore>{
-    public onSearch(value: IDemoDataQo) {
+    public visible: boolean = false;
+
+    public selectable: boolean = true;
+
+    public requestTableData(value: IDemoDataQo) {
         console.log(value)
-        this.uiStore.loading = true;
-        this.uiStore.dataSource = [];
         setTimeout(() => {
-            this.uiStore.dataSource = [
+            this.dataSource = [
                 { name: '0', sex: '0', age: 1 },
                 { name: '1', sex: '0', age: 1 },
                 { name: '2', sex: '0', age: 1 },
@@ -53,8 +72,8 @@ class SimpleSearchLayoutDoaminAction extends OriSearchLayoutUiAction<IDemoDataEn
                 { name: '14', sex: '0', age: 1 },
                 { name: '15', sex: '0', age: 1 },
             ]
-            this.uiStore.totalCount = 7;
-            this.uiStore.loading = false;
+            this.totalCount = 16;
+            this.loading = false;
         }, 1000);
     }
 }
@@ -63,33 +82,30 @@ class SimpleSearchLayoutDoaminAction extends OriSearchLayoutUiAction<IDemoDataEn
 
 export class SimpleSearchLayoutDemo extends React.Component<any, any> {
 
-    private _uiStore = new SimpleSearchLayoutStore();
+    private _domain = new SimpleSearchLayoutDoaminAction();
 
-    private _uiAction = new SimpleSearchLayoutDoaminAction(this._uiStore)
 
     public render(): ReactNode {
         return (
             <OriSearchLayout<IDemoDataEntity, IDemoDataQo>
-                rowKey={'name'}
-                uiStore={this._uiStore}
-                uiAction={this._uiAction}
-                selectable={this._uiStore.selectable}
+                domain={this._domain}
+                selectable={this._domain.selectable}
                 addOnEnd={
                     < div >
                         <span>
                             表格数据可选
                             <Switch
                                 style={{ margin: '0px 8px' }}
-                                checked={this._uiStore.selectable}
+                                checked={this._domain.selectable}
                                 onChange={(checked) => {
-                                    this._uiStore.selectable = checked
+                                    this._domain.selectable = checked
                                 }}
                                 checkedChildren={'on'}
                                 unCheckedChildren={'off'}
                             />
                         </span>
-                        <Button onClick={() => { this._uiStore.visible = !this._uiStore.visible }} >新增</Button>
-                        <Modal title={'demo'} open={this._uiStore.visible} onCancel={() => this._uiStore.visible = false} >
+                        <Button onClick={() => { this._domain.visible = !this._domain.visible }} >新增</Button>
+                        <Modal title={'demo'} open={this._domain.visible} onCancel={() => this._domain.visible = false} >
                             <div>Demo Modal</div>
                         </Modal>
                     </div>
@@ -110,27 +126,7 @@ export class SimpleSearchLayoutDemo extends React.Component<any, any> {
                         }
                     ]
                 }
-                columns={
-                    [
-                        {
-                            title: '姓名',
-                            dataIndex: "name",
-                            width: 100,
-                            fixed: true,
-                            sorter: true,
-                        },
-                        {
-                            title: '性别',
-                            dataIndex: "sex",
-                            width: 600
-                        },
-                        {
-                            title: '年龄',
-                            dataIndex: "age",
-                            width: 500
-                        }
-                    ]
-                }
+
             />
         )
     }

@@ -21,7 +21,8 @@ export function OriTable<T extends AnyObject>(props: TableProps<T>) {
                 [
                     ...(columns || []),
                     {
-                        dataIndex: "ori-table-flex-col",
+                        className: 'ori-table-flex-col',
+                        title: ''
                     },
                 ]
             }
