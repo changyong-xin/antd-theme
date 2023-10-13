@@ -4,7 +4,7 @@ import { AnyObject } from 'antd/es/_util/type';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { OriLayout } from '../oriLayout';
-import { IOriPagination, OriPagination } from '../oriPagination';
+import { OriPagination } from '../oriPagination';
 import { IOriSearchForm, OriSearchForm } from '../oriSearchForm';
 import { OriTable } from '../oriTable';
 import { OriSearchLayoutDomain } from './domain';

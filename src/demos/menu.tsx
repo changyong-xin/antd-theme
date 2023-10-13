@@ -10,8 +10,12 @@ import { SimpleSearchLayoutDemo } from "./layoutDemo/searchLayout";
 import { OriTableDemo } from "./tableDemo";
 import { TreeDemos } from "./treeDemo";
 import { SelectDemo } from "./selectDemo";
+import { HooksDemo } from "./hooksDemo";
 
 export const MainMenus: IMenuItem[] = [
+    {
+        label: 'Hooks使用', key: '0000', component: HooksDemo
+    },
     {
         label: '表格组件', icon: <TableOutlined />, key: '01', children: [
             { label: '通用表格', key: '0101', component: OriTableDemo },
@@ -36,7 +40,7 @@ export const MainMenus: IMenuItem[] = [
             { label: '选择组件', key: '0303', component: SelectDemo },
         ]
     },
-    { label: 'OriContext', key: '04', component: OriContextDemo },
-    { label: 'OriUtils', key: '05', component: OriContextDemo },
+    { label: 'Context', key: '04', component: OriContextDemo },
+    { label: 'Utils', key: '05', component: OriContextDemo },
     { label: '数据查询及展示', key: '06', component: SimpleSearchLayoutDemo },
 ]
