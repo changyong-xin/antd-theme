@@ -18,7 +18,7 @@ export class OriSearchLayoutDomain<T, Q> {
 
     public totalCount: number = 0;
 
-    public columns?: ColumnsType<T>;
+    public columns: ColumnsType<T> = [];
 
     public queryParam?: Q;
 
