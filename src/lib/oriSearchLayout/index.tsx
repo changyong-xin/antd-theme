@@ -39,7 +39,6 @@ export class OriSearchLayout<T extends AnyObject = any, Q extends AnyObject = an
     constructor(props: IOriSearchLayout<T, Q>) {
         super(props)
         this._domain = props.domain ? props.domain : new OriSearchLayoutDomain<T, Q>();
-
     }
 
     public render() {
@@ -84,7 +83,7 @@ export class OriSearchLayout<T extends AnyObject = any, Q extends AnyObject = an
                                 <></>
                         }
                         size={this._domain.pageSize}
-                        index={this._domain.pageIndex || 0}
+                        index={this._domain.pageIndex}
                         total={this._domain.totalCount}
                         onChange={(index, size) => this._domain.onPaginationChange(index, size)}
                     />

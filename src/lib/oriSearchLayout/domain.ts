@@ -8,7 +8,7 @@ export class OriSearchLayoutDomain<T, Q> {
 
     public loading: boolean = false;
 
-    public pageIndex: number = 0;
+    public pageIndex: number = 1;
 
     public pageSize: number = 20;
 
@@ -47,7 +47,7 @@ export class OriSearchLayoutDomain<T, Q> {
         return
     }
 
-    public onFieldsChange(name: string, value: any) {
+    public onFieldsChange(name: keyof Q, value: any) {
         return
     }
 

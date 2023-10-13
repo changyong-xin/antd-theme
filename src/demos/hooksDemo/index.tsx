@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 function SimpleDemo() {
     const [count, setCount] = useState(0)
     return (
-        <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
+        <Button onClick={() => setCount(count + 1)}>{'Count: ' + count}</Button>
     )
 }
 
@@ -26,7 +26,7 @@ function StateDemo() {
                 effectObject.count += 1;
                 setCount(count + 1)
             }}>
-                {'click Count: ' + count + ' effectCount: ' + effectCount + ' effectObject.coun: ' + effectObject.count}
+                {'Count: ' + count + ' effectCount: ' + effectCount + ' effectObject.coun: ' + effectObject.count}
             </Button>
             <ChildrenDemo count={count} />
         </div>
@@ -47,7 +47,7 @@ function EffectDemo1() {
     return (
         <div>
             <p>useEffect没有依赖项的时候：每次渲染都会执行副作用方法，相当于didUpdate的生命周期</p>
-            <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
+            <Button onClick={() => setCount(count + 1)}>{'Count: ' + count}</Button>
         </div>
     )
 }
@@ -61,7 +61,7 @@ function EffectDemo2() {
     return (
         <div>
             <p>useEffect依赖项是空数组的时候：只有第一次渲染会执行副作用方法，相当于didMount的生命周期</p>
-            <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
+            <Button onClick={() => setCount(count + 1)}>{'Count: ' + count}</Button>
         </div>
     )
 }
@@ -78,7 +78,7 @@ function EffectDemo3() {
     return (
         <div>
             <p>useEffect副作用函数返回值是function的时候，相当于willUnmount的生命周期,在这个演示中，可以通过关闭标签页触发unMount</p>
-            <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
+            <Button onClick={() => setCount(count + 1)}>{'Count: ' + count}</Button>
         </div>
     )
 }
@@ -98,7 +98,7 @@ function EffectDemo4() {
                 useEffect副作用函数返回值是function的时候，并且依赖项不是空数组，则会在渲染时先执行上次副作用函数的返回函数再执行副作用函数。
                 实际组件没有卸载，只是为了处理遗留的副作用函数
             </p>
-            <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
+            <Button onClick={() => setCount(count + 1)}>{'Count: ' + count}</Button>
         </div>
     )
 }
@@ -114,8 +114,8 @@ function EffectDemo5() {
     return (
         <div>
             <p>useEffect依赖项是数组的时候：数组内部值改变时会执行副作用函数，在这个示例中，点击count2不会触发，点击count会触发</p>
-            <Button onClick={() => setCount(count + 1)}>{'click Count: ' + count}</Button>
-            <Button onClick={() => setCount2(count2 + 1)}>{'click Count2: ' + count2}</Button>
+            <Button onClick={() => setCount(count + 1)}>{'Count1: ' + count}</Button>
+            <Button onClick={() => setCount2(count2 + 1)}>{'Count2: ' + count2}</Button>
         </div>
     )
 }
@@ -125,11 +125,11 @@ export function HooksDemo(props: any) {
     return (
         <>
             <a href='https://zhuanlan.zhihu.com/p/567534059?utm_id=0'>Hooks原理分析：https://zhuanlan.zhihu.com/p/567534059?utm_id=0</a>
-            <Card title='简单使用' style={{ margin: '8px 0px' }} >
+            <Card title='简单使用-useState' style={{ margin: '8px 0px' }} >
                 <SimpleDemo />
             </Card>
 
-            <Card title='状态管理' style={{ margin: '8px 0px' }} >
+            <Card title='状态管理-不要使用自定义变量' style={{ margin: '8px 0px' }} >
                 <StateDemo />
             </Card>
 

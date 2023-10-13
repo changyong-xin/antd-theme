@@ -1,15 +1,20 @@
 import { Button, Card } from 'antd';
+import { AnyObject } from 'antd/es/_util/type';
 import React from 'react';
 import { OriSearchForm } from '../../lib';
 
-export class SearchFormDemo extends React.Component<any, any>{
+interface IQo extends AnyObject {
+    CustomerName: string
+    CustomerNo: string;
+}
 
+export class SearchFormDemo extends React.Component<any, any>{
 
     public render() {
         return (
             <div>
                 <Card title={'基础查询表单，包含输入框及日期选择组件'} style={{ marginBottom: '16px' }} >
-                    <OriSearchForm
+                    <OriSearchForm<IQo>
                         fields={[
                             {
                                 name: 'CustomerName',
@@ -105,7 +110,7 @@ export class SearchFormDemo extends React.Component<any, any>{
                         onFieldsChange={this.onFieldsChange}
                     />
                 </Card>
-                <Card title={'不使用表单，则仅相当于一个between布局的div，只有addOnAfter及addOnEnd'} style={{ marginBottom: '16px' }} >
+                <Card title={'不使用表单，则仅相当于一个between布局的div，只有addOnBefore及addOnEnd'} style={{ marginBottom: '16px' }} >
                     <OriSearchForm
                         addOnAfter={<Button>addOnAfter</Button>}
                         addOnBefore={<Button>addOnBefore</Button>}
@@ -120,7 +125,7 @@ export class SearchFormDemo extends React.Component<any, any>{
         console.log(value)
     }
 
-    public onFieldsChange = (name: string, value: string | string[] | [string, string]) => {
+    public onFieldsChange = (name: keyof IQo, value: string | string[] | [string, string]) => {
         console.log(name, value)
     }
     public onDividualSearchClick = (name: string, value: any) => {

@@ -13,8 +13,6 @@ export interface IOriPagination {
 
 export function OriPagination(props: IOriPagination) {
 
-    const sizeConfig: number[] = [...[10, 20, 30, 50, 100, 200], ...(props.sizeConfig || [])]
-
     return (
         <div className='ori-pagination'>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -36,10 +34,10 @@ export function OriPagination(props: IOriPagination) {
                             theme='light'
                             selectedKeys={[String(props.size)]}
                             onSelect={(info) => {
-                                props.onChange(0, Number(info.key))
+                                props.onChange(1, Number(info.key))
                             }}
                             items={
-                                sizeConfig.map((item) => {
+                                [...[10, 20, 30, 50, 100, 200], ...(props.sizeConfig || [])].map((item) => {
                                     return {
                                         label: <span style={{ width: '40px' }}>{item}</span>,
                                         key: item.toString(),
@@ -57,7 +55,6 @@ export function OriPagination(props: IOriPagination) {
                 </Popover>
                 <Pagination
                     current={props.index}
-                    defaultCurrent={1}
                     onChange={props.onChange}
                     pageSize={props.size}
                     simple={true}

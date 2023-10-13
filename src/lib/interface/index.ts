@@ -17,7 +17,7 @@ export interface IOriForm<T> {
     /** 获取表单实例对象（用于外部控制表单Api） */
     getFormInstance?: (form: FormInstance<T>) => void;
     /** 响应表单域的值变化 */
-    onFieldsChange?: (name: string, value: any) => void;
+    onFieldsChange?: (name: keyof T, value: any) => void;
 }
 
 
@@ -25,8 +25,8 @@ export declare type ValueInput = 'input' | 'YYYY-MM' | 'YYYY-MM-DD' | 'YYYYMM' |
 
 export declare type FieldVlaue = React.Key | [React.Key, React.Key] | React.Key[];
 
-export interface IOriSearchFormField {
-    name: string;
+export interface IOriSearchFormField<T = AnyObject> {
+    name: keyof T;
     /** 中文描述 */
     description: string;
     /** 是否是区间查询 */
