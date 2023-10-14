@@ -10,7 +10,7 @@ import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
 import { OriInput } from "./oriInput";
 import { OriLayout } from "./oriLayout";
-import { OriList } from "./oriList";
+import { OriDraggableList } from "./oriList";
 import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
@@ -36,7 +36,7 @@ export {
     OriGroupInput,
     OriInput,
     OriLayout,
-    OriList,
+    OriDraggableList,
     OriMainLayout,
     OriMiniLayout,
     OriMonthPicker, OriPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutDomain, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,

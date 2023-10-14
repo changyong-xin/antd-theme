@@ -12,7 +12,6 @@ import { TreeDemos } from "./treeDemo";
 import { SelectDemo } from "./selectDemo";
 import { HooksDemo } from "./hooksDemo";
 import { ListDemo } from "./listDemo";
-import { DndDemo } from "./dndDemo";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -34,17 +33,16 @@ export const MainMenus: IMenuItem[] = [
         label: '布局组件', icon: <LayoutOutlined />, key: '00', children: [
             { label: '通用布局', key: '0001', component: LayoutDemo },
             { label: '自由布局', key: '0002', component: OriFreeLayoutDemo },
+            { label: '数据查询及展示', key: '0003', component: SimpleSearchLayoutDemo },
         ]
     },
     {
         label: '组件列表', icon: <GroupOutlined />, key: '03', children: [
-            { label: '拖放组件', key: '0300', component: DndDemo },
             { label: '树形组件', key: '0302', component: TreeDemos },
             { label: '选择组件', key: '0303', component: SelectDemo },
-            { label: '列表组件', key: '0304', component: ListDemo },
+            { label: '可拖拽列表', key: '0304', component: ListDemo },
         ]
     },
     { label: 'Context', key: '04', component: OriContextDemo },
     { label: 'Utils', key: '05', component: OriContextDemo },
-    { label: '数据查询及展示', key: '06', component: SimpleSearchLayoutDemo },
 ]
