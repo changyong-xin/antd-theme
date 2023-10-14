@@ -5,7 +5,7 @@ import { List, theme } from "antd";
 import React, { useState } from "react";
 
 
-function Droppable(props: { id: string | number, transform?: string, children?: React.ReactNode }) {
+function Droppable(props: { id: string | number, children?: React.ReactNode }) {
     const token = theme.useToken()
     const { isOver, setNodeRef } = useDroppable({
         id: props.id,
@@ -15,7 +15,6 @@ function Droppable(props: { id: string | number, transform?: string, children?: 
             ref={setNodeRef}
             style={{
                 backgroundColor: isOver ? token.token.colorPrimaryBg : undefined,
-                transform: props.transform
             }}
         >
             {props.children}
@@ -50,7 +49,7 @@ const listrow = ['1', '2', '3', '4', '5']
 export function DndDemo(props: any) {
     const [list, setList] = useState(listrow);
     const [overId, setOver] = useState<number | undefined>(undefined);
-    const [activeId, setactiveId] = useState<number | undefined>(undefined);
+    const [activeId, setActive] = useState<number | undefined>(undefined);
     return (
         <div style={{ overflow: "hidden", width: "100%", height: '100%' }}>
             <DndContext
@@ -63,16 +62,19 @@ export function DndDemo(props: any) {
                             ...list.slice(Number(e.over.id) - 1, list.length)
                         ]
                         setList(result)
+                    }
+                    setActive(undefined)
+                }}
+                onDragOver={(e) => {
+                    console.log('over', e.over)
+                    if (e.over) {
+                        setOver(Number(e.over.id))
+                    } else {
                         setOver(undefined)
                     }
                 }}
-                onDragOver={(e) => {
-                    if (e.over) {
-                        setOver(Number(e.over.id))
-                    }
-                }}
                 onDragStart={(e) => {
-                    setactiveId(Number(e.active.id))
+                    setActive(Number(e.active.id))
                 }}
             >
                 <List>
@@ -80,27 +82,26 @@ export function DndDemo(props: any) {
                         list.map(
                             (item, index) =>
                                 <React.Fragment key={index} >
-                                    <Droppable
-                                        id={index + 1}
-                                        transform={
-                                            (overId === undefined || overId === activeId || activeId === undefined)
-                                                ?
-                                                undefined
-                                                :
-                                                (index + 1 > activeId && overId > activeId && index + 1 <= overId)
-                                                    ?
-                                                    'translate(0,-100%)'
-                                                    :
-                                                    (index + 1 < activeId && overId < activeId && index + 1 >= overId)
-                                                        ?
-                                                        'translate(0,100%)'
-                                                        :
-                                                        undefined
-                                        }
-                                    >
+                                    <Droppable id={index + 1} >
                                         <Draggable id={index + 1}>
-                                            <List.Item >
-                                                <div style={{ padding: '24px' }}>{item}</div>
+                                            <List.Item style={{
+                                                transform: (
+                                                    (overId === undefined || overId === activeId || activeId === undefined)
+                                                        ?
+                                                        undefined
+                                                        :
+                                                        (index + 1 > activeId && overId > activeId && index + 1 <= overId)
+                                                            ?
+                                                            'translate(0,-100%)'
+                                                            :
+                                                            (index + 1 < activeId && overId < activeId && index + 1 >= overId)
+                                                                ?
+                                                                'translate(0,100%)'
+                                                                :
+                                                                undefined
+                                                )
+                                            }} >
+                                                <button>{item}</button>
                                             </List.Item>
                                         </Draggable>
                                     </Droppable>
