@@ -11,6 +11,8 @@ import { OriTableDemo } from "./tableDemo";
 import { TreeDemos } from "./treeDemo";
 import { SelectDemo } from "./selectDemo";
 import { HooksDemo } from "./hooksDemo";
+import { ListDemo } from "./listDemo";
+import { DndDemo } from "./dndDemo";
 
 export const MainMenus: IMenuItem[] = [
     {
@@ -36,8 +38,10 @@ export const MainMenus: IMenuItem[] = [
     },
     {
         label: '组件列表', icon: <GroupOutlined />, key: '03', children: [
+            { label: '拖放组件', key: '0300', component: DndDemo },
             { label: '树形组件', key: '0302', component: TreeDemos },
             { label: '选择组件', key: '0303', component: SelectDemo },
+            { label: '列表组件', key: '0304', component: ListDemo },
         ]
     },
     { label: 'Context', key: '04', component: OriContextDemo },

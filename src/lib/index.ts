@@ -1,6 +1,7 @@
 import { IMenuItem, IOriForm, IOriSearchFormField } from "./interface";
 import { OriBooleanSelect } from "./oriBooleanSelect";
 import { OriContext } from "./oriContext";
+import { OriCustomColumn } from "./oriCustomColumn";
 import { OriDatePicker } from "./oriDatePicker";
 import { OriEmpty } from "./oriEmpty";
 import { OriFreeLayout } from "./oriFreeLayout";
@@ -9,6 +10,7 @@ import { OriGridForm } from "./oriGridForm";
 import { OriGroupInput } from "./oriGroupInput";
 import { OriInput } from "./oriInput";
 import { OriLayout } from "./oriLayout";
+import { OriList } from "./oriList";
 import OriMainLayout from "./oriMainLayout";
 import { OriMiniLayout } from "./oriMiniLayout";
 import { OriMonthPicker } from "./oriMonthPicker";
@@ -25,6 +27,7 @@ import { antiShaking, copyObj, createMenuMap, dayjsTrans, throttle, treeDataTran
 export {
     OriBooleanSelect,
     OriContext,
+    OriCustomColumn,
     OriDatePicker,
     OriEmpty,
     OriFreeLayout,
@@ -33,6 +36,7 @@ export {
     OriGroupInput,
     OriInput,
     OriLayout,
+    OriList,
     OriMainLayout,
     OriMiniLayout,
     OriMonthPicker, OriPicker, OriSearchForm, OriSearchLayout, OriSearchLayoutDomain, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
