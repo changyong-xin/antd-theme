@@ -22,13 +22,33 @@ export class OriTableDemo extends React.Component<any, any>{
                             { title: '4' },
                             { title: '5' }
                         ]}
-                        columns={[{
-                            dataIndex: "title",
-                            title: 'Title',
-                            width: 100,
-                            sorter:true,
-                            sortOrder:'ascend'
-                        }]}
+                        columns={[
+                            {
+                                dataIndex: "title",
+                                title: 'Title',
+                                width: 100,
+                                sorter: true,
+                                sortOrder: 'ascend'
+                            },
+                            {
+                                dataIndex: "description",
+                                title: 'Description',
+                                width: 120,
+                            },
+                            {
+                                dataIndex: "tooltip",
+                                title: 'Tooltip',
+                                width: 150,
+                                sorter: true,
+                                sortOrder: 'descend'
+                            },
+                            {
+                                dataIndex: "label",
+                                title: 'Label',
+                                width: 80,
+                                sorter: true,
+                            }
+                        ]}
                     />
                 </div>
             </>

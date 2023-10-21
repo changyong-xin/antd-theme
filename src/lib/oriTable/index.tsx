@@ -17,9 +17,10 @@ interface IOriTable<T> extends TableProps<T> {
 }
 
 export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
-    const [columns, setColumns] = useState(props.columns)
+    const [columns, setColumns] = useState(props.columns || [])
     return (
         <Table<T>
+            rowKey={props.rowKey}
             dataSource={props.dataSource}
             size='small'
             className={
@@ -33,9 +34,10 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     ...(props.customConfig && props.columns ? [
                         {
                             title: <OriCustomColumn
-                                columns={props.columns}
+                                columns={columns}
                                 onOk={
                                     (columns) => {
+                                        console.log(columns)
                                         setColumns(columns)
                                         if (props.customConfig && props.customConfig.onChange) {
                                             props.customConfig.onChange(columns)
@@ -47,7 +49,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                             width: props.customConfig.width,
                         }
                     ] : []),
-                    ...(columns || []),
+                    ...columns.filter((item) => item.className !== 'ori-table-hidden-col'),
                     {
                         className: 'ori-table-flex-col',
                         title: ''
