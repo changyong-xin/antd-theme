@@ -76,6 +76,10 @@ class SimpleSearchLayoutDoaminAction extends OriSearchLayoutDomain<IDemoDataEnti
             this.loading = false;
         }, 1000);
     }
+
+    public getRowKey(record: IDemoDataEntity, index?: number | undefined): string {
+        return record.name
+    }
 }
 
 
@@ -88,6 +92,13 @@ export class SimpleSearchLayoutDemo extends React.Component<any, any> {
     public render(): ReactNode {
         return (
             <OriSearchLayout<IDemoDataEntity, IDemoDataQo>
+                customConfig={{
+                    width: '80px',
+                    render: (text, record, index) => <span>{index + 1}</span>,
+                    onChange:(columns)=>{
+                        this._domain.dataSource=[]
+                    }
+                }}
                 domain={this._domain}
                 selectable={this._domain.selectable}
                 addOnEnd={

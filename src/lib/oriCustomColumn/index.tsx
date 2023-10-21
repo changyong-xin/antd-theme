@@ -1,9 +1,9 @@
 import { CaretDownFilled, CaretUpFilled, LockFilled, SettingOutlined, UnlockFilled } from '@ant-design/icons';
-import { Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag } from 'antd';
+import { Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag, theme } from 'antd';
+import { ColumnType } from 'antd/es/table';
 import React, { useRef } from 'react';
 import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
-import { ColumnType } from 'antd/es/table';
 
 interface IOriCustomColumn {
     columns: ColumnType<any>[]
@@ -13,8 +13,8 @@ interface IOriCustomColumn {
 function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string) => void }) {
     const item: ICustomEdit = JSON.parse(props.value!)
     return (
-        <Row>
-            <Col span={4} style={{ padding: "0px 4px" }}>{item.title as any}</Col>
+        <Row style={{ padding: '4px 0px', borderBottom: "1px solid #e9e9e9" }}>
+            <Col span={4} style={{ padding: "0px 4px", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title as any}</Col>
             <Col span={4} style={{ padding: "0px 4px" }}>
                 <Switch
                     checked={item.className !== 'ori-table-hidden-col'}
@@ -87,29 +87,27 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
                     props.columns.filter((item) => item.sortOrder)
                         .map((item, index) =>
                             <Tag key={index}>
-                                {
-                                    typeof (item.title) === 'function'
-                                        ?
-                                        <></>
-                                        :
-                                        item.title
-                                }
-                                {
-                                    item.sortOrder === 'descend'
-                                        ?
-                                        <CaretDownFilled /> :
-                                        item.sortOrder === 'ascend'
+                                <div style={{ display: 'flex' }}>
+                                    <div style={{ maxWidth: '100px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        <span>{item.title}</span>
+                                    </div>
+                                    {
+                                        item.sortOrder === 'descend'
                                             ?
-                                            <CaretUpFilled />
-                                            :
-                                            <></>
-                                }
+                                            <CaretDownFilled /> :
+                                            item.sortOrder === 'ascend'
+                                                ?
+                                                <CaretUpFilled />
+                                                :
+                                                <></>
+                                    }
+                                </div>
                             </Tag>
                         )
                 }
             </div>
             <div>
-                <Row style={{ margin: '8px 0px 0px 0px' }}>
+                <Row style={{ margin: '8px 0px 0px 0px', padding: '0px 0px 4px 0px', borderBottom: "1px solid #e9e9e9" }}>
                     <Col span={4} style={{ padding: '0px 4px' }}>列名称</Col>
                     <Col span={4} style={{ padding: '0px 4px' }}>显示</Col>
                     <Col span={4} style={{ padding: '0px 4px' }}>锁定</Col>
@@ -131,7 +129,7 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
                         listData={props.columns}
                         onChange={(columns) => props.onChange(columns)}
                         render={
-                            (item, index) => <Form.Item style={{ margin: '8px 0px' }} initialValue={JSON.stringify(item)} name={String(item.dataIndex)}>
+                            (item, index) => <Form.Item style={{ margin: '4px 0px' }} initialValue={JSON.stringify(item)} name={String(item.dataIndex)}>
                                 <OriCustomColumnItem />
                             </Form.Item>
                         }
@@ -143,22 +141,23 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
 }
 
 export function OriCustomColumn(props: IOriCustomColumn) {
+    const token = theme.useToken();
     const [open, setOpen] = React.useState(false);
     const form = useRef<FormInstance>(null);
     const colRef = useRef<ICustomEdit[]>(props.columns.map((col: ColumnType<any>) => (
         {
-            title: col.title as string,
-            dataIndex: col.dataIndex as string,
+            title: String(col.title),
+            dataIndex: String(col.dataIndex),
             width: col.width,
             className: col.className,
             fixed: col.fixed,
-            sorter: col.sorter as boolean,
+            sorter: typeof (col.sorter) === 'boolean' ? col.sorter : false,
             sortOrder: col.sortOrder,
         }
     )));
     return (
         <React.Fragment>
-            <SettingOutlined onClick={() => setOpen(true)} />
+            <SettingOutlined onClick={() => setOpen(true)} style={{color:token.token.colorPrimary}} />
             <Modal
                 width={800}
                 open={open}

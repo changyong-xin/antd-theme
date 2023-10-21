@@ -8,6 +8,12 @@ interface ITabProps<T extends AnyObject = any> {
 import { FormInstance } from "antd";
 
 
+export interface ICustomConfig<T> {
+    onChange?: (columns?: ICustomEdit[]) => void;
+    render: (value: any, record: T, index: number) => React.ReactNode;
+    width: string | number;
+}
+
 export interface IMenuItem extends MenuItemType {
     children?: IMenuItem[];
     component?: React.ComponentClass<ITabProps> | React.FunctionComponent<ITabProps>;

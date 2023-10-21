@@ -10,7 +10,7 @@ export class OriTableDemo extends React.Component<any, any>{
                     <OriTable
                         customConfig={
                             {
-                                width: '80px',
+                                width: '60px',
                                 render: (value, record, index) => <span>{index + 1}</span>,
                             }
                         }
@@ -25,7 +25,7 @@ export class OriTableDemo extends React.Component<any, any>{
                         columns={[
                             {
                                 dataIndex: "title",
-                                title: 'TitleTitleTitleTitle',
+                                title: 'TitleTitleTitleTitleTitleTitleTitleTitle',
                                 width: 100,
                                 sorter: true,
                                 sortOrder: 'ascend'

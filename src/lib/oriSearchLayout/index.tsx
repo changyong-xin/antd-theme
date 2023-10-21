@@ -3,6 +3,7 @@ import { theme } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { ICustomConfig } from '../interface';
 import { OriLayout } from '../oriLayout';
 import { OriPagination } from '../oriPagination';
 import { IOriSearchForm, OriSearchForm } from '../oriSearchForm';
@@ -24,8 +25,8 @@ function SelectCounts(props: { count: number, extra?: React.ReactNode }) {
     )
 }
 
-
 export interface IOriSearchLayout<T, Q> extends IOriSearchForm<Q> {
+    customConfig?: ICustomConfig<T>
     selectable?: boolean;
     selectExtra?: React.ReactNode;
     domain?: OriSearchLayoutDomain<T, Q>;
@@ -57,6 +58,7 @@ export class OriSearchLayout<T extends AnyObject = any, Q extends AnyObject = an
                 }
                 middleContent={
                     <OriTable<T>
+                        customConfig={this.props.customConfig}
                         rowKey={this._domain.getRowKey}
                         columns={this._domain.columns}
                         dataSource={this._domain.dataSource}
