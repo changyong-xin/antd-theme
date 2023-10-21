@@ -1,14 +1,15 @@
 import { Table, TableProps } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
-import { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
+import { ICustomEdit } from '../interface';
 import { OriCustomColumn } from '../oriCustomColumn';
 import { OriEmpty } from '../oriEmpty';
 import './index.scss';
 
+
 interface ICustomConfig<T> {
-    onChange?: (columns?: ColumnsType<T>) => void;
-    render?: (value: any, record: T, index: number) => React.ReactNode;
+    onChange?: (columns?: ICustomEdit[]) => void;
+    render: (value: any, record: T, index: number) => React.ReactNode;
     width: string | number;
 }
 
@@ -34,13 +35,13 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     ...(props.customConfig && props.columns ? [
                         {
                             title: <OriCustomColumn
-                                columns={columns}
+                                columns={columns as any}
                                 onOk={
                                     (columns) => {
-                                        console.log(columns)
-                                        setColumns(columns)
                                         if (props.customConfig && props.customConfig.onChange) {
                                             props.customConfig.onChange(columns)
+                                        } else {
+                                            setColumns(columns)
                                         }
                                     }
                                 }

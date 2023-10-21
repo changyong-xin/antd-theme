@@ -38,3 +38,14 @@ export interface IOriSearchFormField<T = AnyObject> {
     allowClear?: boolean;
     width?: number;
 }
+
+
+export interface ICustomEdit {
+    className?: string;
+    fixed?: boolean;
+    dataIndex: string;
+    title: string;
+    width: string | number;
+    sorter?: boolean;
+    sortOrder?: 'ascend' | 'descend' | null
+}

@@ -1,17 +1,16 @@
 import { CaretDownFilled, CaretUpFilled, LockFilled, SettingOutlined, UnlockFilled } from '@ant-design/icons';
 import { Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag } from 'antd';
-import { ColumnType } from 'antd/es/table';
 import React, { useRef } from 'react';
+import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
 
 interface IOriCustomColumn {
-    columns: ColumnType<any>[]
-    onOk: (columns: ColumnType<any>[]) => void
+    columns: ICustomEdit[]
+    onOk: (columns: ICustomEdit[]) => void
 }
 
 function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string) => void }) {
-    console.log('OriCustomColumnItem', props.value)
-    const item: ColumnType<any> = JSON.parse(props.value!)
+    const item: ICustomEdit = JSON.parse(props.value!)
     return (
         <Row>
             <Col span={4} style={{ padding: "0px 4px" }}>{item.title as any}</Col>
@@ -67,7 +66,6 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
                     }
                     value={item.sortOrder}
                     onChange={(value) => {
-                        console.log(value)
                         item.sortOrder = value;
                         props.onChange!(JSON.stringify(item));
                     }}
@@ -78,7 +76,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
 
 }
 
-function OriCustomColumnEdit(props: { columns: ColumnType<any>[]; form?: React.RefObject<FormInstance>; }) {
+function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form?: React.RefObject<FormInstance>; }) {
 
     return (
         <div>
@@ -121,10 +119,8 @@ function OriCustomColumnEdit(props: { columns: ColumnType<any>[]; form?: React.R
                 <Form
                     ref={props.form}
                     onFieldsChange={(fields) => {
-                        console.log('onchange', fields)
                         fields.forEach((field) => {
                             if (props.form && props.form.current) {
-                                console.log(field.name[0], field.value)
                                 props.form.current.setFieldValue(field.name[0], field.value)
                             }
                         })
@@ -132,7 +128,7 @@ function OriCustomColumnEdit(props: { columns: ColumnType<any>[]; form?: React.R
                     <OriDraggableList
                         rowKey={'dataIndex'}
                         listData={props.columns}
-                        // onChange={(columns) => console.log(columns)}
+                        onChange={(columns) => console.log(columns)}
                         render={
                             (item, index) => <Form.Item style={{ margin: '8px 0px' }} initialValue={JSON.stringify(item)} name={String(item.dataIndex)}>
                                 <OriCustomColumnItem />
@@ -163,9 +159,8 @@ export function OriCustomColumn(props: IOriCustomColumn) {
                 }}
                 onOk={() => {
                     setOpen(false)
-                    console.log()
                     const fields = form.current?.getFieldsValue()!;
-                    const result: ColumnType<any>[] = [];
+                    const result: ICustomEdit[] = [];
                     Object.keys(fields).forEach((key) => {
                         result.push(JSON.parse(fields[key]))
                     })
