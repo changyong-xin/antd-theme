@@ -39,13 +39,12 @@ export interface IOriSearchFormField<T = AnyObject> {
     width?: number;
 }
 
-
 export interface ICustomEdit {
     className?: string;
-    fixed?: boolean;
+    fixed?: 'left' | 'right' | boolean;
     dataIndex: string;
     title: string;
-    width: string | number;
+    width?: string | number;
     sorter?: boolean;
     sortOrder?: 'ascend' | 'descend' | null
 }

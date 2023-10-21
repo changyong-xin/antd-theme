@@ -3,9 +3,10 @@ import { Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag } from 
 import React, { useRef } from 'react';
 import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
+import { ColumnType } from 'antd/es/table';
 
 interface IOriCustomColumn {
-    columns: ICustomEdit[]
+    columns: ColumnType<any>[]
     onOk: (columns: ICustomEdit[]) => void
 }
 
@@ -76,7 +77,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
 
 }
 
-function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form?: React.RefObject<FormInstance>; }) {
+function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObject<FormInstance>; onChange: (columns: ICustomEdit[]) => void; }) {
 
     return (
         <div>
@@ -108,13 +109,13 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form?: React.RefOb
                 }
             </div>
             <div>
-                <Row>
-                    <Col span={4}>列名称</Col>
-                    <Col span={4}>显示</Col>
-                    <Col span={4}>锁定</Col>
-                    <Col span={4}>宽度</Col>
-                    <Col span={4}>允许排序</Col>
-                    <Col span={4}>默认排序</Col>
+                <Row style={{ margin: '8px 0px 0px 0px' }}>
+                    <Col span={4} style={{ padding: '0px 4px' }}>列名称</Col>
+                    <Col span={4} style={{ padding: '0px 4px' }}>显示</Col>
+                    <Col span={4} style={{ padding: '0px 4px' }}>锁定</Col>
+                    <Col span={4} style={{ padding: '0px 4px' }}>宽度</Col>
+                    <Col span={4} style={{ padding: '0px 4px' }}>允许排序</Col>
+                    <Col span={4} style={{ padding: '0px 4px' }}>默认排序</Col>
                 </Row>
                 <Form
                     ref={props.form}
@@ -128,7 +129,7 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form?: React.RefOb
                     <OriDraggableList
                         rowKey={'dataIndex'}
                         listData={props.columns}
-                        onChange={(columns) => console.log(columns)}
+                        onChange={(columns) => props.onChange(columns)}
                         render={
                             (item, index) => <Form.Item style={{ margin: '8px 0px' }} initialValue={JSON.stringify(item)} name={String(item.dataIndex)}>
                                 <OriCustomColumnItem />
@@ -144,6 +145,17 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form?: React.RefOb
 export function OriCustomColumn(props: IOriCustomColumn) {
     const [open, setOpen] = React.useState(false);
     const form = useRef<FormInstance>(null);
+    const colRef = useRef<ICustomEdit[]>(props.columns.map((col: ColumnType<any>) => (
+        {
+            title: col.title as string,
+            dataIndex: col.dataIndex as string,
+            width: col.width,
+            className: col.className,
+            fixed: col.fixed,
+            sorter: col.sorter as boolean,
+            sortOrder: col.sortOrder,
+        }
+    )));
     return (
         <React.Fragment>
             <SettingOutlined onClick={() => setOpen(true)} />
@@ -161,13 +173,14 @@ export function OriCustomColumn(props: IOriCustomColumn) {
                     setOpen(false)
                     const fields = form.current?.getFieldsValue()!;
                     const result: ICustomEdit[] = [];
-                    Object.keys(fields).forEach((key) => {
-                        result.push(JSON.parse(fields[key]))
+                    colRef.current.forEach((item) => {
+                        result.push(JSON.parse(fields[String(item.dataIndex)]))
                     })
+                    colRef.current = result
                     props.onOk(result)
                 }}
             >
-                <OriCustomColumnEdit columns={props.columns} form={form} />
+                <OriCustomColumnEdit columns={colRef.current} form={form} onChange={(columns) => colRef.current = columns} />
             </Modal>
         </React.Fragment>
     )

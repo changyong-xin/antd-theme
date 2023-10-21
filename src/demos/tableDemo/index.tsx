@@ -25,7 +25,7 @@ export class OriTableDemo extends React.Component<any, any>{
                         columns={[
                             {
                                 dataIndex: "title",
-                                title: 'Title',
+                                title: 'TitleTitleTitleTitle',
                                 width: 100,
                                 sorter: true,
                                 sortOrder: 'ascend'

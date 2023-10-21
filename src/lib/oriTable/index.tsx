@@ -21,6 +21,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
     const [columns, setColumns] = useState(props.columns || [])
     return (
         <Table<T>
+            onChange={(pagination, filters, sorter) => console.log(pagination, filters, sorter)}
             rowKey={props.rowKey}
             dataSource={props.dataSource}
             size='small'
@@ -35,14 +36,13 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     ...(props.customConfig && props.columns ? [
                         {
                             title: <OriCustomColumn
-                                columns={columns as any}
+                                columns={columns}
                                 onOk={
-                                    (columns) => {
+                                    (cols) => {
                                         if (props.customConfig && props.customConfig.onChange) {
-                                            props.customConfig.onChange(columns)
-                                        } else {
-                                            setColumns(columns)
+                                            props.customConfig.onChange(cols)
                                         }
+                                        setColumns(cols)
                                     }
                                 }
                             />,
