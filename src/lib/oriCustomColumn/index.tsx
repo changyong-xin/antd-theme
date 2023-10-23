@@ -12,6 +12,7 @@ interface IOriCustomColumn {
 }
 
 function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string) => void }) {
+    const token = theme.useToken();
     const item: ICustomEdit = JSON.parse(props.value!)
     return (
         <Row style={{ padding: '4px 0px', borderBottom: "1px solid #e9e9e9" }}>
@@ -29,7 +30,24 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
                 />
             </Col>
             <Col span={4} style={{ padding: "0px 4px" }}>
-                {item.fixed === true ? <LockFilled /> : <UnlockFilled />}
+                {
+                    item.fixed === true ?
+                        <LockFilled
+                            style={{ color: token.token.colorPrimary, cursor: 'pointer' }}
+                            onClick={() => {
+                                item.fixed = undefined;
+                                props.onChange!(JSON.stringify(item));
+                            }}
+                        />
+                        :
+                        <UnlockFilled
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {
+                                item.fixed = true;
+                                props.onChange!(JSON.stringify(item));
+                            }}
+                        />
+                }
             </Col>
             <Col span={4} style={{ padding: "0px 4px" }}>
                 <Input
@@ -152,12 +170,18 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: IC
                     onClick={
                         () => {
                             const fields = form.current?.getFieldsValue()!;
-                            const result: ICustomEdit[] = [];
+                            const fixedCols: ICustomEdit[] = [];
+                            const flexCols: ICustomEdit[] = [];
                             colRef.current.forEach((item) => {
-                                result.push(JSON.parse(fields[String(item.dataIndex)]))
+                                const parsefield: ICustomEdit = JSON.parse(fields[String(item.dataIndex)]);
+                                if (parsefield.fixed) {
+                                    fixedCols.push(parsefield)
+                                } else {
+                                    flexCols.push(parsefield)
+                                }
                             })
-                            colRef.current = result
-                            props.onOk(result)
+                            colRef.current = [...fixedCols, ...flexCols];
+                            props.onOk([...fixedCols, ...flexCols]);
                         }
                     }
                 >

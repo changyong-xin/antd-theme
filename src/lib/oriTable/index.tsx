@@ -34,6 +34,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
     )
     return (
         <Table<T>
+            rowSelection={props.rowSelection}
             onChange={(pagination, filters, sorter) => {
                 const customCols: ICustomEdit[] = [];
                 columns.forEach((col: ColumnType<T>) => {
