@@ -33,7 +33,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
                 {
                     item.fixed === true ?
                         <LockFilled
-                            style={{ color: token.token.colorPrimary, cursor: 'pointer' }}
+                            style={{ color: token.token.colorPrimary, cursor: 'pointer', fontSize: '24px' }}
                             onClick={() => {
                                 item.fixed = undefined;
                                 props.onChange!(JSON.stringify(item));
@@ -41,7 +41,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
                         />
                         :
                         <UnlockFilled
-                            style={{ cursor: 'pointer' }}
+                            style={{ cursor: 'pointer', fontSize: '24px' }}
                             onClick={() => {
                                 item.fixed = true;
                                 props.onChange!(JSON.stringify(item));
@@ -127,7 +127,7 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: IC
                 }
             </div>
             <div>
-                <Row style={{ margin: '8px 0px 0px 0px', padding: '0px 0px 4px 0px', borderBottom: "1px solid #e9e9e9" }}>
+                <Row style={{ margin: '8px 0px 0px 0px', padding: '4px 0px 4px 0px', borderBottom: "1px solid #e9e9e9", borderTop: "1px solid #e9e9e9" }}>
                     <Col span={4} style={{ padding: '0px 4px' }}>列名称</Col>
                     <Col span={4} style={{ padding: '0px 4px' }}>显示</Col>
                     <Col span={4} style={{ padding: '0px 4px' }}>锁定</Col>
