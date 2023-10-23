@@ -1,7 +1,7 @@
 import { Table, TableProps } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
-import { ColumnType, ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
+import { ColumnType } from 'antd/es/table';
+import { useRef, useState } from 'react';
 import { ICustomConfig, ICustomEdit } from '../interface';
 import { OriCustomColumn } from '../oriCustomColumn';
 import { OriEmpty } from '../oriEmpty';
@@ -14,11 +14,27 @@ interface IOriTable<T> extends TableProps<T> {
 }
 
 export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
-    const [columns, setColumns] = useState(props.columns || [])
+    const renderRef = useRef<Map<string, any>>(new Map())
+    const [columns, setColumns] = useState<ICustomEdit[]>(
+        props.columns ?
+            props.columns.map((item: ColumnType<T>) => {
+                renderRef.current.set(String(item.dataIndex), item.render)
+                return {
+                    title: String(item.title),
+                    dataIndex: String(item.dataIndex),
+                    width: item.width,
+                    className: item.className,
+                    fixed: item.fixed,
+                    sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
+                    sortOrder: item.sortOrder,
+                }
+            })
+            :
+            []
+    )
     return (
         <Table<T>
             onChange={(pagination, filters, sorter) => {
-                const cols: ColumnsType<T> = []
                 const customCols: ICustomEdit[] = [];
                 columns.forEach((col: ColumnType<T>) => {
                     if (!Array.isArray(sorter) && col.dataIndex === sorter.field) {
@@ -26,7 +42,6 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     } else {
                         col.sortOrder = undefined;
                     }
-                    cols.push(col);
                     customCols.push({
                         title: String(col.title),
                         dataIndex: String(col.dataIndex),
@@ -40,7 +55,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                 if (props.customConfig && props.customConfig.onChange) {
                     props.customConfig.onChange(customCols)
                 }
-                setColumns(cols)
+                setColumns(customCols)
             }}
             rowKey={props.rowKey}
             dataSource={props.dataSource}
@@ -56,40 +71,42 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     ...(props.customConfig && props.columns ? [
                         {
                             fixed: true,
-                            title: <OriCustomColumn
-                                columns={columns}
-                                onOk={
-                                    (customCols) => {
-                                        const cols: ColumnsType<T> = [];
-                                        customCols.forEach((item) => {
-                                            const co = columns.find((c: ColumnType<T>) => c.dataIndex === item.dataIndex);
-                                            if (co) {
-                                                cols.push(
-                                                    Object.assign(co,
-                                                        {
-                                                            title: item.title,
-                                                            dataIndex: item.dataIndex,
-                                                            width: item.width,
-                                                            className: item.className,
-                                                            fixed: item.fixed,
-                                                            sorter: item.sorter,
-                                                            sortOrder: item.sortOrder,
-                                                        })
-                                                )
-                                            }
-                                        })
-                                        if (props.customConfig && props.customConfig.onChange) {
-                                            props.customConfig.onChange(customCols)
-                                        }
-                                        setColumns(cols)
-                                    }
-                                }
-                            />,
+                            title:
+                                <OriCustomColumn
+                                    onReset={() => {
+                                        console.log(props.columns);
+                                        setColumns(
+                                            props.columns ?
+                                                props.columns.map((item: ColumnType<T>) => (
+                                                    {
+                                                        title: String(item.title),
+                                                        dataIndex: String(item.dataIndex),
+                                                        width: item.width,
+                                                        className: item.className,
+                                                        fixed: item.fixed,
+                                                        sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
+                                                        sortOrder: item.sortOrder,
+                                                    }
+                                                ))
+                                                :
+                                                []
+                                        )
+                                    }}
+                                    columns={columns}
+                                    onOk={(customCols) => setColumns(customCols)}
+                                />,
                             render: props.customConfig.render,
                             width: props.customConfig.width,
                         }
                     ] : []),
-                    ...columns.filter((item) => item.className !== 'ori-table-hidden-col'),
+                    ...columns.map(
+                        (item, index) => ({
+                            ...item,
+                            render: renderRef.current.has(item.dataIndex) ? renderRef.current.get(item.dataIndex) : undefined
+                        })
+                    ).filter(
+                        (item) => item.className !== 'ori-table-hidden-col'
+                    ),
                     {
                         className: 'ori-table-flex-col',
                         title: ''

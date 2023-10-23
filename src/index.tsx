@@ -3,6 +3,7 @@ import { configure } from 'mobx';
 import ReactDOM from 'react-dom/client';
 import DemoIndex from './demos';
 import './index.css';
+import './lib/index.scss';
 
 configure({
   enforceActions: "never"

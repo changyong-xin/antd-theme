@@ -1,13 +1,14 @@
 import { CaretDownFilled, CaretUpFilled, LockFilled, SettingOutlined, UnlockFilled } from '@ant-design/icons';
-import { Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag, theme } from 'antd';
-import { ColumnType } from 'antd/es/table';
+import { Button, Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag, theme } from 'antd';
 import React, { useRef } from 'react';
 import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
+import { copyObj } from '../utils';
 
 interface IOriCustomColumn {
-    columns: ColumnType<any>[]
-    onOk: (columns: ICustomEdit[]) => void
+    onReset: () => void;
+    columns: ICustomEdit[];
+    onOk: (columns: ICustomEdit[]) => void;
 }
 
 function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string) => void }) {
@@ -77,14 +78,15 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
 
 }
 
-function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObject<FormInstance>; onChange: (columns: ICustomEdit[]) => void; }) {
-
+function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: ICustomEdit[]) => void; onReset: () => void; }) {
+    const form = useRef<FormInstance>(null);
+    const colRef = useRef<ICustomEdit[]>(copyObj(props.columns));
     return (
         <div>
             <div>
                 默认排序顺序：
                 {
-                    props.columns.filter((item) => item.sortOrder)
+                    colRef.current.filter((item) => item.sortOrder)
                         .map((item, index) =>
                             <Tag key={index}>
                                 <div style={{ display: 'flex' }}>
@@ -116,18 +118,18 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
                     <Col span={4} style={{ padding: '0px 4px' }}>默认排序</Col>
                 </Row>
                 <Form
-                    ref={props.form}
+                    ref={form}
                     onFieldsChange={(fields) => {
                         fields.forEach((field) => {
-                            if (props.form && props.form.current) {
-                                props.form.current.setFieldValue(field.name[0], field.value)
+                            if (form.current) {
+                                form.current.setFieldValue(field.name[0], field.value)
                             }
                         })
                     }}>
                     <OriDraggableList
                         rowKey={'dataIndex'}
-                        listData={props.columns}
-                        onChange={(columns) => props.onChange(columns)}
+                        listData={colRef.current}
+                        onChange={(columns) => colRef.current = columns}
                         render={
                             (item, index) => <Form.Item style={{ margin: '4px 0px' }} initialValue={JSON.stringify(item)} name={String(item.dataIndex)}>
                                 <OriCustomColumnItem />
@@ -136,6 +138,32 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
                     />
                 </Form>
             </div>
+            <div style={{ marginTop: '12px', textAlign: "right" }} >
+                <Button
+                    onClick={() => {
+                        props.onReset()
+                    }}
+                >
+                    恢复默认设置
+                </Button>
+                <Button
+                    style={{ marginLeft: "8px" }}
+                    type='primary'
+                    onClick={
+                        () => {
+                            const fields = form.current?.getFieldsValue()!;
+                            const result: ICustomEdit[] = [];
+                            colRef.current.forEach((item) => {
+                                result.push(JSON.parse(fields[String(item.dataIndex)]))
+                            })
+                            colRef.current = result
+                            props.onOk(result)
+                        }
+                    }
+                >
+                    确定
+                </Button>
+            </div>
         </div>
     )
 }
@@ -143,43 +171,31 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; form: React.RefObj
 export function OriCustomColumn(props: IOriCustomColumn) {
     const token = theme.useToken();
     const [open, setOpen] = React.useState(false);
-    const form = useRef<FormInstance>(null);
-    const colRef = useRef<ICustomEdit[]>(props.columns.map((col: ColumnType<any>) => (
-        {
-            title: String(col.title),
-            dataIndex: String(col.dataIndex),
-            width: col.width,
-            className: col.className,
-            fixed: col.fixed,
-            sorter: typeof (col.sorter) === 'boolean' ? col.sorter : false,
-            sortOrder: col.sortOrder,
-        }
-    )));
     return (
         <React.Fragment>
-            <SettingOutlined onClick={() => setOpen(true)} style={{color:token.token.colorPrimary}} />
+            <SettingOutlined onClick={() => setOpen(true)} style={{ color: token.token.colorPrimary }} />
             <Modal
+                className='ori-modal-customfooter'
                 width={800}
                 open={open}
                 title={'自定义显示列'}
                 destroyOnClose={true}
-                okText={'确定'}
-                cancelText={'恢复默认设置'}
                 onCancel={() => {
                     setOpen(false)
                 }}
-                onOk={() => {
-                    setOpen(false)
-                    const fields = form.current?.getFieldsValue()!;
-                    const result: ICustomEdit[] = [];
-                    colRef.current.forEach((item) => {
-                        result.push(JSON.parse(fields[String(item.dataIndex)]))
-                    })
-                    colRef.current = result
-                    props.onOk(result)
-                }}
+                footer={<></>}
             >
-                <OriCustomColumnEdit columns={colRef.current} form={form} onChange={(columns) => colRef.current = columns} />
+                <OriCustomColumnEdit
+                    columns={props.columns}
+                    onOk={(columns) => {
+                        setOpen(false);
+                        props.onOk(columns);
+                    }}
+                    onReset={() => {
+                        setOpen(false);
+                        props.onReset();
+                    }}
+                />
             </Modal>
         </React.Fragment>
     )

@@ -40,7 +40,8 @@ export class OriTableDemo extends React.Component<any, any>{
                                 title: 'Tooltip',
                                 width: 150,
                                 sorter: true,
-                                sortOrder: 'descend'
+                                sortOrder: 'descend',
+                                render:(value,record,index)=><span>{index}</span>
                             },
                             {
                                 dataIndex: "label",
