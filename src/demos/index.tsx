@@ -71,6 +71,7 @@ function DemoIndex() {
                 components: {
                     Tabs: {
                         itemColor: 'white',
+                        itemHoverColor: 'white',
                     },
                     Table: {
                         headerBorderRadius: 0

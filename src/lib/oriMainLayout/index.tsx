@@ -34,7 +34,7 @@ interface IMainAction {
 function mainResucer(state: IMainState, action: IMainAction): IMainState {
     switch (action.type) {
         case 'active': return {
-            ...state,
+            tabs: state.tabs,
             activeKey: action.key ? action.key : state.activeKey
         };
         case 'add':

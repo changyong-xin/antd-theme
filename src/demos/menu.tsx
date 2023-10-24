@@ -17,6 +17,8 @@ export const MainMenus: IMenuItem[] = [
     {
         label: 'Hooks使用', key: '0000', component: HooksDemo
     },
+    { label: 'Context', key: '04', component: OriContextDemo },
+    { label: 'Utils', key: '05', component: OriContextDemo },
     {
         label: '表格组件', icon: <TableOutlined />, key: '01', children: [
             { label: '通用表格', key: '0101', component: OriTableDemo },
@@ -43,6 +45,5 @@ export const MainMenus: IMenuItem[] = [
             { label: '可拖拽列表', key: '0304', component: ListDemo },
         ]
     },
-    { label: 'Context', key: '04', component: OriContextDemo },
-    { label: 'Utils', key: '05', component: OriContextDemo },
+
 ]
