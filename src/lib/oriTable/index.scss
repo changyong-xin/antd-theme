@@ -60,3 +60,21 @@
 .ori-table-hidden-col {
     display: none;
 }
+
+.ori-pagination {
+    padding: 8px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ori-pagination-menu {
+    width: 205px;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+        width: 60px !important;
+        text-align: center;
+    }
+}

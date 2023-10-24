@@ -1,12 +1,10 @@
+import { FormInstance, TableProps } from "antd";
 import { AnyObject } from "antd/es/_util/type";
 import { MenuItemType } from "antd/es/menu/hooks/useItems";
 
-interface ITabProps<T extends AnyObject = any> {
+export interface ITabProps<T extends AnyObject = any> {
     params: T
 }
-
-import { FormInstance } from "antd";
-
 
 export interface ICustomConfig<T> {
     onChange?: (columns?: ICustomEdit[]) => void;
@@ -53,4 +51,19 @@ export interface ICustomEdit {
     width?: string | number;
     sorter?: boolean;
     sortOrder?: 'ascend' | 'descend' | null
+}
+
+
+export interface IOriPagination {
+    size: number;
+    index: number;
+    onChange: (index: number, size: number) => void;
+    total: number;
+    sizeConfig?: number[];
+    addOnBefore?: React.ReactNode;
+}
+
+export interface IOriTable<T> extends Omit<TableProps<T>, 'pagination'> {
+    custom?: ICustomConfig<T>;
+    pagination?: IOriPagination;
 }
