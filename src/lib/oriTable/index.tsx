@@ -150,7 +150,12 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                                 )
                                             }}
                                             columns={columns}
-                                            onOk={(customCols) => setColumns(customCols)}
+                                            onOk={(customCols) => {
+                                                if (props.custom && props.custom.onChange) {
+                                                    props.custom.onChange(customCols)
+                                                }
+                                                setColumns(customCols)
+                                            }}
                                         />,
                                     render: props.custom.render,
                                     width: props.custom.width,
