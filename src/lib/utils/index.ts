@@ -66,7 +66,7 @@ export function createMenuMap(menu: IMenuItem[]) {
  * @returns 域名+路径+url
  */
 export function wrapperUrl(url: string) {
-    return window.location.origin + (window.location.pathname + url).replace('//', '/')
+    return window.location.origin + (window.location.pathname.replace('/index.html', '/') + url).replace('//', '/')
 }
 /**
  * 对针对Api的请求Url进行处理
@@ -74,7 +74,7 @@ export function wrapperUrl(url: string) {
  * @returns 域名+服务路由（ServicePath）+url
  */
 export function wrapperApi(url: string) {
-    return window.location.origin + ((window.location.pathname).split('api')[0] + url).replace('//', '/')
+    return window.location.origin + ((window.location.pathname.replace('/index.html', '/')).split('api')[0] + url).replace('//', '/')
 }
 
 // 节流与防抖的区别在于是立即执行还是延迟执行，
