@@ -9,7 +9,7 @@ import { IOriForm } from '../interface';
 
 interface IOriGridForm<T> extends IOriForm<T> {
     items: FormItemProps[]
-    cols?: number;
+    cols?: number | number[];
     labelCol?: number;
     wrapperCol?: number;
     rowHeight?: number | string;
@@ -33,8 +33,16 @@ export class OriGridForm<T = any> extends React.Component<IOriGridForm<T>, any>{
                     dataSource={this.props.items}
                     render={(item) =>
                         <Form.Item
-                            labelCol={{ span: this.props.labelCol }}
-                            wrapperCol={{ span: this.props.wrapperCol }}
+                            labelCol={
+                                item.labelCol || {
+                                    span: this.props.labelCol,
+                                }
+                            }
+                            wrapperCol={
+                                item.wrapperCol || {
+                                    span: this.props.wrapperCol,
+                                }
+                            }
                             label={item.label}
                             name={item.name}
                             rules={item.rules}

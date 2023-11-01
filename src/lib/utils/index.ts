@@ -30,11 +30,10 @@ export function treeDataTrans<T extends ITreeData>(list: T[], itemTrans: (item: 
     return result
 }
 
-export function copyObj<T = any>(data: T): T {
+export function copyJson<T = any>(data: T): T {
     try {
         return data ? JSON.parse(JSON.stringify(data)) : data
     } catch (error) {
-        console.log('Copy error:', error)
         return data
     }
 }

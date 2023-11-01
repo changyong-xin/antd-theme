@@ -68,7 +68,6 @@ export function OriTreeSelect(props: IOriTreeSelect) {
             style={{ width: (props.width && props.width > 80) ? props.width : 120, }}
             treeData={props.treeData}
             onChange={(value, labels) => {
-                console.log(value)
                 if (props.onChange) {
                     props.onChange(value)
                 }

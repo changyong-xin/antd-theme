@@ -105,7 +105,6 @@ export class OriFreeLayoutCell extends React.Component<IOriFreeLayoutCell, IOriF
 
 
     public onDrag = (left: number, top: number, stoped?: boolean) => {
-        // console.log('drag')
         let leftLine = false;
         let topLine = false;
         let leftResult = left < 8 ? 8 : left;
@@ -163,7 +162,6 @@ export class OriFreeLayoutCell extends React.Component<IOriFreeLayoutCell, IOriF
     }
 
     public onSizeChange = (dir: Direction, width: number, height: number, top: number, left: number, stoped?: boolean) => {
-        // console.log(dir)
         let rightLine = false;
         let bottomLine = false;
         let leftLine = false;

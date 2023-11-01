@@ -3,7 +3,7 @@ import { Button, Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag
 import React, { useRef } from 'react';
 import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
-import { copyObj } from '../utils';
+import { copyJson } from '../utils';
 
 interface IOriCustomColumn {
     onReset: () => void;
@@ -98,7 +98,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
 
 function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: ICustomEdit[]) => void; onReset: () => void; }) {
     const form = useRef<FormInstance>(null);
-    const colRef = useRef<ICustomEdit[]>(copyObj(props.columns));
+    const colRef = useRef<ICustomEdit[]>(copyJson(props.columns));
     return (
         <div>
             <div>

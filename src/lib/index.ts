@@ -21,7 +21,7 @@ import { OriTable } from "./oriTable";
 import { OriTimePicker } from "./oriTimePicker";
 import { OriTreeSelect } from "./oriTreeSelect";
 import './style/index.scss';
-import { antiShaking, copyObj, createMenuMap, dayjsTrans, throttle, treeDataTrans, wrapperApi, wrapperUrl } from "./utils";
+import { antiShaking, copyJson, createMenuMap, dayjsTrans, throttle, treeDataTrans, wrapperApi, wrapperUrl } from "./utils";
 
 export {
     OriBooleanSelect,
@@ -36,7 +36,7 @@ export {
     OriLayout, OriMainLayout,
     OriMiniLayout,
     OriMonthPicker, OriPicker, OriSearchForm, OriSelect, OriTable, OriTimePicker, OriTreeSelect, antiShaking,
-    copyObj, createMenuMap, dayjsTrans,
+    copyJson, createMenuMap, dayjsTrans,
     throttle, treeDataTrans, wrapperApi,
     wrapperUrl
 };

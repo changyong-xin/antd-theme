@@ -1,5 +1,5 @@
 import React from 'react';
-import { copyObj } from '..';
+import { copyJson } from '..';
 import { OriFreeLayoutCell } from './cell';
 import { IOriFreeLayoutCellContent, OriFreeLayoutGutter, OriFreeLayoutStatus } from './interface';
 
@@ -33,7 +33,7 @@ export class OriFreeLayout extends React.Component<IOriFreeLayout, any>{
 
     constructor(props: IOriFreeLayout) {
         super(props);
-        this.items = copyObj(props.items)
+        this.items = copyJson(props.items)
     }
 
     public componentDidMount() {

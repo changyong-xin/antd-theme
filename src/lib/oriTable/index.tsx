@@ -131,7 +131,6 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                     title:
                                         <OriCustomColumn
                                             onReset={() => {
-                                                console.log(props.columns);
                                                 setColumns(
                                                     props.columns ?
                                                         props.columns.map((item: ColumnType<T>) => (
