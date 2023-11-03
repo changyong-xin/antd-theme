@@ -1,8 +1,7 @@
 import { FormInstance, SpinProps } from "antd";
 import { AnyObject } from "antd/es/_util/type";
 import { MenuItemType } from "antd/es/menu/hooks/useItems";
-import { ColumnsType } from "antd/es/table";
-import { GetRowKey, TableRowSelection } from "antd/es/table/interface";
+import { ColumnType, GetRowKey, TableRowSelection } from "antd/es/table/interface";
 
 export interface ITabProps<T extends AnyObject = any> {
     params: T
@@ -50,7 +49,7 @@ export interface ICustomEdit {
     fixed?: 'left' | 'right' | boolean;
     dataIndex: string;
     title: string;
-    width?: string | number;
+    width?: number;
     sorter?: boolean;
     sortOrder?: 'ascend' | 'descend' | null
 }
@@ -68,7 +67,7 @@ export interface IOriPagination {
 export interface IOriTable<T> {
     custom?: ICustomConfig<T>;
     pagination?: IOriPagination;
-    columns: ColumnsType<T>;
+    columns: ColumnType<T>[];
     dataSource: T[];
     rowKey: string | keyof T | GetRowKey<T>;
     loading?: boolean | SpinProps;

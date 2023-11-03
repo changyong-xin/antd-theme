@@ -1,5 +1,5 @@
 import { CaretDownFilled, CaretUpFilled, LockFilled, SettingOutlined, UnlockFilled } from '@ant-design/icons';
-import { Button, Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag, theme } from 'antd';
+import { Button, Col, Form, FormInstance, Input, Modal, Row, Select, Switch, Tag, Tooltip, theme } from 'antd';
 import React, { useRef } from 'react';
 import { ICustomEdit } from '../interface';
 import { OriDraggableList } from '../oriDraggableList';
@@ -51,14 +51,11 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
             </Col>
             <Col span={4} style={{ padding: "0px 4px" }}>
                 <Input
-                    value={typeof (item.width) === 'string' ? item.width.split('px')[0] : item.width}
+                    type='number'
+                    value={item.width}
                     style={{ width: "60px" }}
                     onChange={(e) => {
-                        (isNaN(Number(e.target.value)) || Number(e.target.value) < 50)
-                            ?
-                            item.width = '50px'
-                            :
-                            item.width = e.target.value + 'px';
+                        item.width = e.target.value ? Number(e.target.value) : undefined;
                         props.onChange!(JSON.stringify(item));
                     }}
                 />
@@ -197,7 +194,9 @@ export function OriCustomColumn(props: IOriCustomColumn) {
     const [open, setOpen] = React.useState(false);
     return (
         <React.Fragment>
-            <SettingOutlined onClick={() => setOpen(true)} style={{ color: token.token.colorPrimary }} />
+            <Tooltip title='自定义列'>
+                <SettingOutlined onClick={() => setOpen(true)} style={{ color: token.token.colorPrimary }} />
+            </Tooltip>
             <Modal
                 className='ori-modal-customfooter'
                 width={800}

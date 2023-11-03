@@ -35,6 +35,7 @@ export function OriTableDemo() {
                         {
                             width: '60px',
                             render: (value, record, index) => <span>{index + 1}</span>,
+                            onChange: (columns) => console.log(columns)
                         }
                     }
                     rowKey={'title'}
@@ -43,7 +44,22 @@ export function OriTableDemo() {
                         { title: '2' },
                         { title: '3' },
                         { title: '4' },
-                        { title: '5' }
+                        { title: '5' },
+                        { title: '11' },
+                        { title: '22' },
+                        { title: '33' },
+                        { title: '44' },
+                        { title: '55' },
+                        { title: '111' },
+                        { title: '222' },
+                        { title: '333' },
+                        { title: '444' },
+                        { title: '555' },
+                        { title: '1111' },
+                        { title: '2222' },
+                        { title: '3333' },
+                        { title: '4444' },
+                        { title: '5555' }
                     ]}
                     columns={[
                         {
@@ -57,6 +73,7 @@ export function OriTableDemo() {
                             dataIndex: "description",
                             title: 'Description',
                             width: 120,
+                            render: (value, record, index) => <span>{index + 'd'}</span>
                         },
                         {
                             dataIndex: "tooltip",
@@ -64,13 +81,14 @@ export function OriTableDemo() {
                             width: 150,
                             sorter: true,
                             sortOrder: 'descend',
-                            render: (value, record, index) => <span>{index}</span>
+                            render: (value, record, index) => <span>{index + 't'}</span>
                         },
                         {
                             dataIndex: "label",
                             title: 'Label',
                             width: 80,
                             sorter: true,
+                            render: (value, record, index) => <span>{index + 'l'}</span>
                         }
                     ]}
                 />

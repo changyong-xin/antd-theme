@@ -3,12 +3,57 @@ import { Button, Menu, Pagination, Popover, Table } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { ColumnType } from 'antd/es/table';
 import { useRef, useState } from 'react';
+import { Rnd } from 'react-rnd';
 import { ICustomEdit, IOriPagination, IOriTable } from '../interface';
 import { OriCustomColumn } from '../oriCustomColumn';
 import { OriEmpty } from '../oriEmpty';
 import { OriMiniLayout } from '../oriMiniLayout';
 import './index.scss';
 
+interface IOriResizableThProps {
+    onResize?: (width: any) => void;
+    className: string;
+    children?: React.ReactNode;
+}
+
+function OriResizableTh(props: IOriResizableThProps) {
+    console.log(props)
+    return (
+        <>
+            <th {...props}>
+                {
+                    props.onResize ?
+                        <Rnd
+                            onResize={(e, dir, elementRef, delta, position) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                console.log(e)
+                                props.onResize!(elementRef.clientWidth)
+                            }}
+                            size={{
+                                height: '100%',
+                                width: '100%'
+                            }}
+                            resizeHandleStyles={{
+                                left: { display: 'none' },
+                                top: { display: 'none' },
+                                topLeft: { display: 'none' },
+                                topRight: { display: 'none' },
+                                bottom: { display: 'none' },
+                                bottomLeft: { display: 'none' },
+                                bottomRight: { display: 'none' },
+                            }}
+                            disableDragging={true}
+                        />
+                        :
+                        <></>
+                }
+
+                {props.children}
+            </th>
+        </>
+    )
+}
 
 
 function OriPagination(props: IOriPagination) {
@@ -71,11 +116,13 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
     const [columns, setColumns] = useState<ICustomEdit[]>(
         props.columns ?
             props.columns.map((item: ColumnType<T>) => {
-                renderRef.current.set(String(item.dataIndex), item.render)
+                if (item.dataIndex) {
+                    renderRef.current.set(String(item.dataIndex), item.render)
+                }
                 return {
                     title: String(item.title),
                     dataIndex: String(item.dataIndex),
-                    width: item.width,
+                    width: typeof (item.width) === 'string' ? Number(item.width.split('px')[0]) : item.width,
                     className: item.className,
                     fixed: item.fixed,
                     sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
@@ -85,6 +132,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
             :
             []
     )
+    console.log('oriTablerender')
     return (
         <OriMiniLayout
             orientation='vertical'
@@ -102,7 +150,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                             customCols.push({
                                 title: String(col.title),
                                 dataIndex: String(col.dataIndex),
-                                width: col.width,
+                                width: typeof (col.width) === 'string' ? Number(col.width.split('px')[0]) : col.width,
                                 className: col.className,
                                 fixed: col.fixed,
                                 sorter: typeof (col.sorter) === 'boolean' ? col.sorter : false,
@@ -117,6 +165,11 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                     rowKey={props.rowKey}
                     dataSource={props.dataSource}
                     size='small'
+                    components={{
+                        header: {
+                            cell: OriResizableTh
+                        }
+                    }}
                     className={
                         props.dataSource && props.dataSource.length > 0 ?
                             'ori-table'
@@ -137,7 +190,7 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                                             {
                                                                 title: String(item.title),
                                                                 dataIndex: String(item.dataIndex),
-                                                                width: item.width,
+                                                                width: typeof (item.width) === 'string' ? Number(item.width.split('px')[0]) : item.width,
                                                                 className: item.className,
                                                                 fixed: item.fixed,
                                                                 sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
@@ -163,7 +216,14 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                             ...columns.map(
                                 (item, index) => ({
                                     ...item,
-                                    render: renderRef.current.has(item.dataIndex) ? renderRef.current.get(item.dataIndex) : undefined
+                                    render: renderRef.current.has(item.dataIndex) ? renderRef.current.get(item.dataIndex) : undefined,
+                                    onHeaderCell: (column: any) => (
+                                        {
+                                            onResize: (width: any) => {
+                                                item.width = width;
+                                            }
+                                        }
+                                    )
                                 })
                             ).filter(
                                 (item) => item.className !== 'ori-table-hidden-col'
