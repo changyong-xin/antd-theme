@@ -2,7 +2,7 @@ import { CaretUpOutlined } from '@ant-design/icons';
 import { Button, Menu, Pagination, Popover, Table } from 'antd';
 import { AnyObject } from 'antd/es/_util/type';
 import { ColumnType } from 'antd/es/table';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { ICustomEdit, IOriPagination, IOriTable } from '../interface';
 import { OriCustomColumn } from '../oriCustomColumn';
@@ -12,27 +12,42 @@ import './index.scss';
 
 interface IOriResizableThProps {
     onResize?: (width: any) => void;
+    width?: number;
     className: string;
     children?: React.ReactNode;
 }
 
 function OriResizableTh(props: IOriResizableThProps) {
-    console.log(props)
+    const [width, setWidth] = React.useState<number | undefined>(props.width);
+    const [resizing, setResizing] = React.useState(false);
     return (
         <>
-            <th {...props}>
+            <th {...props} style={resizing ? { display: "block", width: width, zIndex: 9 } : undefined}>
+                {props.children}
                 {
-                    props.onResize ?
+                    props.onResize && props.width ?
                         <Rnd
+                            className='ori-resize-wrapper'
+                            style={resizing ? { border: '1px solid' } : undefined}
                             onResize={(e, dir, elementRef, delta, position) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                console.log(e)
-                                props.onResize!(elementRef.clientWidth)
+                                setWidth(props.width! + delta.width)
+                            }}
+                            onResizeStart={(e, dir, elementRef) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setResizing(true);
+                            }}
+                            onResizeStop={(e, dir, elementRef, delta, position) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setResizing(false);
+                                props.onResize!(width)
                             }}
                             size={{
                                 height: '100%',
-                                width: '100%'
+                                width: width || '100%',
                             }}
                             resizeHandleStyles={{
                                 left: { display: 'none' },
@@ -43,13 +58,15 @@ function OriResizableTh(props: IOriResizableThProps) {
                                 bottomLeft: { display: 'none' },
                                 bottomRight: { display: 'none' },
                             }}
+                            resizeHandleClasses={{
+                                right: resizing ? 'ori-resize-resizing' : 'ori-resize-handle'
+                            }}
+                            minWidth={50}
                             disableDragging={true}
                         />
                         :
                         <></>
                 }
-
-                {props.children}
             </th>
         </>
     )
@@ -132,7 +149,6 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
             :
             []
     )
-    console.log('oriTablerender')
     return (
         <OriMiniLayout
             orientation='vertical'
@@ -140,14 +156,13 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                 <Table<T>
                     rowSelection={props.rowSelection}
                     onChange={(pagination, filters, sorter) => {
-                        const customCols: ICustomEdit[] = [];
-                        columns.forEach((col: ColumnType<T>) => {
+                        const changeResult: ICustomEdit[] = columns.map((col: ColumnType<T>) => {
                             if (!Array.isArray(sorter) && col.dataIndex === sorter.field) {
                                 col.sortOrder = sorter.order;
                             } else {
                                 col.sortOrder = undefined;
                             }
-                            customCols.push({
+                            return {
                                 title: String(col.title),
                                 dataIndex: String(col.dataIndex),
                                 width: typeof (col.width) === 'string' ? Number(col.width.split('px')[0]) : col.width,
@@ -155,12 +170,12 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                 fixed: col.fixed,
                                 sorter: typeof (col.sorter) === 'boolean' ? col.sorter : false,
                                 sortOrder: col.sortOrder,
-                            })
-                        })
+                            }
+                        });
                         if (props.custom && props.custom.onChange) {
-                            props.custom.onChange(customCols)
+                            props.custom.onChange(changeResult)
                         }
-                        setColumns(customCols)
+                        setColumns(changeResult)
                     }}
                     rowKey={props.rowKey}
                     dataSource={props.dataSource}
@@ -184,22 +199,24 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                     title:
                                         <OriCustomColumn
                                             onReset={() => {
-                                                setColumns(
-                                                    props.columns ?
-                                                        props.columns.map((item: ColumnType<T>) => (
-                                                            {
-                                                                title: String(item.title),
-                                                                dataIndex: String(item.dataIndex),
-                                                                width: typeof (item.width) === 'string' ? Number(item.width.split('px')[0]) : item.width,
-                                                                className: item.className,
-                                                                fixed: item.fixed,
-                                                                sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
-                                                                sortOrder: item.sortOrder,
-                                                            }
-                                                        ))
-                                                        :
-                                                        []
-                                                )
+                                                const resetResult: ICustomEdit[] = props.columns.map((item: ColumnType<T>) => {
+                                                    if (item.dataIndex) {
+                                                        renderRef.current.set(String(item.dataIndex), item.render)
+                                                    }
+                                                    return {
+                                                        title: String(item.title),
+                                                        dataIndex: String(item.dataIndex),
+                                                        width: typeof (item.width) === 'string' ? Number(item.width.split('px')[0]) : item.width,
+                                                        className: item.className,
+                                                        fixed: item.fixed,
+                                                        sorter: typeof (item.sorter) === 'boolean' ? item.sorter : false,
+                                                        sortOrder: item.sortOrder,
+                                                    }
+                                                })
+                                                if (props.custom && props.custom.onChange) {
+                                                    props.custom.onChange(resetResult)
+                                                }
+                                                setColumns(resetResult)
                                             }}
                                             columns={columns}
                                             onOk={(customCols) => {
@@ -217,10 +234,20 @@ export function OriTable<T extends AnyObject>(props: IOriTable<T>) {
                                 (item, index) => ({
                                     ...item,
                                     render: renderRef.current.has(item.dataIndex) ? renderRef.current.get(item.dataIndex) : undefined,
-                                    onHeaderCell: (column: any) => (
+                                    onHeaderCell: () => (
                                         {
+                                            width: item.width,
                                             onResize: (width: any) => {
-                                                item.width = width;
+                                                const resizeResult = columns.map((col) => {
+                                                    if (col.dataIndex === item.dataIndex) {
+                                                        col.width = width
+                                                    }
+                                                    return col
+                                                })
+                                                if (props.custom && props.custom.onChange) {
+                                                    props.custom.onChange(resizeResult)
+                                                }
+                                                setColumns(resizeResult)
                                             }
                                         }
                                     )

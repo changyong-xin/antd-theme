@@ -53,7 +53,7 @@ function OriCustomColumnItem(props: { value?: string; onChange?: (value?: string
                 <Input
                     type='number'
                     value={item.width}
-                    style={{ width: "60px" }}
+                    style={{ width: "80px" }}
                     onChange={(e) => {
                         item.width = e.target.value ? Number(e.target.value) : undefined;
                         props.onChange!(JSON.stringify(item));
@@ -171,6 +171,9 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: IC
                             const flexCols: ICustomEdit[] = [];
                             colRef.current.forEach((item) => {
                                 const parsefield: ICustomEdit = JSON.parse(fields[String(item.dataIndex)]);
+                                if (typeof (parsefield.width) === 'number' && parsefield.width < 50) {
+                                    parsefield.width = 50;
+                                }
                                 if (parsefield.fixed) {
                                     fixedCols.push(parsefield)
                                 } else {
@@ -185,7 +188,7 @@ function OriCustomColumnEdit(props: { columns: ICustomEdit[]; onOk: (columns: IC
                     确定
                 </Button>
             </div>
-        </div>
+        </div >
     )
 }
 

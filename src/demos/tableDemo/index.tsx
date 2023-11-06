@@ -35,7 +35,7 @@ export function OriTableDemo() {
                         {
                             width: '60px',
                             render: (value, record, index) => <span>{index + 1}</span>,
-                            onChange: (columns) => console.log(columns)
+                            onChange: (columns) => console.log('oncolumnChange:', columns)
                         }
                     }
                     rowKey={'title'}
@@ -78,7 +78,6 @@ export function OriTableDemo() {
                         {
                             dataIndex: "tooltip",
                             title: 'Tooltip',
-                            width: 150,
                             sorter: true,
                             sortOrder: 'descend',
                             render: (value, record, index) => <span>{index + 't'}</span>
@@ -87,7 +86,6 @@ export function OriTableDemo() {
                             dataIndex: "label",
                             title: 'Label',
                             width: 80,
-                            sorter: true,
                             render: (value, record, index) => <span>{index + 'l'}</span>
                         }
                     ]}

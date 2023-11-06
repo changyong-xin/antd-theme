@@ -74,3 +74,20 @@
         text-align: center;
     }
 }
+
+.ori-resize-wrapper {
+    z-index: 9 !important;
+
+    .ori-resize-resizing {
+        right: 0px !important;
+        background-color: rgb(202, 202, 202);
+    }
+
+    .ori-resize-handle {
+        right: 0px !important;
+    }
+
+    .ori-resize-handle:hover {
+        background-color: rgb(202, 202, 202);
+    }
+}
